@@ -1,2 +1,2 @@
-# 8th_warmingUp_3team_iOS
+# 8th_warming-up_3team_iOS
 iOS project 
