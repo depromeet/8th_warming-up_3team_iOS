@@ -133,10 +133,10 @@ iOSInjectionProject/
 /*.gcno
 
 ### Xcode Patch ###
-*.xcodeproj/*
-!*.xcodeproj/project.pbxproj
-!*.xcodeproj/xcshareddata/
-!*.xcworkspace/contents.xcworkspacedata
-**/xcshareddata/WorkspaceSettings.xcsettings
+warmingUpProject_3/*.xcodeproj/*
+warmingUpProject_3/!*.xcodeproj/project.pbxproj
+warmingUpProject_3/!*.xcodeproj/xcshareddata/
+warmingUpProject_3/!*.xcworkspace/contents.xcworkspacedata
+warmingUpProject_3/**/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,xcode,cocoapods,macos
