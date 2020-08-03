@@ -7,14 +7,17 @@
 //
 
 import UIKit
+import NMapsMap
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+
+        // 네이버 지도 연동
+        NMFAuthManager.shared().clientId = "xm6p6sxsy2"
+
         return true
     }
 
