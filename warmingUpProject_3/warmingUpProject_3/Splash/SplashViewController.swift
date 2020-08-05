@@ -20,7 +20,7 @@ final class SplashViewController: BaseViewController {
     }
 
     @IBAction func touchOnBoarding(_ sender: Any) {
-        let targetVC = OnBoardingViewController()
+        let targetVC = OnBoardNameingViewController()
         targetVC.hidesBottomBarWhenPushed = true
 
         targetVC.modalPresentationStyle = .overFullScreen
