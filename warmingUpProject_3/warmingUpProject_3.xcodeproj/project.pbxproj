@@ -16,11 +16,11 @@
 		56CF14D624D53536008BDCEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56CF14D424D53536008BDCEF /* LaunchScreen.storyboard */; };
 		B8CD079F24D7C971007579FA /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CD079E24D7C971007579FA /* SplashViewController.swift */; };
 		B8CD07A324D7C9E0007579FA /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CD07A224D7C9E0007579FA /* BaseViewController.swift */; };
-		B8CD07A724D7CC48007579FA /* NanumMyeongjo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8CD07A624D7CC48007579FA /* NanumMyeongjo.ttf */; };
-		B8CD07A924D7CC58007579FA /* NanumMyeongjoBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8CD07A824D7CC58007579FA /* NanumMyeongjoBold.ttf */; };
 		B8CD07AD24D7CE04007579FA /* OnBoardNameingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CD07AC24D7CE04007579FA /* OnBoardNameingViewController.swift */; };
 		B8CD07AF24D8F2B8007579FA /* TextUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CD07AE24D8F2B8007579FA /* TextUtils.swift */; };
 		B8CD07FA24DB0FFF007579FA /* extensionUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8CD07F924DB0FFF007579FA /* extensionUILabel.swift */; };
+		B8F8830324E00C2000EED1C1 /* NanumMyeongjoBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8F8830124E00C2000EED1C1 /* NanumMyeongjoBold.ttf */; };
+		B8F8830424E00C2000EED1C1 /* NanumMyeongjo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8F8830224E00C2000EED1C1 /* NanumMyeongjo.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,11 +37,11 @@
 		8C7D9095C67FE9D7B9A2BE0D /* Pods-warmingUpProject_3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-warmingUpProject_3.debug.xcconfig"; path = "Target Support Files/Pods-warmingUpProject_3/Pods-warmingUpProject_3.debug.xcconfig"; sourceTree = "<group>"; };
 		B8CD079E24D7C971007579FA /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		B8CD07A224D7C9E0007579FA /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		B8CD07A624D7CC48007579FA /* NanumMyeongjo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = NanumMyeongjo.ttf; path = "../../../../../../../Downloads/나눔명조ttf/NanumMyeongjo.ttf"; sourceTree = "<group>"; };
-		B8CD07A824D7CC58007579FA /* NanumMyeongjoBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = NanumMyeongjoBold.ttf; path = "../../../../../../../Downloads/나눔명조ttf/NanumMyeongjoBold.ttf"; sourceTree = "<group>"; };
 		B8CD07AC24D7CE04007579FA /* OnBoardNameingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardNameingViewController.swift; sourceTree = "<group>"; };
 		B8CD07AE24D8F2B8007579FA /* TextUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextUtils.swift; sourceTree = "<group>"; };
 		B8CD07F924DB0FFF007579FA /* extensionUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensionUILabel.swift; sourceTree = "<group>"; };
+		B8F8830124E00C2000EED1C1 /* NanumMyeongjoBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjoBold.ttf; sourceTree = "<group>"; };
+		B8F8830224E00C2000EED1C1 /* NanumMyeongjo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjo.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,8 +146,8 @@
 		B8CD07A524D7CC20007579FA /* font */ = {
 			isa = PBXGroup;
 			children = (
-				B8CD07A824D7CC58007579FA /* NanumMyeongjoBold.ttf */,
-				B8CD07A624D7CC48007579FA /* NanumMyeongjo.ttf */,
+				B8F8830224E00C2000EED1C1 /* NanumMyeongjo.ttf */,
+				B8F8830124E00C2000EED1C1 /* NanumMyeongjoBold.ttf */,
 				B8CD07AE24D8F2B8007579FA /* TextUtils.swift */,
 			);
 			path = font;
@@ -236,10 +236,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8CD07A724D7CC48007579FA /* NanumMyeongjo.ttf in Resources */,
 				56CF14D624D53536008BDCEF /* LaunchScreen.storyboard in Resources */,
+				B8F8830324E00C2000EED1C1 /* NanumMyeongjoBold.ttf in Resources */,
 				56CF14D324D53536008BDCEF /* Assets.xcassets in Resources */,
-				B8CD07A924D7CC58007579FA /* NanumMyeongjoBold.ttf in Resources */,
+				B8F8830424E00C2000EED1C1 /* NanumMyeongjo.ttf in Resources */,
 				56CF14D124D53533008BDCEF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
