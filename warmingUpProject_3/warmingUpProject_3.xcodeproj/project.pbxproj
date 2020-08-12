@@ -20,6 +20,10 @@
 		B82F618524E3B68B006A7F91 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82F618424E3B68B006A7F91 /* ColorUtils.swift */; };
 		B82F618924E3C10E006A7F91 /* ProfileCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82F618824E3C10E006A7F91 /* ProfileCollectionCell.swift */; };
 		B82F618B24E3DB00006A7F91 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82F618A24E3DB00006A7F91 /* Extension+UIColor.swift */; };
+		B85F608524E42F26004B2EEE /* OnBoardExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F608424E42F26004B2EEE /* OnBoardExplanationViewController.swift */; };
+		B85F608724E42F4A004B2EEE /* OnBoardExplanationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F608624E42F4A004B2EEE /* OnBoardExplanationViewModel.swift */; };
+		B85F608924E43300004B2EEE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F608824E43300004B2EEE /* MainViewController.swift */; };
+		B85F608C24E43368004B2EEE /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F608B24E43368004B2EEE /* MainViewModel.swift */; };
 		B8C35FF024E382DF002D2E75 /* TransitionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C35FEF24E382DF002D2E75 /* TransitionModel.swift */; };
 		B8C35FF224E38312002D2E75 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C35FF124E38312002D2E75 /* Scene.swift */; };
 		B8C35FF524E383AF002D2E75 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B8C35FF424E383AE002D2E75 /* Localizable.strings */; };
@@ -59,6 +63,11 @@
 		B82F618424E3B68B006A7F91 /* ColorUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
 		B82F618824E3C10E006A7F91 /* ProfileCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionCell.swift; sourceTree = "<group>"; };
 		B82F618A24E3DB00006A7F91 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
+		B85F608424E42F26004B2EEE /* OnBoardExplanationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardExplanationViewController.swift; sourceTree = "<group>"; };
+		B85F608624E42F4A004B2EEE /* OnBoardExplanationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardExplanationViewModel.swift; sourceTree = "<group>"; };
+		B85F608824E43300004B2EEE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = warmingUpProject_3/OnBoarding/ViewModel/MainViewController.swift; sourceTree = SOURCE_ROOT; };
+		B85F608B24E43368004B2EEE /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		B85F608D24E43DA2004B2EEE /* warmingUpProject_3.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = warmingUpProject_3.entitlements; sourceTree = "<group>"; };
 		B8C35FEF24E382DF002D2E75 /* TransitionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionModel.swift; sourceTree = "<group>"; };
 		B8C35FF124E38312002D2E75 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		B8C35FF424E383AE002D2E75 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -130,6 +139,7 @@
 		56CF14C824D53533008BDCEF /* warmingUpProject_3 */ = {
 			isa = PBXGroup;
 			children = (
+				B85F608D24E43DA2004B2EEE /* warmingUpProject_3.entitlements */,
 				B8C35FEE24E382C8002D2E75 /* Scene */,
 				B8CD07AB24D7CDC8007579FA /* OnBoarding */,
 				B8CD07AA24D7CD66007579FA /* Main */,
@@ -162,6 +172,14 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		B85F608A24E43348004B2EEE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B85F608B24E43368004B2EEE /* MainViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		B8C35FEE24E382C8002D2E75 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +204,7 @@
 			children = (
 				B8C3600124E387E2002D2E75 /* OnBoardNameingViewModel.swift */,
 				B8C3600724E393E0002D2E75 /* OnBoardTypeViewModel.swift */,
+				B85F608624E42F4A004B2EEE /* OnBoardExplanationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -251,6 +270,8 @@
 		B8CD07AA24D7CD66007579FA /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				B85F608A24E43348004B2EEE /* ViewModel */,
+				B85F608824E43300004B2EEE /* MainViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -260,9 +281,10 @@
 			children = (
 				B82F618724E3C0F8006A7F91 /* Cell */,
 				B82F618624E3BD13006A7F91 /* Model */,
+				B8C3600024E387A7002D2E75 /* ViewModel */,
 				B8CD07AC24D7CE04007579FA /* OnBoardNameingViewController.swift */,
 				B8C3600524E3938D002D2E75 /* OnBoardTypeViewController.swift */,
-				B8C3600024E387A7002D2E75 /* ViewModel */,
+				B85F608424E42F26004B2EEE /* OnBoardExplanationViewController.swift */,
 			);
 			path = OnBoarding;
 			sourceTree = "<group>";
@@ -396,11 +418,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B85F608524E42F26004B2EEE /* OnBoardExplanationViewController.swift in Sources */,
 				B8CD07A324D7C9E0007579FA /* BaseViewController.swift in Sources */,
 				B8C35FF824E38425002D2E75 /* Constants.swift in Sources */,
 				56CF14CE24D53533008BDCEF /* ViewController.swift in Sources */,
 				B8C35FF224E38312002D2E75 /* Scene.swift in Sources */,
+				B85F608C24E43368004B2EEE /* MainViewModel.swift in Sources */,
+				B85F608724E42F4A004B2EEE /* OnBoardExplanationViewModel.swift in Sources */,
 				56CF14CA24D53533008BDCEF /* AppDelegate.swift in Sources */,
+				B85F608924E43300004B2EEE /* MainViewController.swift in Sources */,
 				B8C3600424E392A1002D2E75 /* BaseViewModel.swift in Sources */,
 				B8C35FFF24E3864B002D2E75 /* SceneCoordinator.swift in Sources */,
 				B8CD07AD24D7CE04007579FA /* OnBoardNameingViewController.swift in Sources */,
@@ -565,6 +591,7 @@
 			baseConfigurationReference = 8C7D9095C67FE9D7B9A2BE0D /* Pods-warmingUpProject_3.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = warmingUpProject_3/warmingUpProject_3.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4693VAH9ZM;
 				INFOPLIST_FILE = warmingUpProject_3/Info.plist;
@@ -573,7 +600,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.depromeet.warmingUpProject-3";
+				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.bookjjogeuro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -585,6 +612,7 @@
 			baseConfigurationReference = 41F1ED98F529823A39A9AC81 /* Pods-warmingUpProject_3.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = warmingUpProject_3/warmingUpProject_3.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4693VAH9ZM;
 				INFOPLIST_FILE = warmingUpProject_3/Info.plist;
@@ -593,7 +621,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.depromeet.warmingUpProject-3";
+				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.bookjjogeuro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

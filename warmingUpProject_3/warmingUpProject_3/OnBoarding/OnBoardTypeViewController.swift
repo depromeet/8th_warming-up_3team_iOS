@@ -15,16 +15,16 @@ import Action
 import NSObject_Rx
 
 class OnBoardTypeViewController: UIViewController, ViewModelBindableType {
-
+    
     var viewModel: OnBoardTypeViewModel!
-
+    
     let ivQuotes: UIImageView = {
         let ivQuotes = UIImageView()
         ivQuotes.image = UIImage(named: "icnDoubleQuotes")
-
+        
         return ivQuotes
     }()
-
+    
     let lbTitle: UILabel = {
         let lbTitle = UILabel()
         lbTitle.numberOfLines = 0
@@ -32,11 +32,11 @@ class OnBoardTypeViewController: UIViewController, ViewModelBindableType {
         lbTitle.font = UIFont(name: TextUtils.FontType.NanumMyeongjoRegular.rawValue, size: 20)
         //        lbTitle.setTextWithLetterSpacing(text: "외로운 규현님의\n독서 유형에 맞는\n프로필사진을 골라주세요.", letterSpacing: -0.1, lineHeight: 30)
         lbTitle.setFocusTextWithLetterSpacing(text: "외로운 규현님의\n독서 유형에 맞는\n프로필사진을 골라주세요.", focusText: "외로운 규현님", focusFont: UIFont(name: TextUtils.FontType.NanumMyeongjoBold.rawValue, size: 20) ?? UIFont.systemFont(ofSize: 20), focusColor: #colorLiteral(red: 0.1333333333, green: 0.1333333333, blue: 0.1333333333, alpha: 1), letterSpacing: -0.1, lineHeight: 30)
-
+        
         lbTitle.textAlignment = .center
         return lbTitle
     }()
-
+    
     let profileCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = .zero
@@ -49,18 +49,16 @@ class OnBoardTypeViewController: UIViewController, ViewModelBindableType {
         profileCollectionView.register(ProfileCollectionCell.self, forCellWithReuseIdentifier: String(describing: ProfileCollectionCell.self))
         return profileCollectionView
     }()
-
+    
     let lbWarningMessage: UILabel = {
         let lbWarningMessage = UILabel()
         lbWarningMessage.font = UIFont.systemFont(ofSize: 12)
         lbWarningMessage.textColor = .lightGray
-        //FIXME: 컬러 왜 안먹힘?
-        //UIColor(red: 170, green: 170, blue: 170, alpha: 1)
         lbWarningMessage.textAlignment = .center
         lbWarningMessage.attributedText = TextUtils.textLetterSpacingAttribute(text: "이후 수정이 불가하니 신중히 선택해주세요.", letterSpacing: -0.06, color: nil)
         return lbWarningMessage
     }()
-
+    
     var btnNext: UIButton = {
         let btnNext = UIButton(type: .custom)
         btnNext.isEnabled = false
@@ -74,22 +72,22 @@ class OnBoardTypeViewController: UIViewController, ViewModelBindableType {
         btnNext.titleLabel?.attributedText = TextUtils.attributedPlaceholder(text: "다음", letterSpacing: -0.09)
         return btnNext
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
     }
-
+    
     func bindViewModel() {
         let profile = Observable.of(["장르 박애주의", "속독가", "올빼미족", "상상 대마왕", "나노 분석가", "꿈나라"])
         profile.bind(to: profileCollectionView.rx.items(cellIdentifier: String(describing: ProfileCollectionCell.self), cellType: ProfileCollectionCell.self)) { (row, element, cell) in
-
+            
             cell.lbTypeName.setTextWithLetterSpacing(text: element, letterSpacing: -0.07, lineHeight: 17)
             cell.lbTypeName.textAlignment = .center
             // cell
-
+            
         }.disposed(by: rx.disposeBag)
-
+        
         profileCollectionView.rx
             .itemSelected
             .do(onNext: { [unowned self] indexPath in
@@ -106,6 +104,9 @@ class OnBoardTypeViewController: UIViewController, ViewModelBindableType {
                 self.btnNext.isEnabled = true
                 self.btnNext.backgroundColor = ColorUtils.colorProfileBoard
             }).disposed(by: rx.disposeBag)
+        
+        
+        btnNext.rx.action = viewModel?.nextAction()
     }
 }
 
@@ -121,7 +122,7 @@ extension OnBoardTypeViewController {
         self.view.setNeedsUpdateConstraints()
         setLayout()
     }
-
+    
     private func setLayout() {
         ivQuotes.snp.makeConstraints { (make) in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(52)
@@ -129,14 +130,14 @@ extension OnBoardTypeViewController {
             make.height.equalTo(24)
             make.width.equalTo(30)
         }
-
+        
         lbTitle.snp.makeConstraints { (make) in
             make.top.equalTo(ivQuotes.snp.bottom).offset(22)
             make.leading.equalToSuperview().offset(28)
             make.trailing.equalToSuperview().offset(-28)
             make.height.equalTo(90)
         }
-
+        
         btnNext.snp.makeConstraints { (make) in
             var bottom: CGFloat = 0
             if #available(iOS 13.0, *) {
@@ -150,18 +151,20 @@ extension OnBoardTypeViewController {
             make.height.equalTo(74 + Dimens.getSafeAreaBottomMargin())
             make.bottom.equalToSuperview()
         }
-
+        
         lbWarningMessage.snp.makeConstraints { (make) in
             make.leading.equalToSuperview().offset(28)
             make.trailing.equalToSuperview().offset(-28)
+            make.height.equalTo(14)
             make.bottom.equalTo(btnNext.snp.top).offset(-32)
         }
-
+        
         profileCollectionView.snp.makeConstraints { (make) in
             make.top.equalTo(lbTitle.snp.bottom).offset(57)
             make.leading.equalToSuperview().offset(55)
             make.trailing.equalToSuperview().offset(-49)
-            make.bottom.equalTo(lbWarningMessage.snp.top).offset(-142)
+            make.height.equalTo(220)
+            make.bottom.lessThanOrEqualTo(lbWarningMessage.snp.top).offset(-142).priority(999)
         }
     }
 }

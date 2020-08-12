@@ -12,5 +12,16 @@ import RxCocoa
 import Action
 
 class OnBoardTypeViewModel: BaseViewModel {
-
+    func nextAction() -> CocoaAction {
+        return CocoaAction { _ in
+            /*
+             api 검증 해서 아이디 중복없으면 넘어가고
+             아니면 팝업띄우는걸로 구현해야함
+             */
+            
+            let onboardExplanationViewModel = OnBoardExplanationViewModel(scenCoordinator: self.scenCoordinator)
+            let onBoardTypeScene = Scene.onboardExplanation(onboardExplanationViewModel)
+            return self.scenCoordinator.transition(to: onBoardTypeScene, using: .root, animated: true).asObservable().map { _ in }
+        }
+    }
 }
