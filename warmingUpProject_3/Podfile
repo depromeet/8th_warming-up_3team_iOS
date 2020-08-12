@@ -12,5 +12,6 @@ target 'warmingUpProject_3' do
   pod 'SwiftLint'
   pod 'NMapsMap'
   pod 'Action'	
+  pod 'NSObject+Rx'
 	
 end

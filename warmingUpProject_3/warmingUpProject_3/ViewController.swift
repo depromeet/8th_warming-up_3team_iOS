@@ -17,7 +17,5 @@ class ViewController: UIViewController {
         let mapView = NMFMapView(frame: view.frame)
         view.addSubview(mapView)
     }
-
-
 }
 

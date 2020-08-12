@@ -7,8 +7,17 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+//import NSObject_Rx
 
-final class SplashViewController: BaseViewController {
+final class SplashViewController: UIViewController, ViewModelBindableType {
+
+    var viewModel: SplashViewModel!
+
+    @IBOutlet weak var btnKakao: UIButton!
+
+    @IBOutlet weak var btnApple: UIButton!
 
     override func loadView() {
         super.loadView()
@@ -19,13 +28,8 @@ final class SplashViewController: BaseViewController {
         super.viewDidLoad()
     }
 
-    @IBAction func touchOnBoarding(_ sender: Any) {
-        let targetVC = OnBoardNameingViewController()
-        targetVC.hidesBottomBarWhenPushed = true
-
-        targetVC.modalPresentationStyle = .overFullScreen
-
-        // iOS 13 이상 present 기본값: pageSheet
-        self.present(targetVC, animated: false, completion: nil)
+    func bindViewModel() {
+        btnKakao.rx.action = viewModel.kakaoLoingAction()
     }
+
 }

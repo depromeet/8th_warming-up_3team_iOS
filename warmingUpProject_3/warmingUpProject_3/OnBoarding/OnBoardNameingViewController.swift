@@ -8,8 +8,11 @@
 
 import UIKit
 import SnapKit
+import Action
 
-class OnBoardNameingViewController: BaseViewController {
+class OnBoardNameingViewController: UIViewController, ViewModelBindableType {
+
+     var viewModel: OnBoardNameingViewModel!
 
     let ivQuotes: UIImageView = {
         let ivQuotes = UIImageView()
@@ -37,8 +40,6 @@ class OnBoardNameingViewController: BaseViewController {
         let tfNickName = UITextField()
         // 사이즈 별로 자동으로 됨 19 전까지는 SF Pro Text
         tfNickName.font = UIFont.systemFont(ofSize: 14)
-        print("------tfNickName.font: \(tfNickName.font)")
-//        tfNickName.placeholder = "최대 8자까지 입력 가능합니다."
         tfNickName.attributedPlaceholder = TextUtils.attributedPlaceholder(text: "최대 8자까지 입력 가능합니다.", letterSpacing: -0.07)
         return tfNickName
     }()
@@ -49,6 +50,30 @@ class OnBoardNameingViewController: BaseViewController {
         return ivTextfieldRight
     }()
 
+    let lbWarningMessage: UILabel = {
+        let lbWarningMessage = UILabel()
+        lbWarningMessage.font = UIFont.systemFont(ofSize: 12)
+        lbWarningMessage.textColor = .lightGray
+        //FIXME: 컬러 왜 안먹힘?
+        //UIColor(red: 170, green: 170, blue: 170, alpha: 1)
+        lbWarningMessage.textAlignment = .center
+        lbWarningMessage.attributedText = TextUtils.textLetterSpacingAttribute(text: "이후 수정이 불가하니 신중히 선택해주세요.", letterSpacing: -0.06, color: nil)
+        return lbWarningMessage
+    }()
+
+    var btnNext: UIButton = {
+        let btnNext = UIButton(type: .custom)
+        btnNext.setTitle("다음", for: .normal)
+        btnNext.setTitle("다음", for: .selected)
+        btnNext.setTitleColor(.white, for: .normal)
+        btnNext.setTitleColor(.white, for: .selected)
+        btnNext.backgroundColor = #colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 1)
+        btnNext.titleEdgeInsets.top = -Dimens.getSafeAreaBottomMargin() - 17
+        btnNext.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        btnNext.titleLabel?.attributedText = TextUtils.attributedPlaceholder(text: "다음", letterSpacing: -0.09)
+        return btnNext
+    }()
+
 
     override func loadView() {
         super.loadView()
@@ -57,6 +82,10 @@ class OnBoardNameingViewController: BaseViewController {
 
     override func viewDidLoad() {
         print("######### OnBoardingViewController ")
+    }
+
+    func bindViewModel() {
+        btnNext.rx.action = viewModel?.nextAction()
     }
 
 }
@@ -71,6 +100,8 @@ extension OnBoardNameingViewController {
         self.view.addSubview(ivTextfieldLeft)
         self.view.addSubview(tfNickName)
         self.view.addSubview(ivTextfieldRight)
+        self.view.addSubview(btnNext)
+        self.view.addSubview(lbWarningMessage)
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
         self.view.setNeedsUpdateConstraints()
         setLayout()
@@ -78,7 +109,7 @@ extension OnBoardNameingViewController {
 
     private func setLayout() {
         ivQuotes.snp.makeConstraints { (make) in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(52)//offset(52)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(52)
             make.centerX.equalToSuperview().offset(-1)
             make.height.equalTo(24)
             make.width.equalTo(30)
@@ -109,6 +140,26 @@ extension OnBoardNameingViewController {
             make.top.equalTo(ivTextfieldLeft.snp.top)
             make.leading.equalTo(tfNickName.snp.trailing).offset(23)
             make.trailing.equalToSuperview().offset(-55)
+        }
+
+        btnNext.snp.makeConstraints { (make) in
+            var bottom: CGFloat = 0
+            if #available(iOS 13.0, *) {
+                bottom = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.safeAreaInsets.bottom ?? 0.0
+            } else {
+                bottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0.0
+            }
+            print(bottom)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(74 + Dimens.getSafeAreaBottomMargin())
+            make.bottom.equalToSuperview()
+        }
+
+        lbWarningMessage.snp.makeConstraints { (make) in
+            make.leading.equalToSuperview().offset(28)
+            make.trailing.equalToSuperview().offset(-28)
+            make.bottom.equalTo(btnNext.snp.top).offset(-32)
         }
     }
 }

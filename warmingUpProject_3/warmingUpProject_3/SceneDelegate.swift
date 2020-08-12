@@ -6,6 +6,7 @@
 //  Copyright © 2020 team3. All rights reserved.
 //
 
+/*
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -50,4 +51,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
-
+*/

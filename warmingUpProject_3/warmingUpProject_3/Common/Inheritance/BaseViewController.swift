@@ -9,9 +9,11 @@
 import UIKit
 import RxSwift
 
-open class BaseViewController: UIViewController {
+open class BaseViewController<T>: UIViewController {
 
     open var disposeBag = DisposeBag()
+
+    open var viewModel: T?
 
     deinit {
         print("## deinit ##")
