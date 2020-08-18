@@ -18,7 +18,7 @@ final class SplashViewController: UIViewController, ViewModelBindableType {
     @IBOutlet weak var btnKakao: UIButton!
 
     @IBOutlet weak var btnApple: UIButton!
-
+    
     override func loadView() {
         super.loadView()
 
@@ -26,6 +26,7 @@ final class SplashViewController: UIViewController, ViewModelBindableType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
 
     func bindViewModel() {
