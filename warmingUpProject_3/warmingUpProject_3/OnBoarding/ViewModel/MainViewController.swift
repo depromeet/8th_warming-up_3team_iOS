@@ -21,11 +21,6 @@ class MainViewController: UIViewController, ViewModelBindableType {
     
     let mapView: UIView = {
         let naverMapView = NMFNaverMapView()
-        //        naverMapView.showLegalNotice()
-        naverMapView.showLocationButton = true
-        //        locationOverlay.hidden = false
-        //        naverMapView.sho
-        
         return naverMapView.mapView
     }()
     
@@ -63,6 +58,7 @@ class MainViewController: UIViewController, ViewModelBindableType {
         return profileView
     }()
     
+    //TODO: 테스트 코드 임
     
     let baseView: UIView = {
         let baseView = UIView()
@@ -131,6 +127,30 @@ class MainViewController: UIViewController, ViewModelBindableType {
         
         return baseView
     }()
+    // -------------------------
+    
+    var btnWrite: UIButton = {
+        let btnWrite = UIButton(type: .custom)
+        btnWrite.backgroundColor = .white
+        btnWrite.setImage(#imageLiteral(resourceName: "write"), for: .normal)
+        btnWrite.layer.masksToBounds = false
+        btnWrite.layer.cornerRadius = 29
+        btnWrite.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.05).cgColor
+        btnWrite.layer.shadowOpacity = 1
+        btnWrite.layer.shadowOffset = CGSize(width: 0, height: 2)
+        btnWrite.layer.shadowRadius = 4 / 2
+        
+        let layer1 = CALayer()
+        layer1.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        layer1.shadowOpacity = 1
+        layer1.shadowOffset = CGSize(width: 0, height: 4)
+        layer1.shadowRadius = 10 / 4
+        
+        btnWrite.layer.insertSublayer(layer1, at: 1)
+        
+        return btnWrite
+    }()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,7 +158,7 @@ class MainViewController: UIViewController, ViewModelBindableType {
     }
     
     func bindViewModel() {
-        
+        btnWrite.rx.action = viewModel.writeAction()
     }
 }
 
@@ -148,6 +168,7 @@ extension MainViewController {
         self.view.addSubview(mapView)
         self.view.addSubview(profileBaseView)
         self.view.addSubview(baseView)
+        self.view.addSubview(btnWrite)
         
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
         self.view.setNeedsUpdateConstraints()
@@ -174,6 +195,13 @@ extension MainViewController {
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
+        }
+        
+        btnWrite.snp.makeConstraints { (make) in
+            make.width.equalTo(58)
+            make.height.equalTo(58)
+            make.bottom.equalToSuperview().offset(-24)
+            make.trailing.equalToSuperview().offset(-22)
         }
     }
 }

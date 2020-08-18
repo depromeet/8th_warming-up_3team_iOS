@@ -14,6 +14,7 @@ enum Scene {
     case onboardType(OnBoardTypeViewModel)
     case onboardExplanation(OnBoardExplanationViewModel)
     case main(MainViewModel)
+    case write(WriteViewModel)
 }
 
 // 스토리 보드에 있는 씬을 생성 연관값이 저장된 뷰 모델을 바인딩해서 리턴
@@ -43,9 +44,18 @@ extension Scene {
             return onBoardExplanationVC
             
         case .main(let viewModel):
+//            let naviController = UINavigationController()
             var mainVC = MainViewController()
+//            naviController.viewControllers = [mainVC]
             mainVC.bind(viewModel: viewModel)
+//            return naviController
             return mainVC
+            
+        case .write(let viewModel):
+            var writeVC = WriteViewController()
+            writeVC.bind(viewModel: viewModel)
+            return writeVC
+            
         }
     }
 }

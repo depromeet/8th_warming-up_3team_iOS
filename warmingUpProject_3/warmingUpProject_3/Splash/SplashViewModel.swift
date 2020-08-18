@@ -31,4 +31,22 @@ class SplashViewModel: BaseViewModel {
             return self.scenCoordinator.transition(to: onboardNammingScene, using: .root, animated: true).asObservable().map { _ in }
         }
     }
+    
+    func mainAction() -> CocoaAction {
+        return CocoaAction { _ in
+
+
+            // TODO:  로그인 - 토큰 떨어지면 진행 화면 전환
+            /*
+
+             방방어 코드 작성
+
+             */
+
+
+            let mainViewModel = MainViewModel(scenCoordinator: self.scenCoordinator)
+            let mainScene = Scene.main(mainViewModel)
+            return self.scenCoordinator.transition(to: mainScene, using: .root, animated: true).asObservable().map { _ in }
+        }
+    }
 }

@@ -59,7 +59,6 @@ class SceneCoordinator: SceneCoordinatorType {
             }
 
             // 델리게이트 메소드가 호출되는 시점마다 Next이벤트를 방출하는 속성
-            // UINavigationControllerDelegate.navigationController(_:willShow:animated:)
             nav.rx.willShow
                 .subscribe(onNext: { [unowned self] evt in
                     self.currentVC = evt.viewController.sceneViewController
@@ -71,6 +70,7 @@ class SceneCoordinator: SceneCoordinatorType {
             subject.onCompleted()
 
         case .modal:
+            target.sceneViewController.modalPresentationStyle = .fullScreen
             currentVC.present(target, animated: animated) {
                 subject.onCompleted()
             }

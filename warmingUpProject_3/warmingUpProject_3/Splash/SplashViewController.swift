@@ -31,6 +31,7 @@ final class SplashViewController: UIViewController, ViewModelBindableType {
 
     func bindViewModel() {
         btnKakao.rx.action = viewModel.kakaoLoingAction()
+        btnApple.rx.action = viewModel.mainAction()
     }
 
 }

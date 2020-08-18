@@ -14,6 +14,8 @@
 		56CF14D124D53533008BDCEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56CF14CF24D53533008BDCEF /* Main.storyboard */; };
 		56CF14D324D53536008BDCEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56CF14D224D53536008BDCEF /* Assets.xcassets */; };
 		56CF14D624D53536008BDCEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56CF14D424D53536008BDCEF /* LaunchScreen.storyboard */; };
+		B823CCD124EC06DA009C734F /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B823CCD024EC06DA009C734F /* WriteViewController.swift */; };
+		B823CCD324EC0701009C734F /* WriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B823CCD224EC0701009C734F /* WriteViewModel.swift */; };
 		B82F617F24E39CCF006A7F91 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82F617E24E39CCF006A7F91 /* SplashViewModel.swift */; };
 		B82F618124E3B37C006A7F91 /* Extension+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82F618024E3B37C006A7F91 /* Extension+UIButton.swift */; };
 		B82F618324E3B47A006A7F91 /* Dimens.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82F618224E3B47A006A7F91 /* Dimens.swift */; };
@@ -59,6 +61,8 @@
 		56CF14D724D53536008BDCEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		618F7D2538EA098E978C7BEB /* Pods_warmingUpProject_3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_warmingUpProject_3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C7D9095C67FE9D7B9A2BE0D /* Pods-warmingUpProject_3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-warmingUpProject_3.debug.xcconfig"; path = "Target Support Files/Pods-warmingUpProject_3/Pods-warmingUpProject_3.debug.xcconfig"; sourceTree = "<group>"; };
+		B823CCD024EC06DA009C734F /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
+		B823CCD224EC0701009C734F /* WriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewModel.swift; sourceTree = "<group>"; };
 		B82F617E24E39CCF006A7F91 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		B82F618024E3B37C006A7F91 /* Extension+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIButton.swift"; sourceTree = "<group>"; };
 		B82F618224E3B47A006A7F91 /* Dimens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dimens.swift; sourceTree = "<group>"; };
@@ -180,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				B85F608B24E43368004B2EEE /* MainViewModel.swift */,
+				B823CCD224EC0701009C734F /* WriteViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -310,6 +315,7 @@
 				B8BCF65E24EB5A8D006142A7 /* View */,
 				B85F608A24E43348004B2EEE /* ViewModel */,
 				B85F608824E43300004B2EEE /* MainViewController.swift */,
+				B823CCD024EC06DA009C734F /* WriteViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -480,12 +486,14 @@
 				B8C3600B24E39519002D2E75 /* ViewModelBindableType.swift in Sources */,
 				B8CD079F24D7C971007579FA /* SplashViewController.swift in Sources */,
 				B82F617F24E39CCF006A7F91 /* SplashViewModel.swift in Sources */,
+				B823CCD324EC0701009C734F /* WriteViewModel.swift in Sources */,
 				B8C3600224E387E2002D2E75 /* OnBoardNameingViewModel.swift in Sources */,
 				B82F618124E3B37C006A7F91 /* Extension+UIButton.swift in Sources */,
 				B8BCF66224EB5B60006142A7 /* bookListcollectionView.swift in Sources */,
 				B8C35FFD24E385BD002D2E75 /* SceneCoordinatorType.swift in Sources */,
 				B8C3600824E393E0002D2E75 /* OnBoardTypeViewModel.swift in Sources */,
 				B82F618524E3B68B006A7F91 /* ColorUtils.swift in Sources */,
+				B823CCD124EC06DA009C734F /* WriteViewController.swift in Sources */,
 				B8CD07AF24D8F2B8007579FA /* TextUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
