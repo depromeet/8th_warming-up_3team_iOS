@@ -22,9 +22,10 @@
 		B82F618524E3B68B006A7F91 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82F618424E3B68B006A7F91 /* ColorUtils.swift */; };
 		B82F618924E3C10E006A7F91 /* ProfileCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82F618824E3C10E006A7F91 /* ProfileCollectionCell.swift */; };
 		B82F618B24E3DB00006A7F91 /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82F618A24E3DB00006A7F91 /* Extension+UIColor.swift */; };
+		B85DF84724ED08ED00963927 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85DF84624ED08ED00963927 /* MainViewController.swift */; };
+		B85DF84A24ED0F6B00963927 /* BookCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85DF84924ED0F6B00963927 /* BookCoverView.swift */; };
 		B85F608524E42F26004B2EEE /* OnBoardExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F608424E42F26004B2EEE /* OnBoardExplanationViewController.swift */; };
 		B85F608724E42F4A004B2EEE /* OnBoardExplanationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F608624E42F4A004B2EEE /* OnBoardExplanationViewModel.swift */; };
-		B85F608924E43300004B2EEE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F608824E43300004B2EEE /* MainViewController.swift */; };
 		B85F608C24E43368004B2EEE /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F608B24E43368004B2EEE /* MainViewModel.swift */; };
 		B8BCF66224EB5B60006142A7 /* bookListcollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BCF66124EB5B60006142A7 /* bookListcollectionView.swift */; };
 		B8BCF66524EB5BA3006142A7 /* BookCoverCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BCF66424EB5BA3006142A7 /* BookCoverCollectionCell.swift */; };
@@ -69,9 +70,10 @@
 		B82F618424E3B68B006A7F91 /* ColorUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
 		B82F618824E3C10E006A7F91 /* ProfileCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCollectionCell.swift; sourceTree = "<group>"; };
 		B82F618A24E3DB00006A7F91 /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
+		B85DF84624ED08ED00963927 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		B85DF84924ED0F6B00963927 /* BookCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCoverView.swift; sourceTree = "<group>"; };
 		B85F608424E42F26004B2EEE /* OnBoardExplanationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardExplanationViewController.swift; sourceTree = "<group>"; };
 		B85F608624E42F4A004B2EEE /* OnBoardExplanationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardExplanationViewModel.swift; sourceTree = "<group>"; };
-		B85F608824E43300004B2EEE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = warmingUpProject_3/OnBoarding/ViewModel/MainViewController.swift; sourceTree = SOURCE_ROOT; };
 		B85F608B24E43368004B2EEE /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		B85F608D24E43DA2004B2EEE /* warmingUpProject_3.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = warmingUpProject_3.entitlements; sourceTree = "<group>"; };
 		B8BCF66124EB5B60006142A7 /* bookListcollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookListcollectionView.swift; sourceTree = "<group>"; };
@@ -148,11 +150,9 @@
 			isa = PBXGroup;
 			children = (
 				B85F608D24E43DA2004B2EEE /* warmingUpProject_3.entitlements */,
-				B8C35FEE24E382C8002D2E75 /* Scene */,
-				B8CD079D24D7C94B007579FA /* Splash */,
-				B8CD07AB24D7CDC8007579FA /* OnBoarding */,
-				B8CD07AA24D7CD66007579FA /* Main */,
-				B8BCF65F24EB5AAD006142A7 /* ReviewDetail */,
+				B85DF84824ED0F4F00963927 /* CustomView */,
+				B8A16F6B24ED06E500EA78D8 /* Scenes */,
+				B8C35FEE24E382C8002D2E75 /* Coordinator */,
 				56CF14C924D53533008BDCEF /* AppDelegate.swift */,
 				56CF14CB24D53533008BDCEF /* SceneDelegate.swift */,
 				56CF14CD24D53533008BDCEF /* ViewController.swift */,
@@ -180,6 +180,14 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		B85DF84824ED0F4F00963927 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				B85DF84924ED0F6B00963927 /* BookCoverView.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 		B85F608A24E43348004B2EEE /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +195,16 @@
 				B823CCD224EC0701009C734F /* WriteViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B8A16F6B24ED06E500EA78D8 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				B8CD079D24D7C94B007579FA /* Splash */,
+				B8CD07AB24D7CDC8007579FA /* OnBoarding */,
+				B8CD07AA24D7CD66007579FA /* Main */,
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 		B8BCF65E24EB5A8D006142A7 /* View */ = {
@@ -197,21 +215,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		B8BCF65F24EB5AAD006142A7 /* ReviewDetail */ = {
-			isa = PBXGroup;
-			children = (
-				B8BCF66024EB5ADA006142A7 /* ViewModel */,
-			);
-			path = ReviewDetail;
-			sourceTree = "<group>";
-		};
-		B8BCF66024EB5ADA006142A7 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		B8BCF66324EB5B81006142A7 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,7 +223,7 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		B8C35FEE24E382C8002D2E75 /* Scene */ = {
+		B8C35FEE24E382C8002D2E75 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
 				B8C35FEF24E382DF002D2E75 /* TransitionModel.swift */,
@@ -228,7 +231,7 @@
 				B8C35FFC24E385BD002D2E75 /* SceneCoordinatorType.swift */,
 				B8C35FFE24E3864B002D2E75 /* SceneCoordinator.swift */,
 			);
-			path = Scene;
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		B8C35FF624E38417002D2E75 /* Constants */ = {
@@ -291,10 +294,10 @@
 			isa = PBXGroup;
 			children = (
 				B8CD07A024D7C988007579FA /* Common */,
-				B82F618424E3B68B006A7F91 /* ColorUtils.swift */,
-				B8CD07AE24D8F2B8007579FA /* TextUtils.swift */,
 				B8CD07F624DB0953007579FA /* Extension */,
 				B8CD07A524D7CC20007579FA /* Font */,
+				B82F618424E3B68B006A7F91 /* ColorUtils.swift */,
+				B8CD07AE24D8F2B8007579FA /* TextUtils.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -314,8 +317,8 @@
 				B8BCF66324EB5B81006142A7 /* Cell */,
 				B8BCF65E24EB5A8D006142A7 /* View */,
 				B85F608A24E43348004B2EEE /* ViewModel */,
-				B85F608824E43300004B2EEE /* MainViewController.swift */,
 				B823CCD024EC06DA009C734F /* WriteViewController.swift */,
+				B85DF84624ED08ED00963927 /* MainViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -469,12 +472,13 @@
 				B8C35FF224E38312002D2E75 /* Scene.swift in Sources */,
 				B85F608C24E43368004B2EEE /* MainViewModel.swift in Sources */,
 				B85F608724E42F4A004B2EEE /* OnBoardExplanationViewModel.swift in Sources */,
+				B85DF84724ED08ED00963927 /* MainViewController.swift in Sources */,
 				56CF14CA24D53533008BDCEF /* AppDelegate.swift in Sources */,
-				B85F608924E43300004B2EEE /* MainViewController.swift in Sources */,
 				B8C3600424E392A1002D2E75 /* BaseViewModel.swift in Sources */,
 				B8C35FFF24E3864B002D2E75 /* SceneCoordinator.swift in Sources */,
 				B8CD07AD24D7CE04007579FA /* OnBoardNameingViewController.swift in Sources */,
 				B8CD07FA24DB0FFF007579FA /* Extension+UILabel.swift in Sources */,
+				B85DF84A24ED0F6B00963927 /* BookCoverView.swift in Sources */,
 				B8C3600624E3938D002D2E75 /* OnBoardTypeViewController.swift in Sources */,
 				56CF14CC24D53533008BDCEF /* SceneDelegate.swift in Sources */,
 				B82F618B24E3DB00006A7F91 /* Extension+UIColor.swift in Sources */,
