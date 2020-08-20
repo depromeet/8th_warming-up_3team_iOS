@@ -27,6 +27,8 @@
 		B85F608724E42F4A004B2EEE /* OnBoardExplanationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F608624E42F4A004B2EEE /* OnBoardExplanationViewModel.swift */; };
 		B85F608C24E43368004B2EEE /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F608B24E43368004B2EEE /* MainViewModel.swift */; };
 		B882A07E24EE1E0E00FC480E /* UserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882A07D24EE1E0E00FC480E /* UserUtils.swift */; };
+		B882A08124EE484D00FC480E /* AppleID.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882A08024EE484D00FC480E /* AppleID.swift */; };
+		B882A08324EE6FB900FC480E /* EdgeInsetsLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882A08224EE6FB900FC480E /* EdgeInsetsLabel.swift */; };
 		B8BCF66224EB5B60006142A7 /* bookListcollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BCF66124EB5B60006142A7 /* bookListcollectionView.swift */; };
 		B8BCF66524EB5BA3006142A7 /* BookCoverCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BCF66424EB5BA3006142A7 /* BookCoverCollectionCell.swift */; };
 		B8C35FF024E382DF002D2E75 /* TransitionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C35FEF24E382DF002D2E75 /* TransitionModel.swift */; };
@@ -76,6 +78,8 @@
 		B85F608B24E43368004B2EEE /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		B85F608D24E43DA2004B2EEE /* warmingUpProject_3.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = warmingUpProject_3.entitlements; sourceTree = "<group>"; };
 		B882A07D24EE1E0E00FC480E /* UserUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUtils.swift; sourceTree = "<group>"; };
+		B882A08024EE484D00FC480E /* AppleID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleID.swift; sourceTree = "<group>"; };
+		B882A08224EE6FB900FC480E /* EdgeInsetsLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeInsetsLabel.swift; sourceTree = "<group>"; };
 		B8BCF66124EB5B60006142A7 /* bookListcollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookListcollectionView.swift; sourceTree = "<group>"; };
 		B8BCF66424EB5BA3006142A7 /* BookCoverCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCoverCollectionCell.swift; sourceTree = "<group>"; };
 		B8C35FEF24E382DF002D2E75 /* TransitionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionModel.swift; sourceTree = "<group>"; };
@@ -183,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				B85DF84924ED0F6B00963927 /* BookCoverView.swift */,
+				B882A08224EE6FB900FC480E /* EdgeInsetsLabel.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -194,6 +199,14 @@
 				B823CCD224EC0701009C734F /* WriteViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B882A07F24EE483200FC480E /* SNSLoing */ = {
+			isa = PBXGroup;
+			children = (
+				B882A08024EE484D00FC480E /* AppleID.swift */,
+			);
+			path = SNSLoing;
 			sourceTree = "<group>";
 		};
 		B8A16F6B24ED06E500EA78D8 /* Scenes */ = {
@@ -292,6 +305,7 @@
 		B8CD07A424D7CC0A007579FA /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				B882A07F24EE483200FC480E /* SNSLoing */,
 				B8CD07A024D7C988007579FA /* Common */,
 				B8CD07F624DB0953007579FA /* Extension */,
 				B8CD07A524D7CC20007579FA /* Font */,
@@ -493,8 +507,10 @@
 				B823CCD324EC0701009C734F /* WriteViewModel.swift in Sources */,
 				B8C3600224E387E2002D2E75 /* OnBoardNameingViewModel.swift in Sources */,
 				B82F618124E3B37C006A7F91 /* Extension+UIButton.swift in Sources */,
+				B882A08124EE484D00FC480E /* AppleID.swift in Sources */,
 				B8BCF66224EB5B60006142A7 /* bookListcollectionView.swift in Sources */,
 				B8C35FFD24E385BD002D2E75 /* SceneCoordinatorType.swift in Sources */,
+				B882A08324EE6FB900FC480E /* EdgeInsetsLabel.swift in Sources */,
 				B8C3600824E393E0002D2E75 /* OnBoardTypeViewModel.swift in Sources */,
 				B82F618524E3B68B006A7F91 /* ColorUtils.swift in Sources */,
 				B823CCD124EC06DA009C734F /* WriteViewController.swift in Sources */,

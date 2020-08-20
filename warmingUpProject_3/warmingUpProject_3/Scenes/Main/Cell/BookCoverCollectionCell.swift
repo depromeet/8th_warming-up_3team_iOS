@@ -1,71 +1,74 @@
-////
-////  BookCoverCollectionCell.swift
-////  warmingUpProject_3
-////
-////  Created by 이규현 on 2020/08/18.
-////  Copyright © 2020 team3. All rights reserved.
-////
 //
-//import UIKit
-//import SnapKit
+//  BookCoverCollectionCell.swift
+//  warmingUpProject_3
 //
-//class BookCoverCollectionCell: UICollectionViewCell {
+//  Created by 이규현 on 2020/08/18.
+//  Copyright © 2020 team3. All rights reserved.
 //
-//    let baseView: UIView = {
-//        let baseView = UIView()
-//        ivProfile.contentMode = .scaleAspectFill
-//        ivProfile.image = #imageLiteral(resourceName: "Profile").withAlignmentRectInsets(UIEdgeInsets(top: -7, left: -7, bottom: -7, right: -7))
-//        return ivProfile
-//    }()
-//
-//    let lbProfileHighLight: UILabel = {
-//        let lbProfileHighLight = UILabel()
-//        lbProfileHighLight.layer.cornerRadius = 84 / 2
-//        return lbProfileHighLight
-//    }()
-//
-//    let lbTypeName: UILabel = {
-//        let lbTypeName = UILabel()
-//        lbTypeName.font = UIFont.systemFont(ofSize: 14)
-//        lbTypeName.textAlignment = .center
-//        lbTypeName.textColor = ColorUtils.color170
-//        return lbTypeName
-//    }()
-//
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        self.backgroundColor = .clear
-//        self.addSubview(ivProfile)
-//        self.addSubview(lbTypeName)
-//        self.addSubview(lbProfileHighLight)
-//        setLayout()
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//
-//    func setLayout() {
-//        ivProfile.snp.makeConstraints { (make) in
-//            make.top.equalToSuperview()
-//            make.leading.equalToSuperview()
-//            make.trailing.equalToSuperview()
-//            make.height.equalTo(84)
-//        }
-//
-//        lbTypeName.snp.makeConstraints { (make) in
-//            make.top.equalTo(ivProfile.snp.bottom).offset(5)
-//            make.leading.equalToSuperview()
-//            make.trailing.equalToSuperview()
-//            make.height.equalTo(17)
-//        }
-//
-//        lbProfileHighLight.snp.makeConstraints { (make) in
-//            make.top.equalToSuperview()
-//            make.leading.equalToSuperview()
-//            make.trailing.equalToSuperview()
-//            make.height.equalTo(84)
-//        }
-//    }
-//}
-//
+
+import UIKit
+import SnapKit
+
+class BookCoverCollectionCell: UICollectionViewCell {
+    
+    let bookCover = BookCoverView()
+    
+    let lbBookTitle: UILabel = {
+        let lbBookTitle = UILabel()
+        lbBookTitle.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        lbBookTitle.textColor = ColorUtils.color34
+        lbBookTitle.numberOfLines = 0
+        return lbBookTitle
+    }()
+    
+    let lbWriter: UILabel = {
+        let lbWriter = UILabel()
+        lbWriter.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        lbWriter.textColor = ColorUtils.color136
+        lbWriter.numberOfLines = 0
+        return lbWriter
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = .clear
+        setUI()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setUI() {
+        self.addSubview(bookCover)
+        self.addSubview(lbBookTitle)
+        self.addSubview(lbWriter)
+        //TODO: 스냅킷 데모에서 사용하던데 이유는?
+        self.setNeedsUpdateConstraints()
+        setLayout()
+    }
+    
+    private func setLayout() {
+        bookCover.snp.makeConstraints { (make) in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalTo(lbBookTitle.snp.top).offset(-20)
+        }
+        
+        lbBookTitle.snp.makeConstraints { (make) in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(36)
+            make.bottom.equalTo(lbWriter.snp.top).offset(-6)
+        }
+        
+        lbWriter.snp.makeConstraints { (make) in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(14)
+            make.bottom.equalToSuperview().offset(-(Dimens.getSafeAreaBottomMargin() + 22))
+        }
+    }
+}
+
