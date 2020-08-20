@@ -52,6 +52,7 @@ extension Scene {
             return mainVC
             
         case .write(let viewModel):
+          
             var writeVC = WriteViewController()
             writeVC.bind(viewModel: viewModel)
             return writeVC
