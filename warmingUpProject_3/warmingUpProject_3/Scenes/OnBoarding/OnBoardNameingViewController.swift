@@ -9,6 +9,8 @@
 import UIKit
 import SnapKit
 import Action
+import NSObject_Rx
+import KakaoSDKUser
 
 class OnBoardNameingViewController: UIViewController, ViewModelBindableType {
 
@@ -82,6 +84,19 @@ class OnBoardNameingViewController: UIViewController, ViewModelBindableType {
 
     override func viewDidLoad() {
         print("######### OnBoardingViewController ")
+        
+        UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
+            if let error = error {
+                print(error)
+            }
+            else {
+                print("accessTokenInfo() success.")
+
+                //do something
+                _ = accessTokenInfo
+            }
+        }
+        
     }
 
     func bindViewModel() {

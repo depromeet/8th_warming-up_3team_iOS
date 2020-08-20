@@ -21,7 +21,6 @@ final class SplashViewController: UIViewController, ViewModelBindableType {
     
     override func loadView() {
         super.loadView()
-
     }
 
     override func viewDidLoad() {

@@ -6,7 +6,7 @@
 //  Copyright © 2020 team3. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class BookCoverView: UIView {
     

@@ -10,41 +10,55 @@ import Foundation
 import RxSwift
 import RxCocoa
 import Action
+import NSObject_Rx
+import KakaoSDKAuth
+import RxKakaoSDKAuth
 
 class SplashViewModel: BaseViewModel {
-
+    
     func kakaoLoingAction() -> CocoaAction {
         return CocoaAction { _ in
-
-
-            // TODO:  로그인 - 토큰 떨어지면 진행 화면 전환
-            /*
-
-             방방어 코드 작성
-
-             */
-            let xx = UIButton()
-            xx.rx.tap.throttle(<#T##dueTime: RxTimeInterval##RxTimeInterval#>, scheduler: <#T##SchedulerType#>).subscribe(<#T##observer: ObserverType##ObserverType#>)
-
-
-            let onboardNammingViewModel = OnBoardNameingViewModel(scenCoordinator: self.scenCoordinator)
-            let onboardNammingScene = Scene.onboardNamming(onboardNammingViewModel)
-            return self.scenCoordinator.transition(to: onboardNammingScene, using: .root, animated: true).asObservable().map { _ in }
+            
+            
+            //            if isLo
+            
+            
+            if (AuthApi.isKakaoTalkLoginAvailable()) {
+                AuthApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                    if let error = error {
+                        print(error)
+                    }
+                    else {
+                        print("loginWithKakaoTalk() success.")
+                        
+                        //do something
+                        _ = oauthToken
+                        
+                        
+                    }
+                }
+                let onboardNammingViewModel = OnBoardNameingViewModel(scenCoordinator: self.scenCoordinator)
+                let onboardNammingScene = Scene.onboardNamming(onboardNammingViewModel)
+                return self.scenCoordinator.transition(to: onboardNammingScene, using: .root, animated: true).asObservable().map { _ in }
+            }
+            
+            return Observable<Any>.empty().asObservable().map { _ in }
+            
         }
     }
     
     func mainAction() -> CocoaAction {
         return CocoaAction { _ in
-
-
+            
+            
             // TODO:  로그인 - 토큰 떨어지면 진행 화면 전환
             /*
-
+             
              방방어 코드 작성
-
+             
              */
-
-
+            
+            
             let mainViewModel = MainViewModel(scenCoordinator: self.scenCoordinator)
             let mainScene = Scene.main(mainViewModel)
             return self.scenCoordinator.transition(to: mainScene, using: .root, animated: true).asObservable().map { _ in }

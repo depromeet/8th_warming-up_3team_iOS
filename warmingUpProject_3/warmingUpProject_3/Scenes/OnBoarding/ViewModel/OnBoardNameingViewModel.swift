@@ -20,6 +20,7 @@ class OnBoardNameingViewModel: BaseViewModel {
              api 검증 해서 아이디 중복없으면 넘어가고
              아니면 팝업띄우는걸로 구현해야함
              */
+            
 
              let onboardTypeViewModel = OnBoardTypeViewModel(scenCoordinator: self.scenCoordinator)
             let onBoardTypeScene = Scene.onboardType(onboardTypeViewModel)

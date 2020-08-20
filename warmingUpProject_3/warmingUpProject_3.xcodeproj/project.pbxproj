@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3BF22BAABA840B1F7BC66E5E /* Pods_warmingUpProject_3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 618F7D2538EA098E978C7BEB /* Pods_warmingUpProject_3.framework */; };
 		56CF14CA24D53533008BDCEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CF14C924D53533008BDCEF /* AppDelegate.swift */; };
-		56CF14CC24D53533008BDCEF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CF14CB24D53533008BDCEF /* SceneDelegate.swift */; };
 		56CF14CE24D53533008BDCEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CF14CD24D53533008BDCEF /* ViewController.swift */; };
 		56CF14D124D53533008BDCEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56CF14CF24D53533008BDCEF /* Main.storyboard */; };
 		56CF14D324D53536008BDCEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56CF14D224D53536008BDCEF /* Assets.xcassets */; };
@@ -27,6 +26,7 @@
 		B85F608524E42F26004B2EEE /* OnBoardExplanationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F608424E42F26004B2EEE /* OnBoardExplanationViewController.swift */; };
 		B85F608724E42F4A004B2EEE /* OnBoardExplanationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F608624E42F4A004B2EEE /* OnBoardExplanationViewModel.swift */; };
 		B85F608C24E43368004B2EEE /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F608B24E43368004B2EEE /* MainViewModel.swift */; };
+		B882A07E24EE1E0E00FC480E /* UserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882A07D24EE1E0E00FC480E /* UserUtils.swift */; };
 		B8BCF66224EB5B60006142A7 /* bookListcollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BCF66124EB5B60006142A7 /* bookListcollectionView.swift */; };
 		B8BCF66524EB5BA3006142A7 /* BookCoverCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BCF66424EB5BA3006142A7 /* BookCoverCollectionCell.swift */; };
 		B8C35FF024E382DF002D2E75 /* TransitionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C35FEF24E382DF002D2E75 /* TransitionModel.swift */; };
@@ -54,7 +54,6 @@
 		41F1ED98F529823A39A9AC81 /* Pods-warmingUpProject_3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-warmingUpProject_3.release.xcconfig"; path = "Target Support Files/Pods-warmingUpProject_3/Pods-warmingUpProject_3.release.xcconfig"; sourceTree = "<group>"; };
 		56CF14C624D53533008BDCEF /* warmingUpProject_3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = warmingUpProject_3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56CF14C924D53533008BDCEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		56CF14CB24D53533008BDCEF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		56CF14CD24D53533008BDCEF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		56CF14D024D53533008BDCEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		56CF14D224D53536008BDCEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -76,6 +75,7 @@
 		B85F608624E42F4A004B2EEE /* OnBoardExplanationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardExplanationViewModel.swift; sourceTree = "<group>"; };
 		B85F608B24E43368004B2EEE /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		B85F608D24E43DA2004B2EEE /* warmingUpProject_3.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = warmingUpProject_3.entitlements; sourceTree = "<group>"; };
+		B882A07D24EE1E0E00FC480E /* UserUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUtils.swift; sourceTree = "<group>"; };
 		B8BCF66124EB5B60006142A7 /* bookListcollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookListcollectionView.swift; sourceTree = "<group>"; };
 		B8BCF66424EB5BA3006142A7 /* BookCoverCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCoverCollectionCell.swift; sourceTree = "<group>"; };
 		B8C35FEF24E382DF002D2E75 /* TransitionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionModel.swift; sourceTree = "<group>"; };
@@ -154,7 +154,6 @@
 				B8A16F6B24ED06E500EA78D8 /* Scenes */,
 				B8C35FEE24E382C8002D2E75 /* Coordinator */,
 				56CF14C924D53533008BDCEF /* AppDelegate.swift */,
-				56CF14CB24D53533008BDCEF /* SceneDelegate.swift */,
 				56CF14CD24D53533008BDCEF /* ViewController.swift */,
 				56CF14CF24D53533008BDCEF /* Main.storyboard */,
 				56CF14D224D53536008BDCEF /* Assets.xcassets */,
@@ -298,6 +297,7 @@
 				B8CD07A524D7CC20007579FA /* Font */,
 				B82F618424E3B68B006A7F91 /* ColorUtils.swift */,
 				B8CD07AE24D8F2B8007579FA /* TextUtils.swift */,
+				B882A07D24EE1E0E00FC480E /* UserUtils.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -467,6 +467,7 @@
 			files = (
 				B85F608524E42F26004B2EEE /* OnBoardExplanationViewController.swift in Sources */,
 				B8CD07A324D7C9E0007579FA /* BaseViewController.swift in Sources */,
+				B882A07E24EE1E0E00FC480E /* UserUtils.swift in Sources */,
 				B8C35FF824E38425002D2E75 /* Constants.swift in Sources */,
 				56CF14CE24D53533008BDCEF /* ViewController.swift in Sources */,
 				B8C35FF224E38312002D2E75 /* Scene.swift in Sources */,
@@ -480,7 +481,6 @@
 				B8CD07FA24DB0FFF007579FA /* Extension+UILabel.swift in Sources */,
 				B85DF84A24ED0F6B00963927 /* BookCoverView.swift in Sources */,
 				B8C3600624E3938D002D2E75 /* OnBoardTypeViewController.swift in Sources */,
-				56CF14CC24D53533008BDCEF /* SceneDelegate.swift in Sources */,
 				B82F618B24E3DB00006A7F91 /* Extension+UIColor.swift in Sources */,
 				B82F618924E3C10E006A7F91 /* ProfileCollectionCell.swift in Sources */,
 				B82F618324E3B47A006A7F91 /* Dimens.swift in Sources */,
