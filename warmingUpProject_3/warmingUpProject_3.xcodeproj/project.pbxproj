@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3BF22BAABA840B1F7BC66E5E /* Pods_warmingUpProject_3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 618F7D2538EA098E978C7BEB /* Pods_warmingUpProject_3.framework */; };
+		56871D4F24F06D2B00E1F863 /* WriteScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56871D4E24F06D2B00E1F863 /* WriteScrollViewController.swift */; };
 		56CF14CA24D53533008BDCEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CF14C924D53533008BDCEF /* AppDelegate.swift */; };
 		56CF14CE24D53533008BDCEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CF14CD24D53533008BDCEF /* ViewController.swift */; };
 		56CF14D124D53533008BDCEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56CF14CF24D53533008BDCEF /* Main.storyboard */; };
@@ -57,6 +58,7 @@
 
 /* Begin PBXFileReference section */
 		41F1ED98F529823A39A9AC81 /* Pods-warmingUpProject_3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-warmingUpProject_3.release.xcconfig"; path = "Target Support Files/Pods-warmingUpProject_3/Pods-warmingUpProject_3.release.xcconfig"; sourceTree = "<group>"; };
+		56871D4E24F06D2B00E1F863 /* WriteScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteScrollViewController.swift; sourceTree = "<group>"; };
 		56CF14C624D53533008BDCEF /* warmingUpProject_3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = warmingUpProject_3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56CF14C924D53533008BDCEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		56CF14CD24D53533008BDCEF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				56CF14D424D53536008BDCEF /* LaunchScreen.storyboard */,
 				56CF14D724D53536008BDCEF /* Info.plist */,
 				B8CD07A424D7CC0A007579FA /* Support */,
+				56871D4E24F06D2B00E1F863 /* WriteScrollViewController.swift */,
 			);
 			path = warmingUpProject_3;
 			sourceTree = "<group>";
@@ -501,6 +504,7 @@
 				56CF14CA24D53533008BDCEF /* AppDelegate.swift in Sources */,
 				B8C3600424E392A1002D2E75 /* BaseViewModel.swift in Sources */,
 				B8C35FFF24E3864B002D2E75 /* SceneCoordinator.swift in Sources */,
+				56871D4F24F06D2B00E1F863 /* WriteScrollViewController.swift in Sources */,
 				B8CD07AD24D7CE04007579FA /* OnBoardNameingViewController.swift in Sources */,
 				B882A08724EFB17C00FC480E /* mapViewManager.swift in Sources */,
 				B8CD07FA24DB0FFF007579FA /* Extension+UILabel.swift in Sources */,

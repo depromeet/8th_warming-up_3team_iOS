@@ -30,36 +30,77 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="스플래쉬화면 - 로티 노출 - 버전체크 - 회원가입 체크" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZP-i9-xop">
-                                <rect key="frame" x="134" y="271" width="146" height="115"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fdB-Or-kk3">
                                 <rect key="frame" x="20" y="788" width="374" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="lDn-Tm-u8L"/>
                                 </constraints>
-                                <state key="normal" title="Apple로 계속하기(Main으로 이동)"/>
+                                <state key="normal">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P6B-34-i9L">
                                 <rect key="frame" x="20" y="724" width="374" height="50"/>
+                                <color key="backgroundColor" red="1" green="0.92156862750000001" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="oYY-uo-Jah"/>
                                 </constraints>
-                                <state key="normal" title="카카오톡으로 로그인하기(OnBoarding 이동)"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.24313725490196078" green="0.15294117647058825" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yVe-f5-VJt">
+                                <rect key="frame" x="0.0" y="78" width="414" height="563"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnKakao24" translatesAutoresizingMaskIntoConstraints="NO" id="Wlb-pI-45T">
+                                <rect key="frame" x="98" y="737" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="MWl-JH-vVa"/>
+                                    <constraint firstAttribute="width" constant="24" id="s9M-2b-E9X"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="카카오톡으로 로그인하기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vlN-sM-eti">
+                                <rect key="frame" x="124" y="739" width="166.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.24313725489999999" green="0.1529411765" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apple로 로그인하기" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YCA-bl-fyW">
+                                <rect key="frame" x="138.5" y="803" width="137" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnApple24" translatesAutoresizingMaskIntoConstraints="NO" id="ily-lb-Ybp">
+                                <rect key="frame" x="112.5" y="801" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="kV5-9G-IGe"/>
+                                    <constraint firstAttribute="height" constant="24" id="txG-6r-jC3"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="dZP-i9-xop" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="IRQ-LV-40v"/>
+                            <constraint firstItem="YCA-bl-fyW" firstAttribute="leading" secondItem="ily-lb-Ybp" secondAttribute="trailing" constant="2" id="2dW-bO-KGc"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yVe-f5-VJt" secondAttribute="trailing" id="3Qp-tZ-EHX"/>
+                            <constraint firstItem="YCA-bl-fyW" firstAttribute="centerX" secondItem="fdB-Or-kk3" secondAttribute="centerX" id="Gr4-Ns-f3z"/>
+                            <constraint firstItem="yVe-f5-VJt" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="IhW-AU-rMQ"/>
+                            <constraint firstItem="Wlb-pI-45T" firstAttribute="centerY" secondItem="P6B-34-i9L" secondAttribute="centerY" id="R7E-AI-YOL"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fdB-Or-kk3" secondAttribute="bottom" constant="24" id="RNV-U6-INe"/>
+                            <constraint firstItem="YCA-bl-fyW" firstAttribute="centerY" secondItem="fdB-Or-kk3" secondAttribute="centerY" id="UGW-Yh-7Il"/>
                             <constraint firstItem="P6B-34-i9L" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="YQO-oU-vdJ"/>
-                            <constraint firstItem="dZP-i9-xop" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="227" id="hDa-8F-rkg"/>
+                            <constraint firstItem="P6B-34-i9L" firstAttribute="top" secondItem="yVe-f5-VJt" secondAttribute="bottom" constant="83" id="bl8-uc-G8A"/>
+                            <constraint firstItem="vlN-sM-eti" firstAttribute="leading" secondItem="Wlb-pI-45T" secondAttribute="trailing" constant="2" id="kRo-A6-a4N"/>
                             <constraint firstItem="fdB-Or-kk3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="khE-PS-DhA"/>
                             <constraint firstItem="fdB-Or-kk3" firstAttribute="top" secondItem="P6B-34-i9L" secondAttribute="bottom" constant="14" id="n55-bb-ljc"/>
+                            <constraint firstItem="vlN-sM-eti" firstAttribute="centerY" secondItem="P6B-34-i9L" secondAttribute="centerY" id="oIA-QG-7f9"/>
+                            <constraint firstItem="ily-lb-Ybp" firstAttribute="centerY" secondItem="fdB-Or-kk3" secondAttribute="centerY" id="pdB-bm-hjh"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fdB-Or-kk3" secondAttribute="trailing" constant="20" id="q9S-xG-T43"/>
+                            <constraint firstItem="yVe-f5-VJt" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="34" id="r8u-VQ-mIa"/>
+                            <constraint firstItem="vlN-sM-eti" firstAttribute="centerX" secondItem="P6B-34-i9L" secondAttribute="centerX" id="rpO-Ob-aZi"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="P6B-34-i9L" secondAttribute="trailing" constant="20" id="sc3-Bd-3gu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -71,7 +112,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-35" y="52"/>
+            <point key="canvasLocation" x="-36.231884057971016" y="51.5625"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icnApple24" width="24" height="24"/>
+        <image name="icnKakao24" width="24" height="24"/>
+    </resources>
 </document>

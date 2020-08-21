@@ -26,6 +26,8 @@ final class SplashViewController: UIViewController, ViewModelBindableType {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        btnApple.layer.cornerRadius = 6
+        btnKakao.layer.cornerRadius = 6
         
     }
 
