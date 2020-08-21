@@ -10,6 +10,12 @@ import Foundation
 import UIKit
 
 class Dimens {
+    
+    
+    //MARK: 기기 사이즈
+    static let deviceWidth: CGFloat = UIScreen.main.bounds.width
+    
+    static let deviceHeight: CGFloat = UIScreen.main.bounds.height
 
     static func getSafeAreaBottomMargin() -> CGFloat {
         var bottom: CGFloat = 0

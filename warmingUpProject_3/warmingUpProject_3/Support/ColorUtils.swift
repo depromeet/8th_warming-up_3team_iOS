@@ -14,9 +14,17 @@ class ColorUtils {
     
     static let color34 = UIColor(r: 34, g: 34, b: 34)
     
+    static let color68 = UIColor(r: 68, g: 68, b: 68)
+    
     static let color136 = UIColor(r: 136, g: 136, b: 136)
     
     static let color170 = UIColor(r: 170, g: 170, b: 170)
+    
+    static let color231 = UIColor(r: 231, g: 231, b: 231)
+    
+    static let color242 = UIColor(r: 242, g: 242, b: 242)
+    
+    static let colorTimeSelected = UIColor(r: 84, g: 90, b: 124)
     
     static let colorCoverWhite = UIColor(r: 250, g: 249, b: 248)
     

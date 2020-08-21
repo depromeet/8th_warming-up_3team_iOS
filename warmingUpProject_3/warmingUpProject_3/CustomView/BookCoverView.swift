@@ -10,11 +10,19 @@ import UIKit
 
 class BookCoverView: UIView {
     
-    let lbContent: EdgeInsetsLabel = {
-        let lbContent = EdgeInsetsLabel(insets: .init(top: 15, left: 15, bottom: 15, right: 15))
-        lbContent.backgroundColor = ColorUtils.colorCoverWhite
+    let lbBg: UILabel = {
+        let lbBg = UILabel()
+        lbBg.backgroundColor = ColorUtils.colorCoverWhite
+        return lbBg
+    }()
+    
+    
+    let lbContent: UILabel = {
+        let lbContent = UILabel()
         lbContent.numberOfLines = 0
+        lbContent.textAlignment = .left
         lbContent.font = UIFont(name: TextUtils.FontType.NanumMyeongjoRegular.rawValue, size: 13)
+        lbContent.textColor = ColorUtils.color34 
         return lbContent
     }()
     
@@ -35,23 +43,40 @@ class BookCoverView: UIView {
      */
     init(colorChip: String = "", text: String = "") {
         super.init(frame: .zero)
+        
+        let rightRadius = CALayer()
+        self.layer.addSublayer(rightRadius)
         self.backgroundColor = ColorUtils.getColorChip(colorChip).bookColor
-        self.layer.cornerRadius = 5
+        
+        //FIXME: 각각 들어가게 수정해야함.
+        self.layer.cornerRadius = 3
+        self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+        self.layer.cornerRadius = 6
+        self.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMaxXMinYCorner]
+        
         self.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor
         self.layer.shadowOpacity = 1
         self.layer.shadowOffset = CGSize(width: 1, height: 2)
         self.layer.shadowRadius = 4 / 2
         self.layer.shadowPath = nil
         self.layer.addSublayer(gra)
+        self.addSubview(lbBg)
         self.addSubview(lbContent)
         
         self.lbContent.setTextWithLetterSpacing(text: text, letterSpacing: -0.06, lineHeight: 20)
         
-        lbContent.snp.makeConstraints { (make) in
+        lbBg.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(48)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview().offset(-10)
+        }
+        
+        lbContent.snp.makeConstraints { (make) in
+            make.top.equalTo(lbBg.snp.top).offset(15)
+            make.leading.equalToSuperview().offset(15)
+            make.trailing.equalToSuperview().offset(-15)
+            make.bottom.lessThanOrEqualToSuperview().offset(-10).priority(999)
         }
     }
     

@@ -13,6 +13,11 @@ class BookCoverCollectionCell: UICollectionViewCell {
     
     let bookCover = BookCoverView()
     
+    let bgBookTitle: UIView = {
+        let bgBookTitle = UIView()
+        return bgBookTitle
+    }()
+    
     let lbBookTitle: UILabel = {
         let lbBookTitle = UILabel()
         lbBookTitle.font = UIFont.systemFont(ofSize: 14, weight: .medium)
@@ -41,6 +46,7 @@ class BookCoverCollectionCell: UICollectionViewCell {
     
     private func setUI() {
         self.addSubview(bookCover)
+        self.addSubview(bgBookTitle)
         self.addSubview(lbBookTitle)
         self.addSubview(lbWriter)
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
@@ -53,14 +59,21 @@ class BookCoverCollectionCell: UICollectionViewCell {
             make.top.equalToSuperview()
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
+            make.bottom.equalTo(bgBookTitle.snp.top).offset(-20)
             make.bottom.equalTo(lbBookTitle.snp.top).offset(-20)
+        }
+        
+        bgBookTitle.snp.makeConstraints { (make) in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.height.equalTo(36)
+            make.bottom.equalTo(lbWriter.snp.top).offset(-6)
         }
         
         lbBookTitle.snp.makeConstraints { (make) in
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(36)
-            make.bottom.equalTo(lbWriter.snp.top).offset(-6)
+            make.bottom.lessThanOrEqualToSuperview().offset(-6).priority(999)
         }
         
         lbWriter.snp.makeConstraints { (make) in

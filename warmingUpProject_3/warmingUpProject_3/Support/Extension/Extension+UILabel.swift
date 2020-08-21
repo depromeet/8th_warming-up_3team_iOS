@@ -13,6 +13,7 @@ extension UILabel {
     func setTextWithLetterSpacing(text: String, letterSpacing: CGFloat, lineHeight: CGFloat) {
         let style = NSMutableParagraphStyle()
         let attrText = NSMutableAttributedString(string: text)
+        style.alignment = self.textAlignment
         style.lineSpacing = lineHeight - self.font.lineHeight
         attrText.addAttribute(.kern, value: letterSpacing, range: NSRange(location: 0, length: attrText.length))
         attrText.addAttribute(.paragraphStyle, value: style, range: NSRange(location: 0, length: attrText.length))
