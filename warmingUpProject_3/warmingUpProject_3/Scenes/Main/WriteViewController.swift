@@ -40,6 +40,18 @@ class WriteViewController: UIViewController, ViewModelBindableType {
     btn.setTitleColor(.black, for: .normal)
     return btn
   }()
+    
+    let mainView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemYellow
+        return view
+    }()
+    
+    let writeView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray
+        return view
+    }()
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +79,8 @@ extension WriteViewController {
       self.view.addSubview(exitImg)
       self.view.addSubview(titleLabel)
       self.view.addSubview(saveBtn)
+      self.view.addSubview(mainView)
+      self.view.addSubview(writeView)
       
       //TODO: 스냅킷 데모에서 사용하던데 이유는?
       self.view.setNeedsUpdateConstraints()
@@ -93,6 +107,18 @@ extension WriteViewController {
           $0.trailing.equalToSuperview().offset(-24)
           $0.height.equalTo(30)
           $0.width.equalTo(50)
+        }
+        
+        mainView.snp.makeConstraints {
+            $0.height.equalTo(269)
+            $0.width.equalToSuperview()
+            $0.top.equalTo(exitImg.snp.bottom).offset(16)
+        }
+        
+        writeView.snp.makeConstraints {
+            $0.width.equalToSuperview()
+            $0.top.equalTo(mainView.snp.bottom)
+            $0.bottom.equalToSuperview()
         }
     }
 }
