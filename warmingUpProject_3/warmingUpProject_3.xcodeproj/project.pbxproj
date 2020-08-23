@@ -11,6 +11,7 @@
 		56871D4F24F06D2B00E1F863 /* WriteScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56871D4E24F06D2B00E1F863 /* WriteScrollViewController.swift */; };
 		56871D5324F0780000E1F863 /* AccessPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56871D5224F0780000E1F863 /* AccessPopup.xib */; };
 		56871D5624F07B3900E1F863 /* ToastPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56871D5524F07B3900E1F863 /* ToastPopup.xib */; };
+		56871D5E24F29E5A00E1F863 /* ColorCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56871D5D24F29E5A00E1F863 /* ColorCollectionCell.swift */; };
 		56CF14CA24D53533008BDCEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CF14C924D53533008BDCEF /* AppDelegate.swift */; };
 		56CF14CE24D53533008BDCEF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56CF14CD24D53533008BDCEF /* ViewController.swift */; };
 		56CF14D124D53533008BDCEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56CF14CF24D53533008BDCEF /* Main.storyboard */; };
@@ -63,6 +64,7 @@
 		56871D4E24F06D2B00E1F863 /* WriteScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteScrollViewController.swift; sourceTree = "<group>"; };
 		56871D5224F0780000E1F863 /* AccessPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccessPopup.xib; sourceTree = "<group>"; };
 		56871D5524F07B3900E1F863 /* ToastPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToastPopup.xib; sourceTree = "<group>"; };
+		56871D5D24F29E5A00E1F863 /* ColorCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionCell.swift; sourceTree = "<group>"; };
 		56CF14C624D53533008BDCEF /* warmingUpProject_3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = warmingUpProject_3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56CF14C924D53533008BDCEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		56CF14CD24D53533008BDCEF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 			children = (
 				B8BCF66424EB5BA3006142A7 /* BookCoverCollectionCell.swift */,
 				B882A08424EE8B5D00FC480E /* RoundCollectionCell.swift */,
+				56871D5D24F29E5A00E1F863 /* ColorCollectionCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -547,6 +550,7 @@
 				B82F618524E3B68B006A7F91 /* ColorUtils.swift in Sources */,
 				B823CCD124EC06DA009C734F /* WriteViewController.swift in Sources */,
 				B8CD07AF24D8F2B8007579FA /* TextUtils.swift in Sources */,
+				56871D5E24F29E5A00E1F863 /* ColorCollectionCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

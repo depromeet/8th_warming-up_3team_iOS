@@ -64,9 +64,9 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         layout.scrollDirection = .horizontal
         let colorListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         colorListCollectionView.contentInset = UIEdgeInsets(top: 16, left: 20, bottom: 12, right: 20)
-        colorListCollectionView.backgroundColor = .white
+        colorListCollectionView.backgroundColor = .yellow
         colorListCollectionView.showsHorizontalScrollIndicator = false
-        colorListCollectionView.register(RoundCollectionCell.self, forCellWithReuseIdentifier: String(describing: RoundCollectionCell.self))
+        colorListCollectionView.register(ColorCollectionCell.self, forCellWithReuseIdentifier: String(describing: ColorCollectionCell.self))
         
         
         return colorListCollectionView
@@ -82,7 +82,10 @@ class WriteViewController: UIViewController,ViewModelBindableType {
     }
     
     func bindViewModel() {
-        
+        viewModel.success.bind(to: colorListCollectionView.rx.items(cellIdentifier: String(describing: ColorCollectionCell.self), cellType: ColorCollectionCell.self)) { (row, element, cell) in
+            cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 20)
+            
+        }.disposed(by: rx.disposeBag)
     }
     
 }
@@ -102,7 +105,7 @@ extension WriteViewController {
         self.view.addSubview(scrollView)
         scrollView.addSubview(mainView)
         scrollView.addSubview(writeView)
-//        writeView.addSubview(colorListCollectionView)
+        writeView.addSubview(colorListCollectionView)
 //
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
         self.view.setNeedsUpdateConstraints()
@@ -150,11 +153,11 @@ extension WriteViewController {
             $0.bottom.equalTo(scrollView.snp.bottom)
         }
 //
-//        colorListCollectionView.snp.makeConstraints {
-//            $0.top.equalTo(writeView.snp.top)
-//            $0.leading.equalTo(writeView.snp.leading)
-//            $0.trailing.equalTo(writeView.snp.trailing)
-//            $0.height.equalTo(62)
-//        }
+        colorListCollectionView.snp.makeConstraints {
+            $0.top.equalTo(writeView.snp.top)
+            $0.leading.equalTo(writeView.snp.leading)
+            $0.trailing.equalTo(writeView.snp.trailing)
+            $0.height.equalTo(62)
+        }
     }
 }
