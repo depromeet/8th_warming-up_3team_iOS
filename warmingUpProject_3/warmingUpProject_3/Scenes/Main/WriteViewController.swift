@@ -74,7 +74,7 @@ class WriteViewController: UIViewController,ViewModelBindableType {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(touchToPickPhoto))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(touchToExitBtn))
         setUI()
         exitImg.addGestureRecognizer(tapGesture)
         exitImg.isUserInteractionEnabled = true
@@ -89,7 +89,7 @@ class WriteViewController: UIViewController,ViewModelBindableType {
 
 extension WriteViewController {
     
-    @objc func touchToPickPhoto() {
+    @objc func touchToExitBtn() {
         self.dismiss(animated: true, completion: nil)
     }
     
