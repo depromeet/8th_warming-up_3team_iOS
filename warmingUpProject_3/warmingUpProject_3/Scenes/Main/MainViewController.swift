@@ -34,8 +34,8 @@ class MainViewController: UIViewController, ViewModelBindableType {
         locationOverlay.subIcon = nil
         
         naverMapView.mapView.touchDelegate = self
-//        locationOverlay.touchHandler = { [unowned self] Bool in
-//        }
+        //        locationOverlay.touchHandler = { [unowned self] Bool in
+        //        }
         return naverMapView.mapView
     }
     
@@ -123,6 +123,63 @@ class MainViewController: UIViewController, ViewModelBindableType {
         return bookListCollectionView
     }()
     
+    
+    // --------------
+    let selectedBaseView: UIView = {
+        let selectedBaseView = UIView()
+        selectedBaseView.backgroundColor = .white
+        selectedBaseView.layer.cornerRadius = 12
+        selectedBaseView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2).cgColor
+        selectedBaseView.layer.shadowOpacity = 1
+        selectedBaseView.layer.shadowOffset = CGSize(width: 0, height: 6)
+        selectedBaseView.layer.shadowRadius = 20 / 2
+        selectedBaseView.isHidden = true
+        
+        return selectedBaseView
+    }()
+    
+    let selectedSeparateLine: UIView = {
+        let separateLine = UIView()
+        separateLine.frame.size = CGSize(width: Dimens.deviceWidth, height: 1)
+        separateLine.backgroundColor = ColorUtils.color242
+        return separateLine
+    }()
+    
+    let lbSelecteTime: UILabel = {
+       let selecteTime = UILabel()
+        selecteTime.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        selecteTime.textColor = ColorUtils.color34
+        return selecteTime
+    }()
+    
+    let ivLocation: UIImageView = {
+        let ivLocation = UIImageView(image: #imageLiteral(resourceName: "icnPin16"))
+        return ivLocation
+    }()
+    
+    let lbSelecteLocation: UILabel = {
+        let lbSelecteLocation = UILabel()
+        lbSelecteLocation.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        lbSelecteLocation.textColor = UIColor(r: 84, g: 90, b: 124)
+        return lbSelecteLocation
+    }()
+    
+    let selectedBookListCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = .zero
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.itemSize = CGSize(width: Dimens.deviceWidth - 80, height: 168 )
+        layout.scrollDirection = .horizontal
+        let bookListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        bookListCollectionView.isPagingEnabled = true
+        bookListCollectionView.backgroundColor = .white
+        bookListCollectionView.showsHorizontalScrollIndicator = false
+        bookListCollectionView.register(selectedBookCollectionCell.self, forCellWithReuseIdentifier: String(describing: selectedBookCollectionCell.self))
+        return bookListCollectionView
+    }()
+    
+    // ------
     var btnWrite: UIButton = {
         let btnWrite = UIButton(type: .custom)
         btnWrite.backgroundColor = .white
@@ -163,6 +220,9 @@ class MainViewController: UIViewController, ViewModelBindableType {
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager?.location?.coordinate.latitude ?? 37.5666102, lng: locationManager?.location?.coordinate.longitude ?? 126.9783881))
         cameraUpdate.pivot = CGPoint(x: 0.5, y: 0.3)
         mapView.moveCamera(cameraUpdate)
+        
+        lbSelecteTime.setTextWithLetterSpacing(text: "나른한 낮 시간", letterSpacing: -0.08, lineHeight: 19)
+        lbSelecteLocation.setTextWithLetterSpacing(text: "망원동, 아틀리에 크레타", letterSpacing: -0.07, lineHeight: 17)
     }
     
     func bindViewModel() {
@@ -178,9 +238,29 @@ class MainViewController: UIViewController, ViewModelBindableType {
                     self.markers.append(NMFMarker(position: NMGLatLng(lat: value.location.lat, lng: value.location.lng)))
                     self.markers[idx].iconImage = NMFOverlayImage(image: ImageUtils.getColorBookIcon(value.color))
                     self.markers[idx].mapView = self.naverMapView.mapView
-//                    self.markers[idx].isHideCollidedMarkers = true
-//                    self.markers[idx].isHideCollidedCaptions = true
+                    self.markers[idx].tag = UInt(value.id)
+                    //                    self.markers[idx].isHideCollidedMarkers = true
+                    //                    self.markers[idx].isHideCollidedCaptions = true
                 }
+            })
+            .disposed(by: rx.disposeBag)
+        
+        // 네이버 지도에서 선택된 마커가 들어오는 경우 처리
+        viewModel.selectedData
+            .subscribe(onNext: { [unowned self]values in
+                print("------ value:    \(values)")
+                
+                // 애니메이션 줘야함
+                if values.isEmpty || values == [] {
+                    self.baseView.isHidden = false
+                    self.btnWrite.isHidden = false
+                    self.selectedBaseView.isHidden = true
+                } else {
+                    self.baseView.isHidden = true
+                    self.btnWrite.isHidden = true
+                    self.selectedBaseView.isHidden = false
+                }
+                
             })
             .disposed(by: rx.disposeBag)
         
@@ -192,7 +272,6 @@ class MainViewController: UIViewController, ViewModelBindableType {
         
         viewModel.times.bind(to: timeListCollectionView.rx.items(cellIdentifier: String(describing: RoundCollectionCell.self), cellType: RoundCollectionCell.self)) { (row, element, cell) in
             cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 20)
-            
         }.disposed(by: rx.disposeBag)
         
         timeListCollectionView.rx
@@ -214,6 +293,19 @@ class MainViewController: UIViewController, ViewModelBindableType {
                 cell?.backgroundColor = ColorUtils.colorTimeSelected
                 cell?.layer.borderWidth = 0
             }).disposed(by: rx.disposeBag)
+                
+        viewModel.selectedData.bind(to: selectedBookListCollectionView.rx.items(cellIdentifier: String(describing: selectedBookCollectionCell.self), cellType: selectedBookCollectionCell.self)) { (row, element, cell) in
+            
+            let sameElement = self.viewModel.copyWriteData.first { $0.id == element }
+            
+            cell.bookCover.bind(color: sameElement!.color, text: sameElement!.content)
+            cell.lbBookTitle.setTextWithLetterSpacing(text: sameElement!.book, letterSpacing: -0.08, lineHeight: 16)
+            cell.lbWriter.setTextWithLetterSpacing(text: sameElement!.write, letterSpacing: -0.07, lineHeight: 17)
+            cell.lbBookSummary.setTextWithLetterSpacing(text: "1줄\n2줄\n불라불라라라라라라라라라라라라라라라라라라", letterSpacing: 0, lineHeight: 18)
+            cell.layoutIfNeeded()
+            cell.lbBookSummary.lineBreakMode = .byTruncatingTail
+        }.disposed(by: rx.disposeBag)
+        
     }
 }
 
@@ -226,6 +318,12 @@ extension MainViewController {
         self.baseView.addSubview(timeListCollectionView)
         self.baseView.addSubview(separateLine)
         self.baseView.addSubview(bookListCollectionView)
+        self.view.addSubview(selectedBaseView)
+        self.selectedBaseView.addSubview(selectedBookListCollectionView)
+        self.selectedBaseView.addSubview(lbSelecteTime)
+        self.selectedBaseView.addSubview(ivLocation)
+        self.selectedBaseView.addSubview(lbSelecteLocation)
+        self.selectedBaseView.addSubview(selectedSeparateLine)
         self.view.addSubview(btnWrite)
         
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
@@ -250,7 +348,7 @@ extension MainViewController {
         }
         
         baseView.snp.makeConstraints { (make) in
-            make.height.equalTo(view.snp.width).offset(4)
+            make.height.equalTo(view.snp.width).offset(-2)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -264,7 +362,7 @@ extension MainViewController {
         }
         
         separateLine.snp.makeConstraints { (make) in
-            make.top.equalTo(timeListCollectionView.snp.bottom)
+            make.top.equalTo(baseView.snp.top).offset(62)
             make.leading.equalTo(baseView.snp.leading)
             make.trailing.equalTo(baseView.snp.trailing)
             make.height.equalTo(1)
@@ -282,6 +380,50 @@ extension MainViewController {
             make.height.equalTo(58)
             make.bottom.equalToSuperview().offset(-24)
             make.trailing.equalToSuperview().offset(-22)
+        }
+        
+        selectedSeparateLine.snp.makeConstraints { (make) in
+            make.top.equalTo(lbSelecteLocation.snp.bottom).offset(14)
+            make.leading.equalTo(baseView.snp.leading).offset(20)
+            make.trailing.equalTo(baseView.snp.trailing).offset(-20)
+            make.height.equalTo(1)
+            make.bottom.equalTo(selectedBookListCollectionView.snp.top).offset(-15)
+        }
+        
+        selectedBaseView.snp.makeConstraints { (make) in
+            make.height.equalTo(self.view.snp.width).offset(-73)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+            make.bottom.equalToSuperview().offset(-36)
+        }
+        
+        selectedBookListCollectionView.snp.makeConstraints { (make) in
+//            make.top.equalTo(selectedBaseView.snp.top).offset(90)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+//            make.height.equalTo(168)
+            make.bottom.equalToSuperview().offset(-44)
+        }
+        
+        lbSelecteTime.snp.makeConstraints { (make) in
+            make.top.equalTo(selectedBaseView.snp.top).offset(20)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+            make.height.equalTo(19)
+        }
+        
+        ivLocation.snp.makeConstraints { (make) in
+            make.top.equalTo(lbSelecteTime.snp.bottom).offset(4)
+            make.leading.equalToSuperview().offset(20)
+            make.height.equalTo(16)
+            make.width.equalTo(16)
+        }
+        
+        lbSelecteLocation.snp.makeConstraints { (make) in
+            make.top.equalTo(ivLocation.snp.top)
+            make.leading.equalTo(ivLocation.snp.trailing).offset(3)
+            make.height.equalTo(17)
+            make.trailing.equalTo(lbSelecteTime)
         }
     }
     
@@ -306,7 +448,7 @@ extension MainViewController: CLLocationManagerDelegate {
             locationManager?.requestLocation()
         case .authorizedAlways:
             print("LocationManager didChangeAuthorization authorizedAlways")
-
+            
             locationManager?.requestLocation()
         case .restricted:
             print("LocationManager didChangeAuthorization restricted")
@@ -331,31 +473,23 @@ extension MainViewController: CLLocationManagerDelegate {
 }
 
 extension MainViewController: NMFMapViewTouchDelegate {
+    
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        
-        
-        let xx = naverMapView.mapView.pickAll(point, withTolerance: 1)
-        print("------", xx)
-        let tt = sortingMarker(picks: naverMapView.mapView.pickAll(point, withTolerance: 1))
-        
-        print("-------", tt)
+        sortingMarker(picks: naverMapView.mapView.pickAll(point, withTolerance: 3))
     }
-}
-private func sortingMarker(picks: [NMFPickable]? ) -> [Any] {
-    let sortMarkers = picks?.filter { $0.isKind(of: NMFMarker.self) }
-    let count = sortMarkers?.count ?? 0
-    var hospitals: [Any] = []
-
-    for idx in 0..<count {
-        let tempMarker = sortMarkers?[idx] as? NMFMarker
-        guard let userInfo = tempMarker?.userInfo else { return [] }
-        var keys = Array(userInfo.keys)
-        for idx in 0..<keys.count {
-            if let dictKey = keys[idx] as? String {
-                hospitals.append(userInfo[dictKey] as Any)
+    
+    private func sortingMarker(picks: [NMFPickable]? ) {
+        let sortMarkers = picks?.filter { $0.isKind(of: NMFMarker.self) }
+        let count = sortMarkers?.count ?? 0
+        var selectedMarkers: [UInt] = []
+        
+        for idx in 0..<count {
+            if let marker = sortMarkers?[idx] as? NMFMarker {
+                selectedMarkers.append(marker.tag)
             }
         }
-
+        
+        viewModel.selectedData.onNext(selectedMarkers)
     }
-    return hospitals
+    
 }

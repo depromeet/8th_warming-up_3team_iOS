@@ -16,6 +16,7 @@
 		56CF14D624D53536008BDCEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56CF14D424D53536008BDCEF /* LaunchScreen.storyboard */; };
 		B823CCD124EC06DA009C734F /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B823CCD024EC06DA009C734F /* WriteViewController.swift */; };
 		B823CCD324EC0701009C734F /* WriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B823CCD224EC0701009C734F /* WriteViewModel.swift */; };
+		B82BEBDB24F0DB6300E3B375 /* selectedBookCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82BEBDA24F0DB6300E3B375 /* selectedBookCollectionCell.swift */; };
 		B82F617F24E39CCF006A7F91 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82F617E24E39CCF006A7F91 /* SplashViewModel.swift */; };
 		B82F618124E3B37C006A7F91 /* Extension+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82F618024E3B37C006A7F91 /* Extension+UIButton.swift */; };
 		B82F618324E3B47A006A7F91 /* Dimens.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82F618224E3B47A006A7F91 /* Dimens.swift */; };
@@ -59,7 +60,7 @@
 /* Begin PBXFileReference section */
 		41F1ED98F529823A39A9AC81 /* Pods-warmingUpProject_3.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-warmingUpProject_3.release.xcconfig"; path = "Target Support Files/Pods-warmingUpProject_3/Pods-warmingUpProject_3.release.xcconfig"; sourceTree = "<group>"; };
 		56871D4E24F06D2B00E1F863 /* WriteScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteScrollViewController.swift; sourceTree = "<group>"; };
-		56CF14C624D53533008BDCEF /* warmingUpProject_3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = warmingUpProject_3.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		56CF14C624D53533008BDCEF /* 북쪽으로.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "북쪽으로.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		56CF14C924D53533008BDCEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		56CF14CD24D53533008BDCEF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		56CF14D024D53533008BDCEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -70,6 +71,7 @@
 		8C7D9095C67FE9D7B9A2BE0D /* Pods-warmingUpProject_3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-warmingUpProject_3.debug.xcconfig"; path = "Target Support Files/Pods-warmingUpProject_3/Pods-warmingUpProject_3.debug.xcconfig"; sourceTree = "<group>"; };
 		B823CCD024EC06DA009C734F /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		B823CCD224EC0701009C734F /* WriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewModel.swift; sourceTree = "<group>"; };
+		B82BEBDA24F0DB6300E3B375 /* selectedBookCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = selectedBookCollectionCell.swift; sourceTree = "<group>"; };
 		B82F617E24E39CCF006A7F91 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		B82F618024E3B37C006A7F91 /* Extension+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIButton.swift"; sourceTree = "<group>"; };
 		B82F618224E3B47A006A7F91 /* Dimens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dimens.swift; sourceTree = "<group>"; };
@@ -153,7 +155,7 @@
 		56CF14C724D53533008BDCEF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				56CF14C624D53533008BDCEF /* warmingUpProject_3.app */,
+				56CF14C624D53533008BDCEF /* 북쪽으로.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -172,7 +174,6 @@
 				56CF14D424D53536008BDCEF /* LaunchScreen.storyboard */,
 				56CF14D724D53536008BDCEF /* Info.plist */,
 				B8CD07A424D7CC0A007579FA /* Support */,
-				56871D4E24F06D2B00E1F863 /* WriteScrollViewController.swift */,
 			);
 			path = warmingUpProject_3;
 			sourceTree = "<group>";
@@ -205,7 +206,6 @@
 			isa = PBXGroup;
 			children = (
 				B85F608B24E43368004B2EEE /* MainViewModel.swift */,
-				B823CCD224EC0701009C734F /* WriteViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -218,12 +218,23 @@
 			path = SNSLoing;
 			sourceTree = "<group>";
 		};
+		B889563424F09FCC00912D99 /* Write */ = {
+			isa = PBXGroup;
+			children = (
+				56871D4E24F06D2B00E1F863 /* WriteScrollViewController.swift */,
+				B823CCD224EC0701009C734F /* WriteViewModel.swift */,
+				B823CCD024EC06DA009C734F /* WriteViewController.swift */,
+			);
+			path = Write;
+			sourceTree = "<group>";
+		};
 		B8A16F6B24ED06E500EA78D8 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
 				B8CD079D24D7C94B007579FA /* Splash */,
 				B8CD07AB24D7CDC8007579FA /* OnBoarding */,
 				B8CD07AA24D7CD66007579FA /* Main */,
+				B889563424F09FCC00912D99 /* Write */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -241,6 +252,7 @@
 			children = (
 				B8BCF66424EB5BA3006142A7 /* BookCoverCollectionCell.swift */,
 				B882A08424EE8B5D00FC480E /* RoundCollectionCell.swift */,
+				B82BEBDA24F0DB6300E3B375 /* selectedBookCollectionCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -343,7 +355,6 @@
 				B8BCF66324EB5B81006142A7 /* Cell */,
 				B8BCF65E24EB5A8D006142A7 /* View */,
 				B85F608A24E43348004B2EEE /* ViewModel */,
-				B823CCD024EC06DA009C734F /* WriteViewController.swift */,
 				B85DF84624ED08ED00963927 /* MainViewController.swift */,
 			);
 			path = Main;
@@ -392,7 +403,7 @@
 			);
 			name = warmingUpProject_3;
 			productName = warmingUpProject_3;
-			productReference = 56CF14C624D53533008BDCEF /* warmingUpProject_3.app */;
+			productReference = 56CF14C624D53533008BDCEF /* 북쪽으로.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -526,6 +537,7 @@
 				B882A08124EE484D00FC480E /* AppleID.swift in Sources */,
 				B8BCF66224EB5B60006142A7 /* bookListcollectionView.swift in Sources */,
 				B8C35FFD24E385BD002D2E75 /* SceneCoordinatorType.swift in Sources */,
+				B82BEBDB24F0DB6300E3B375 /* selectedBookCollectionCell.swift in Sources */,
 				B882A08324EE6FB900FC480E /* EdgeInsetsLabel.swift in Sources */,
 				B8C3600824E393E0002D2E75 /* OnBoardTypeViewModel.swift in Sources */,
 				B82F618524E3B68B006A7F91 /* ColorUtils.swift in Sources */,
@@ -676,6 +688,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = warmingUpProject_3/warmingUpProject_3.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4693VAH9ZM;
 				INFOPLIST_FILE = warmingUpProject_3/Info.plist;
@@ -685,7 +698,8 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.bookjjogeuro;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "북쪽으로";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -697,6 +711,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = warmingUpProject_3/warmingUpProject_3.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4693VAH9ZM;
 				INFOPLIST_FILE = warmingUpProject_3/Info.plist;
@@ -706,7 +721,8 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.bookjjogeuro;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "북쪽으로";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

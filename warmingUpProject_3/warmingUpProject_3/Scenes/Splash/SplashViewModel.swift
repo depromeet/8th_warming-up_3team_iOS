@@ -18,11 +18,6 @@ class SplashViewModel: BaseViewModel {
     
     func kakaoLoingAction() -> CocoaAction {
         return CocoaAction { _ in
-            
-            
-            //            if isLo
-            
-            
             if (AuthApi.isKakaoTalkLoginAvailable()) {
                 AuthApi.shared.loginWithKakaoTalk {(oauthToken, error) in
                     if let error = error {
@@ -32,27 +27,23 @@ class SplashViewModel: BaseViewModel {
                         print("loginWithKakaoTalk() success.")
                         print("\n====================")
                         print("oauthToken() success.:  ", oauthToken)
-                        //do something
-                        _ = oauthToken
-                        
-                        
                     }
                 }
-                let onboardNammingViewModel = OnBoardNameingViewModel(scenCoordinator: self.scenCoordinator)
-                let onboardNammingScene = Scene.onboardNamming(onboardNammingViewModel)
-//                return self.scenCoordinator.transition(to: onboardNammingScene, using: .root, animated: true).asObservable().map { _ in }
             }
             
-            return Observable<Any>.empty().asObservable().map { _ in }
             
+            let onboardNammingViewModel = OnBoardNameingViewModel(scenCoordinator: self.scenCoordinator)
+            let onboardNammingScene = Scene.onboardNamming(onboardNammingViewModel)
+            
+            return self.scenCoordinator.transition(to: onboardNammingScene, using: .root, animated: true).asObservable().map { _ in }
         }
     }
     
     func appleLoingAction() -> CocoaAction {
         return CocoaAction { _ in
-        AppleID.login(controller: SplashViewController())
+            AppleID.login(controller: SplashViewController())
             
-        return Observable<Any>.empty().asObservable().map { _ in }
+            return Observable<Any>.empty().asObservable().map { _ in }
         }
     }
     
