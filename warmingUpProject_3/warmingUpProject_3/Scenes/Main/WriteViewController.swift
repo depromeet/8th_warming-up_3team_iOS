@@ -72,6 +72,98 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         return colorListCollectionView
     }()
     
+    let bookTitleView: UIView = {
+        let bookTitle = UIView()
+        let titleLabel = UILabel()
+        titleLabel.text = "책 제목"
+        titleLabel.font = UIFont.systemFont(ofSize: 14)
+        let searchBtnView = UIButton()
+        searchBtnView.setTitle("찾아보기 >", for: .normal)
+        searchBtnView.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        searchBtnView.setTitleColor(ColorUtils.color170, for: .normal)
+        
+        bookTitle.addSubview(titleLabel)
+        bookTitle.addSubview(searchBtnView)
+        bookTitle.backgroundColor = .clear
+        
+        bookTitle.snp.makeConstraints {
+            $0.height.equalTo(55)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.leading.equalTo(bookTitle.snp.leading).offset(20)
+            $0.top.equalTo(bookTitle.snp.top).offset(20)
+            $0.height.equalTo(17)
+        }
+        
+        searchBtnView.snp.makeConstraints {
+            $0.trailing.equalTo(bookTitle.snp.trailing).offset(-20)
+            $0.top.equalTo(bookTitle.snp.top).offset(20)
+            $0.height.equalTo(17)
+        }
+        return bookTitle
+    }()
+    
+    
+    let locationView: UIView = {
+        let locationTitle = UIView()
+        let titleLabel = UILabel()
+        titleLabel.text = "기록을 남길 위치"
+        titleLabel.font = UIFont.systemFont(ofSize: 14)
+        
+        let selectBtnView = UIButton()
+        selectBtnView.setTitle("선택하기 >", for: .normal)
+        selectBtnView.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        selectBtnView.setTitleColor(ColorUtils.color170, for: .normal)
+        
+        locationTitle.addSubview(titleLabel)
+        locationTitle.addSubview(selectBtnView)
+        locationTitle.backgroundColor = .clear
+        
+        locationTitle.snp.makeConstraints {
+            $0.height.equalTo(55)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.leading.equalTo(locationTitle.snp.leading).offset(20)
+            $0.top.equalTo(locationTitle.snp.top).offset(20)
+            $0.height.equalTo(17)
+        }
+        
+        selectBtnView.snp.makeConstraints {
+            $0.trailing.equalTo(locationTitle.snp.trailing).offset(-20)
+            $0.top.equalTo(locationTitle.snp.top).offset(20)
+            $0.height.equalTo(17)
+        }
+        return locationTitle
+    }()
+    
+    let writeBookcoverView: UIView = {
+        let bookcoverView = UIView()
+        let selectBtnView = UIButton()
+        selectBtnView.setTitle("북커버에 남길 감상이나 문구를 적어주세요 (32자)", for: .normal)
+        selectBtnView.setTitleColor(ColorUtils.color170, for: .normal)
+        selectBtnView.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        bookcoverView.addSubview(selectBtnView)
+        bookcoverView.backgroundColor = .clear
+        
+        bookcoverView.snp.makeConstraints {
+            $0.height.equalTo(55)
+        }
+        
+        selectBtnView.snp.makeConstraints {
+            $0.leading.equalTo(bookcoverView.snp.leading).offset(20)
+            $0.top.equalTo(bookcoverView.snp.top).offset(20)
+            $0.height.equalTo(17)
+        }
+        
+        
+        return bookcoverView
+    }()
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(touchToExitBtn))
@@ -98,7 +190,7 @@ extension WriteViewController {
     
     private func setUI() {
         self.view.backgroundColor = .white
-        scrollView.backgroundColor = .systemPink
+        scrollView.backgroundColor = .systemGray
         self.view.addSubview(exitImg)
         self.view.addSubview(titleLabel)
         self.view.addSubview(saveBtn)
@@ -106,6 +198,10 @@ extension WriteViewController {
         scrollView.addSubview(mainView)
         scrollView.addSubview(writeView)
         writeView.addSubview(colorListCollectionView)
+        writeView.addSubview(bookTitleView)
+        writeView.addSubview(locationView)
+        writeView.addSubview(writeBookcoverView)
+        
 //
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
         self.view.setNeedsUpdateConstraints()
@@ -158,6 +254,27 @@ extension WriteViewController {
             $0.leading.equalTo(writeView.snp.leading)
             $0.trailing.equalTo(writeView.snp.trailing)
             $0.height.equalTo(62)
+        }
+        
+        bookTitleView.snp.makeConstraints {
+            $0.top.equalTo(colorListCollectionView.snp.bottom)
+            $0.leading.equalTo(writeView.snp.leading)
+            $0.trailing.equalTo(writeView.snp.trailing)
+            $0.height.equalTo(55)
+        }
+        
+        locationView.snp.makeConstraints {
+            $0.top.equalTo(bookTitleView.snp.bottom)
+            $0.leading.equalTo(writeView.snp.leading)
+            $0.trailing.equalTo(writeView.snp.trailing)
+            $0.height.equalTo(55)
+        }
+        
+        writeBookcoverView.snp.makeConstraints {
+            $0.top.equalTo(locationView.snp.bottom)
+            $0.leading.equalTo(writeView.snp.leading)
+            $0.trailing.equalTo(writeView.snp.trailing)
+            $0.height.equalTo(55)
         }
     }
 }

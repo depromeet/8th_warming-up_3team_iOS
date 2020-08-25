@@ -13,15 +13,28 @@ class ColorCollectionCell: UICollectionViewCell {
     
     let lbRoundText: UILabel = {
        let lbRoundText = UILabel()
-        lbRoundText.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        lbRoundText.frame.size = CGSize(width: 30, height:30)
+        
+        lbRoundText.layer.cornerRadius =  lbRoundText.frame.size.width / 2
+        
+        lbRoundText.font = UIFont.systemFont(ofSize: 8, weight: .regular)
+        
+        lbRoundText.backgroundColor = .green
         lbRoundText.textColor = ColorUtils.colorBlack
         return lbRoundText
     }()
     
+//    override func draw(_ rect: CGRect) { //Your code should go here.
+//        super.draw(rect)
+//        self.layer.cornerRadius = self.frame.size.width / 2
+//    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .blue
         setUI()
+        layoutIfNeeded()
+        setNeedsLayout()
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -29,7 +42,9 @@ class ColorCollectionCell: UICollectionViewCell {
     }
     
     private func setUI() {
-        self.layer.cornerRadius = 17
+        self.contentView.frame.size = CGSize(width: 30, height:30)
+        self.layer.cornerRadius = self.frame.size.width / 2
+        self.contentView.backgroundColor = .systemPink
         self.layer.borderColor = ColorUtils.color231.cgColor
         self.layer.borderWidth = 1
         self.addSubview(lbRoundText)
@@ -40,11 +55,12 @@ class ColorCollectionCell: UICollectionViewCell {
     
     private func setLayout() {
         lbRoundText.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(7)
-            make.leading.equalToSuperview().offset(12)
-            make.trailing.equalToSuperview().offset(-12)
-            make.height.greaterThanOrEqualTo(20).priority(999)
-            make.bottom.equalToSuperview().offset(-7)
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.width.equalTo(30)
+            make.height.equalTo(30)
+            make.bottom.equalToSuperview()
         }
         
     }
