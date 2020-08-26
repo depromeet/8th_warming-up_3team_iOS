@@ -197,20 +197,20 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         return suggestListCollectionView
     }()
     
-//    let tagCollectionView: UICollectionView = {
-//        let layout = UICollectionViewFlowLayout()
-//        layout.sectionInset = .zero
-//        layout.minimumLineSpacing = 7
-//        layout.minimumInteritemSpacing = 0
-//        layout.estimatedItemSize = CGSize(width: 10, height: 34)
-//        layout.scrollDirection = .horizontal
-//        let tagListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-//        tagListCollectionView.contentInset = UIEdgeInsets(top: 16, left: 20, bottom: 12, right: 20)
-//        tagListCollectionView.backgroundColor = .white
-//        tagListCollectionView.showsHorizontalScrollIndicator = false
-//        tagListCollectionView.register(RoundCollectionCell.self, forCellWithReuseIdentifier: String(describing: RoundCollectionCell.self))
-//        return tagListCollectionView
-//    }()
+    let tagCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = .zero
+        layout.minimumLineSpacing = 7
+        layout.minimumInteritemSpacing = 0
+        layout.estimatedItemSize = CGSize(width: 10, height: 34)
+        layout.scrollDirection = .horizontal
+        let tagListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        tagListCollectionView.contentInset = UIEdgeInsets(top: 16, left: 20, bottom: 12, right: 20)
+        tagListCollectionView.backgroundColor = .white
+        tagListCollectionView.showsHorizontalScrollIndicator = false
+        tagListCollectionView.register(RoundCollectionCell.self, forCellWithReuseIdentifier: String(describing: RoundCollectionCell.self))
+        return tagListCollectionView
+    }()
     
     
     override func viewDidLoad() {
@@ -233,10 +233,10 @@ class WriteViewController: UIViewController,ViewModelBindableType {
                    
                }.disposed(by: rx.disposeBag)
         
-//        viewModel.suggest.bind(to: tagCollectionView.rx.items(cellIdentifier: String(describing: RoundCollectionCell.self), cellType: RoundCollectionCell.self)) { (row, element, cell) in
-//            cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 20)
-//
-//        }.disposed(by: rx.disposeBag)
+        viewModel.suggest.bind(to: tagCollectionView.rx.items(cellIdentifier: String(describing: RoundCollectionCell.self), cellType: RoundCollectionCell.self)) { (row, element, cell) in
+            cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 20)
+
+        }.disposed(by: rx.disposeBag)
     }
     
 }
@@ -262,7 +262,7 @@ extension WriteViewController {
         writeView.addSubview(writeBookcoverView)
         writeView.addSubview(bookCommentView)
         writeView.addSubview(suggestCollectionView)
-//        writeView.addSubview(tagCollectionView)
+        writeView.addSubview(tagCollectionView)
 //
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
         self.view.setNeedsUpdateConstraints()
@@ -352,11 +352,11 @@ extension WriteViewController {
             $0.height.equalTo(62)
         }
     
-//        tagCollectionView.snp.makeConstraints {
-//            $0.top.equalTo(suggestCollectionView.snp.top)
-//            $0.leading.equalTo(writeView.snp.leading)
-//            $0.trailing.equalTo(writeView.snp.trailing)
-//            $0.height.equalTo(136)
-//        }
+        tagCollectionView.snp.makeConstraints {
+            $0.top.equalTo(suggestCollectionView.snp.bottom)
+            $0.leading.equalTo(writeView.snp.leading)
+            $0.trailing.equalTo(writeView.snp.trailing)
+            $0.height.equalTo(136)
+        }
     }
 }
