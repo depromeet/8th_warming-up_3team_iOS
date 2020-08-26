@@ -346,7 +346,7 @@ extension WriteViewController {
         }
         
         suggestCollectionView.snp.makeConstraints {
-            $0.top.equalTo(bookCommentView.snp.top)
+            $0.top.equalTo(bookCommentView.snp.bottom)
             $0.leading.equalTo(writeView.snp.leading)
             $0.trailing.equalTo(writeView.snp.trailing)
             $0.height.equalTo(62)
