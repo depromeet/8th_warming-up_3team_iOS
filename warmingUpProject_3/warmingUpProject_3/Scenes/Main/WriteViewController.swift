@@ -66,7 +66,7 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         colorListCollectionView.contentInset = UIEdgeInsets(top: 16, left: 20, bottom: 12, right: 20)
         colorListCollectionView.backgroundColor = .yellow
         colorListCollectionView.showsHorizontalScrollIndicator = false
-        colorListCollectionView.register(ColorCollectionCell.self, forCellWithReuseIdentifier: String(describing: ColorCollectionCell.self))
+        colorListCollectionView.register(RoundCollectionCell.self, forCellWithReuseIdentifier: String(describing: RoundCollectionCell.self))
         
         
         return colorListCollectionView
@@ -223,7 +223,7 @@ class WriteViewController: UIViewController,ViewModelBindableType {
     }
     
     func bindViewModel() {
-        viewModel.success.bind(to: colorListCollectionView.rx.items(cellIdentifier: String(describing: ColorCollectionCell.self), cellType: ColorCollectionCell.self)) { (row, element, cell) in
+        viewModel.success.bind(to: colorListCollectionView.rx.items(cellIdentifier: String(describing: RoundCollectionCell.self), cellType: RoundCollectionCell.self)) { (row, element, cell) in
             cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 20)
             
         }.disposed(by: rx.disposeBag)
