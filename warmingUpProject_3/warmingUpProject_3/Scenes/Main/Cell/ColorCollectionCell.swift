@@ -19,8 +19,8 @@ class ColorCollectionCell: UICollectionViewCell {
         
         lbRoundText.font = UIFont.systemFont(ofSize: 8, weight: .regular)
         
-        lbRoundText.backgroundColor = .green
-        lbRoundText.textColor = ColorUtils.colorBlack
+        lbRoundText.backgroundColor = ColorUtils.colorTimeSelected
+            lbRoundText.textColor =  ColorUtils.colorBlack
         return lbRoundText
     }()
     

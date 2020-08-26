@@ -156,12 +156,61 @@ class WriteViewController: UIViewController,ViewModelBindableType {
             $0.top.equalTo(bookcoverView.snp.top).offset(20)
             $0.height.equalTo(17)
         }
-        
-        
         return bookcoverView
     }()
     
+    let bookCommentView: UIView = {
+        let commentView = UIView()
+        let selectBtnView = UIButton()
+        selectBtnView.setTitle("이 책을 이 위치에 남기는 이유를 알려주세요.", for: .normal)
+        selectBtnView.setTitleColor(ColorUtils.color170, for: .normal)
+        selectBtnView.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        commentView.addSubview(selectBtnView)
+        commentView.backgroundColor = ColorUtils.color247
+        
+        commentView.snp.makeConstraints {
+            $0.height.equalTo(146)
+            $0.leading.equalTo(commentView.snp.leading).offset(20)
+            $0.top.equalTo(commentView.snp.top).offset(14)
+        }
+        
+        selectBtnView.snp.makeConstraints {
+            $0.leading.equalTo(commentView.snp.leading).offset(20)
+            $0.top.equalTo(commentView.snp.top).offset(20)
+            $0.height.equalTo(17)
+        }
+        return commentView
+    }()
     
+    let suggestCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = .zero
+        layout.minimumLineSpacing = 7
+        layout.minimumInteritemSpacing = 0
+        layout.estimatedItemSize = CGSize(width: 10, height: 34)
+        layout.scrollDirection = .horizontal
+        let suggestListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        suggestListCollectionView.contentInset = UIEdgeInsets(top: 16, left: 20, bottom: 12, right: 20)
+        suggestListCollectionView.backgroundColor = .white
+        suggestListCollectionView.showsHorizontalScrollIndicator = false
+        suggestListCollectionView.register(RoundCollectionCell.self, forCellWithReuseIdentifier: String(describing: RoundCollectionCell.self))
+        return suggestListCollectionView
+    }()
+    
+//    let tagCollectionView: UICollectionView = {
+//        let layout = UICollectionViewFlowLayout()
+//        layout.sectionInset = .zero
+//        layout.minimumLineSpacing = 7
+//        layout.minimumInteritemSpacing = 0
+//        layout.estimatedItemSize = CGSize(width: 10, height: 34)
+//        layout.scrollDirection = .horizontal
+//        let tagListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+//        tagListCollectionView.contentInset = UIEdgeInsets(top: 16, left: 20, bottom: 12, right: 20)
+//        tagListCollectionView.backgroundColor = .white
+//        tagListCollectionView.showsHorizontalScrollIndicator = false
+//        tagListCollectionView.register(RoundCollectionCell.self, forCellWithReuseIdentifier: String(describing: RoundCollectionCell.self))
+//        return tagListCollectionView
+//    }()
     
     
     override func viewDidLoad() {
@@ -178,6 +227,16 @@ class WriteViewController: UIViewController,ViewModelBindableType {
             cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 20)
             
         }.disposed(by: rx.disposeBag)
+        
+        viewModel.suggest.bind(to: suggestCollectionView.rx.items(cellIdentifier: String(describing: RoundCollectionCell.self), cellType: RoundCollectionCell.self)) { (row, element, cell) in
+                   cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 20)
+                   
+               }.disposed(by: rx.disposeBag)
+        
+//        viewModel.suggest.bind(to: tagCollectionView.rx.items(cellIdentifier: String(describing: RoundCollectionCell.self), cellType: RoundCollectionCell.self)) { (row, element, cell) in
+//            cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 20)
+//
+//        }.disposed(by: rx.disposeBag)
     }
     
 }
@@ -201,7 +260,9 @@ extension WriteViewController {
         writeView.addSubview(bookTitleView)
         writeView.addSubview(locationView)
         writeView.addSubview(writeBookcoverView)
-        
+        writeView.addSubview(bookCommentView)
+        writeView.addSubview(suggestCollectionView)
+//        writeView.addSubview(tagCollectionView)
 //
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
         self.view.setNeedsUpdateConstraints()
@@ -244,7 +305,7 @@ extension WriteViewController {
 //
         writeView.snp.makeConstraints {
             $0.width.equalTo(scrollView)
-            $0.height.equalTo(644)
+            $0.height.equalTo(800)
             $0.top.equalTo(mainView.snp.bottom)
             $0.bottom.equalTo(scrollView.snp.bottom)
         }
@@ -276,5 +337,26 @@ extension WriteViewController {
             $0.trailing.equalTo(writeView.snp.trailing)
             $0.height.equalTo(55)
         }
+        
+        bookCommentView.snp.makeConstraints {
+            $0.top.equalTo(writeBookcoverView.snp.bottom)
+            $0.leading.equalTo(writeView.snp.leading)
+            $0.trailing.equalTo(writeView.snp.trailing)
+            $0.height.equalTo(160)
+        }
+        
+        suggestCollectionView.snp.makeConstraints {
+            $0.top.equalTo(bookCommentView.snp.top)
+            $0.leading.equalTo(writeView.snp.leading)
+            $0.trailing.equalTo(writeView.snp.trailing)
+            $0.height.equalTo(62)
+        }
+    
+//        tagCollectionView.snp.makeConstraints {
+//            $0.top.equalTo(suggestCollectionView.snp.top)
+//            $0.leading.equalTo(writeView.snp.leading)
+//            $0.trailing.equalTo(writeView.snp.trailing)
+//            $0.height.equalTo(136)
+//        }
     }
 }
