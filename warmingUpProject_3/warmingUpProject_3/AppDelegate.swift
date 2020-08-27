@@ -26,7 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NMFAuthManager.shared().clientId = "xm6p6sxsy2"
         
         let coordinator = SceneCoordinator(window: window!)
-        let splahScene = Scene.splash
+//        let splahScene = Scene.splash
+        
+        let mainViewModel = MainViewModel(scenCoordinator: coordinator)
+        let splahScene = Scene.main(mainViewModel)
         coordinator.transition(to: splahScene, using: .root, animated: false)
 
         return true

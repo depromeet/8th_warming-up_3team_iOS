@@ -13,6 +13,7 @@ import Action
 import NSObject_Rx
 import KakaoSDKAuth
 import RxKakaoSDKAuth
+import Moya
 
 class LoginViewModel: BaseViewModel {
     
@@ -41,7 +42,12 @@ class LoginViewModel: BaseViewModel {
     
     func appleLoingAction() -> CocoaAction {
         return CocoaAction { _ in
-            AppleID.login(controller: LoginViewController())
+            
+            if #available(iOS 13.0, *) {
+                AppleID.login(controller: LoginViewController())
+            } else {
+                // Fallback on earlier versions
+            }
             
             return Observable<Any>.empty().asObservable().map { _ in }
         }
@@ -59,7 +65,7 @@ class LoginViewModel: BaseViewModel {
              
              */
             
-            
+            print(12348912)
             let mainViewModel = MainViewModel(scenCoordinator: self.scenCoordinator)
             let mainScene = Scene.main(mainViewModel)
             return self.scenCoordinator.transition(to: mainScene, using: .root, animated: true).asObservable().map { _ in }

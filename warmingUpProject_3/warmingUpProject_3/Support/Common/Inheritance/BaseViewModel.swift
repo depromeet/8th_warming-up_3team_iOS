@@ -8,13 +8,18 @@
 
 import Foundation
 import RxSwift
-import RxCocoa
+import RxSwift
+import Moya
 
-class BaseViewModel {
+class BaseViewModel: NSObject {
 
     let scenCoordinator: SceneCoordinatorType
 
     init(scenCoordinator: SceneCoordinatorType) {
         self.scenCoordinator = scenCoordinator
     }
+    
+    
+    let provider = MoyaProvider<BookAPI>(plugins: [NetworkLoggerPlugin()])
+        
 }

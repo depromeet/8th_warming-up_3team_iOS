@@ -16,6 +16,7 @@ enum Scene {
     case onboardExplanation(OnBoardExplanationViewModel)
     case main(MainViewModel)
     case write(WriteViewModel)
+    case mypage(MyPageViewModel)
 }
 
 // 스토리 보드에 있는 씬을 생성 연관값이 저장된 뷰 모델을 바인딩해서 리턴
@@ -25,12 +26,11 @@ extension Scene {
         
         switch self {
         case .splash:
-            guard let splashVC = storyboard.instantiateViewController(identifier: "splashVC") as? SplashViewController else { fatalError() }
-            return splashVC
+                guard let splashVC = storyboard.instantiateViewController(withIdentifier: "splashVC") as? SplashViewController else { fatalError() }
+                return splashVC
             
         case .login(let viewModel):
-            guard var loginVC = storyboard.instantiateViewController(identifier: "loginVC") as? LoginViewController else { fatalError() }
-            loginVC.bind(viewModel: viewModel)
+            guard var loginVC = storyboard.instantiateViewController(withIdentifier: "loginVC") as? LoginViewController else { fatalError() }
             return loginVC
             
         case .onboardNamming(let viewModel):
@@ -49,18 +49,22 @@ extension Scene {
             return onBoardExplanationVC
             
         case .main(let viewModel):
-            //            let naviController = UINavigationController()
+            let naviVC = UINavigationController()
+            naviVC.isNavigationBarHidden = true
             var mainVC = MainViewController()
-            //            naviController.viewControllers = [mainVC]
             mainVC.bind(viewModel: viewModel)
-            //            return naviController
-            return mainVC
+            naviVC.setViewControllers([mainVC], animated: false)
+            return naviVC
             
         case .write(let viewModel):
             var writeVC = WriteViewController()
             writeVC.bind(viewModel: viewModel)
             return writeVC
             
+        case .mypage(let viewModel):
+            var mypageVC = MyPageViewController()
+            mypageVC.bind(viewModel: viewModel)
+            return mypageVC
         }
     }
 }

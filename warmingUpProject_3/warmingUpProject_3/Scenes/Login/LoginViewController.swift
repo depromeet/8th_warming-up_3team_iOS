@@ -28,26 +28,18 @@ final class LoginViewController: UIViewController, ViewModelBindableType {
         super.viewDidLoad()
         btnApple.layer.cornerRadius = 6
         btnKakao.layer.cornerRadius = 6
-        
     }
 
     func bindViewModel() {
         btnKakao.rx.action = viewModel.kakaoLoingAction()
         btnApple.rx.action = viewModel.mainAction()
-//        btnApple.rx.action = viewModel.appleLoingAction()
-        
-//         btnApple.rx
-//                   .controlEvent(.touchUpInside)
-//                   .subscribe(onNext: { [weak self] _ in
-//                       guard let self = self else { return }
-//                    AppleID.login(controller: self)
-//                   })
-//            .disposed(by: rx.disposeBag)
+            
     }
 
 }
 
 
+@available(iOS 13.0, *)
 extension LoginViewController: ASAuthorizationControllerDelegate {
 
     // error 동작

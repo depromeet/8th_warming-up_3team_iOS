@@ -146,7 +146,7 @@ class MainViewController: UIViewController, ViewModelBindableType {
     }()
     
     let lbSelecteTime: UILabel = {
-       let selecteTime = UILabel()
+        let selecteTime = UILabel()
         selecteTime.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         selecteTime.textColor = ColorUtils.color34
         return selecteTime
@@ -179,11 +179,19 @@ class MainViewController: UIViewController, ViewModelBindableType {
         return bookListCollectionView
     }()
     
+    let btnCurrentLocation: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.backgroundColor = .white
+        btn.setImage(#imageLiteral(resourceName: "icnLocation24"), for: .normal)
+        btn.layer.cornerRadius = 20
+        return btn
+    }()
+    
     // ------
     var btnWrite: UIButton = {
         let btnWrite = UIButton(type: .custom)
         btnWrite.backgroundColor = .white
-        btnWrite.setImage(#imageLiteral(resourceName: "write"), for: .normal)
+        btnWrite.setImage(#imageLiteral(resourceName: "icnWrite"), for: .normal)
         btnWrite.layer.masksToBounds = false
         btnWrite.layer.cornerRadius = 29
         btnWrite.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.05).cgColor
@@ -216,7 +224,7 @@ class MainViewController: UIViewController, ViewModelBindableType {
         locationManager?.delegate = self
         locationManager?.requestWhenInUseAuthorization()
         locationManager?.requestLocation()
-        
+        locationManager?.desiredAccuracy = kCLLocationAccuracyThreeKilometers
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager?.location?.coordinate.latitude ?? 37.5666102, lng: locationManager?.location?.coordinate.longitude ?? 126.9783881))
         cameraUpdate.pivot = CGPoint(x: 0.5, y: 0.3)
         mapView.moveCamera(cameraUpdate)
@@ -225,18 +233,33 @@ class MainViewController: UIViewController, ViewModelBindableType {
         lbSelecteLocation.setTextWithLetterSpacing(text: "망원동, 아틀리에 크레타", letterSpacing: -0.07, lineHeight: 17)
     }
     
+    @objc func tapProfile() {
+        viewModel.myPageAction()
+    }
+    
     func bindViewModel() {
         btnWrite.rx.action = viewModel.writeAction()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapProfile))
+        profileBaseView.addGestureRecognizer(tap)
+        
+        btnCurrentLocation.rx
+            .controlEvent(.touchUpInside)
+            .subscribe(onNext: { _ in
+                print(1232131)
+            })
+            .disposed(by: rx.disposeBag)
+        
         
         viewModel.writeData
             .subscribe(onNext: { [unowned self ] value in
+                
                 // 다 지우고
                 self.markers.forEach { $0.mapView = nil }
                 
                 // 한방에 들어오네
                 for (idx, value) in value.enumerated() {
-                    self.markers.append(NMFMarker(position: NMGLatLng(lat: value.location.lat, lng: value.location.lng)))
-                    self.markers[idx].iconImage = NMFOverlayImage(image: ImageUtils.getColorBookIcon(value.color))
+                    self.markers.append(NMFMarker(position: NMGLatLng(lat: value.latitude, lng: value.longitude)))
+                    self.markers[idx].iconImage = NMFOverlayImage(image: ImageUtils.getColorBookIcon(value.colorType))
                     self.markers[idx].mapView = self.naverMapView.mapView
                     self.markers[idx].tag = UInt(value.id)
                     //                    self.markers[idx].isHideCollidedMarkers = true
@@ -245,30 +268,32 @@ class MainViewController: UIViewController, ViewModelBindableType {
             })
             .disposed(by: rx.disposeBag)
         
-        // 네이버 지도에서 선택된 마커가 들어오는 경우 처리
-        viewModel.selectedData
-            .subscribe(onNext: { [unowned self]values in
-                print("------ value:    \(values)")
-                
-                // 애니메이션 줘야함
-                if values.isEmpty || values == [] {
-                    self.baseView.isHidden = false
-                    self.btnWrite.isHidden = false
-                    self.selectedBaseView.isHidden = true
-                } else {
-                    self.baseView.isHidden = true
-                    self.btnWrite.isHidden = true
-                    self.selectedBaseView.isHidden = false
-                }
-                
-            })
-            .disposed(by: rx.disposeBag)
-        
+        /*
+         // 네이버 지도에서 선택된 마커가 들어오는 경우 처리
+         viewModel.selectedData
+         .subscribe(onNext: { [unowned self]values in
+         print("------ value:    \(values)")
+         
+         // 애니메이션 줘야함
+         if values.isEmpty || values == [] {
+         self.baseView.isHidden = false
+         self.btnWrite.isHidden = false
+         self.selectedBaseView.isHidden = true
+         } else {
+         self.baseView.isHidden = true
+         self.btnWrite.isHidden = true
+         self.selectedBaseView.isHidden = false
+         }
+         
+         })
+         .disposed(by: rx.disposeBag)
+         */
         viewModel.writeData.bind(to: bookListCollectionView.rx.items(cellIdentifier: String(describing: BookCoverCollectionCell.self), cellType: BookCoverCollectionCell.self)) { (row, element, cell) in
-            cell.bookCover.bind(color: element.color, text: element.content)
-            cell.lbBookTitle.setTextWithLetterSpacing(text: element.book, letterSpacing: -0.07, lineHeight: 17)
-            cell.lbWriter.setTextWithLetterSpacing(text: element.write, letterSpacing: -0.06, lineHeight: 14)
+            cell.bookCover.bind(color: element.colorType, text: element.reason)
+            cell.lbBookTitle.setTextWithLetterSpacing(text: element.title, letterSpacing: -0.07, lineHeight: 17)
+            cell.lbWriter.setTextWithLetterSpacing(text: element.author, letterSpacing: -0.06, lineHeight: 14)
         }.disposed(by: rx.disposeBag)
+        
         
         viewModel.times.bind(to: timeListCollectionView.rx.items(cellIdentifier: String(describing: RoundCollectionCell.self), cellType: RoundCollectionCell.self)) { (row, element, cell) in
             cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 20)
@@ -293,19 +318,18 @@ class MainViewController: UIViewController, ViewModelBindableType {
                 cell?.backgroundColor = ColorUtils.colorTimeSelected
                 cell?.layer.borderWidth = 0
             }).disposed(by: rx.disposeBag)
-                
+        
         viewModel.selectedData.bind(to: selectedBookListCollectionView.rx.items(cellIdentifier: String(describing: selectedBookCollectionCell.self), cellType: selectedBookCollectionCell.self)) { (row, element, cell) in
             
-            let sameElement = self.viewModel.copyWriteData.first { $0.id == element }
-            
-            cell.bookCover.bind(color: sameElement!.color, text: sameElement!.content)
-            cell.lbBookTitle.setTextWithLetterSpacing(text: sameElement!.book, letterSpacing: -0.08, lineHeight: 16)
-            cell.lbWriter.setTextWithLetterSpacing(text: sameElement!.write, letterSpacing: -0.07, lineHeight: 17)
-            cell.lbBookSummary.setTextWithLetterSpacing(text: "1줄\n2줄\n불라불라라라라라라라라라라라라라라라라라라", letterSpacing: 0, lineHeight: 18)
-            cell.layoutIfNeeded()
-            cell.lbBookSummary.lineBreakMode = .byTruncatingTail
+            //            let sameElement = self.viewModel.copyWriteData.first { $0.id == element }
+            //
+            //            cell.bookCover.bind(color: sameElement!.color, text: sameElement!.content)
+            //            cell.lbBookTitle.setTextWithLetterSpacing(text: sameElement!.book, letterSpacing: -0.08, lineHeight: 16)
+            //            cell.lbWriter.setTextWithLetterSpacing(text: sameElement!.write, letterSpacing: -0.07, lineHeight: 17)
+            //            cell.lbBookSummary.setTextWithLetterSpacing(text: "1줄\n2줄\n불라불라라라라라라라라라라라라라라라라라라", letterSpacing: 0, lineHeight: 18)
+            //            cell.layoutIfNeeded()
+            //            cell.lbBookSummary.lineBreakMode = .byTruncatingTail
         }.disposed(by: rx.disposeBag)
-        
     }
 }
 
@@ -318,6 +342,7 @@ extension MainViewController {
         self.baseView.addSubview(timeListCollectionView)
         self.baseView.addSubview(separateLine)
         self.baseView.addSubview(bookListCollectionView)
+        self.baseView.addSubview(btnCurrentLocation)
         self.view.addSubview(selectedBaseView)
         self.selectedBaseView.addSubview(selectedBookListCollectionView)
         self.selectedBaseView.addSubview(lbSelecteTime)
@@ -352,6 +377,13 @@ extension MainViewController {
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
+        }
+        
+        btnCurrentLocation.snp.makeConstraints { (make) in
+            make.bottom.equalTo(baseView.snp.top).offset(-24)
+            make.trailing.equalTo(baseView.snp.trailing).offset(-20)
+            make.width.equalTo(40)
+            make.height.equalTo(40)
         }
         
         timeListCollectionView.snp.makeConstraints { (make) in
@@ -398,10 +430,10 @@ extension MainViewController {
         }
         
         selectedBookListCollectionView.snp.makeConstraints { (make) in
-//            make.top.equalTo(selectedBaseView.snp.top).offset(90)
+            //            make.top.equalTo(selectedBaseView.snp.top).offset(90)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
-//            make.height.equalTo(168)
+            //            make.height.equalTo(168)
             make.bottom.equalToSuperview().offset(-44)
         }
         
@@ -460,6 +492,8 @@ extension MainViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locations.forEach { (location) in
             mapView.locationOverlay.location = NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
+            viewModel.requesBooksList(lat: location.coordinate.latitude, log: location.coordinate.longitude)
+            print("location:  ",location.coordinate)
         }
     }
     

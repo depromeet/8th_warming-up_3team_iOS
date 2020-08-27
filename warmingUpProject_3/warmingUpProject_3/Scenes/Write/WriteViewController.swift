@@ -244,7 +244,7 @@ class WriteViewController: UIViewController,ViewModelBindableType {
 extension WriteViewController {
     
     @objc func touchToExitBtn() {
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     private func setUI() {
