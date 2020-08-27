@@ -51,6 +51,8 @@ class MainViewModel: BaseViewModel {
     
     let times = Observable.of(["모든 시간", "촉촉한 새벽", "새로운 아침", "나른한 낮 시간", "별 헤는 밤"])
     
+    
+    
     func writeAction() -> CocoaAction {
         return CocoaAction { _ in
             let writeViewModel = WriteViewModel(scenCoordinator: self.scenCoordinator)
