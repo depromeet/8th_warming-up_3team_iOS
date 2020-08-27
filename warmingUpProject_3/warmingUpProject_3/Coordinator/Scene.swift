@@ -9,7 +9,8 @@
 import UIKit
 
 enum Scene {
-    case splash(SplashViewModel)
+    case splash
+    case login(LoginViewModel)
     case onboardNamming(OnBoardNameingViewModel)
     case onboardType(OnBoardTypeViewModel)
     case onboardExplanation(OnBoardExplanationViewModel)
@@ -23,10 +24,14 @@ extension Scene {
         let storyboard = UIStoryboard(name: storyboard, bundle: nil)
         
         switch self {
-        case .splash(let viewModel):
-            guard var splashVC = storyboard.instantiateViewController(identifier: "splashVC") as? SplashViewController else { fatalError() }
-            splashVC.bind(viewModel: viewModel)
+        case .splash:
+            guard let splashVC = storyboard.instantiateViewController(identifier: "splashVC") as? SplashViewController else { fatalError() }
             return splashVC
+            
+        case .login(let viewModel):
+            guard var loginVC = storyboard.instantiateViewController(identifier: "loginVC") as? LoginViewController else { fatalError() }
+            loginVC.bind(viewModel: viewModel)
+            return loginVC
             
         case .onboardNamming(let viewModel):
             var onBoardNameingVC = OnBoardNameingViewController()
@@ -44,11 +49,11 @@ extension Scene {
             return onBoardExplanationVC
             
         case .main(let viewModel):
-//            let naviController = UINavigationController()
+            //            let naviController = UINavigationController()
             var mainVC = MainViewController()
-//            naviController.viewControllers = [mainVC]
+            //            naviController.viewControllers = [mainVC]
             mainVC.bind(viewModel: viewModel)
-//            return naviController
+            //            return naviController
             return mainVC
             
         case .write(let viewModel):

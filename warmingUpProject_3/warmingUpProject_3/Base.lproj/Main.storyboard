@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="w1Q-S3-pwS">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -10,28 +10,97 @@
         <!--View Controller-->
         <scene sceneID="5BV-0h-Llf">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BSd-sY-h63" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="w1Q-S3-pwS" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tQ7-xS-Hcr">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="fAB-a9-31j"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BSd-sY-h63" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-881" y="52"/>
+            <point key="canvasLocation" x="-1300" y="52"/>
         </scene>
         <!--Splash View Controller-->
+        <scene sceneID="0NE-qS-UZL">
+            <objects>
+                <viewController storyboardIdentifier="splashVC" id="NXk-b4-Yia" customClass="SplashViewController" customModule="북쪽으로" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="w9C-5p-xKb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgSplashBg" translatesAutoresizingMaskIntoConstraints="NO" id="5dB-Fh-aah">
+                                <rect key="frame" x="0.0" y="113" width="375" height="340"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgLogo" translatesAutoresizingMaskIntoConstraints="NO" id="4wA-ew-3zz">
+                                <rect key="frame" x="113" y="471" width="149" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="IT1-O8-cZY"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y1d-Sd-Cv6">
+                                <rect key="frame" x="114.66666666666669" y="513" width="146" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="x48-2r-SbR"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment content="마음을 움직이는 책을 따라서">
+                                        <attributes>
+                                            <color key="NSColor" red="0.52549019607843139" green="0.54509803921568623" blue="0.6705882352941176" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" metaFont="system"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GcS-8E-U69" customClass="AnimationView" customModule="Lottie">
+                                <rect key="frame" x="123" y="251.66666666666663" width="129" height="129"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="129" id="69r-4V-9UQ"/>
+                                    <constraint firstAttribute="width" constant="129" id="Y2r-ql-ipv"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1803921568627451" green="0.19215686274509802" blue="0.3411764705882353" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="y1d-Sd-Cv6" firstAttribute="centerX" secondItem="4wA-ew-3zz" secondAttribute="centerX" id="8Fc-TK-s3I"/>
+                            <constraint firstItem="GcS-8E-U69" firstAttribute="centerY" secondItem="5dB-Fh-aah" secondAttribute="centerY" multiplier="1.11667" id="9kQ-fL-87P"/>
+                            <constraint firstItem="5dB-Fh-aah" firstAttribute="width" secondItem="5dB-Fh-aah" secondAttribute="height" multiplier="1:0.906667" id="GY7-7S-tin"/>
+                            <constraint firstItem="4wA-ew-3zz" firstAttribute="top" secondItem="5dB-Fh-aah" secondAttribute="bottom" constant="18" id="He1-wc-hqL"/>
+                            <constraint firstItem="5wA-Ad-zrS" firstAttribute="trailing" secondItem="5dB-Fh-aah" secondAttribute="trailing" id="Pyt-6z-lYK"/>
+                            <constraint firstItem="5dB-Fh-aah" firstAttribute="leading" secondItem="5wA-Ad-zrS" secondAttribute="leading" id="SPM-fD-qJj"/>
+                            <constraint firstItem="4wA-ew-3zz" firstAttribute="centerX" secondItem="5dB-Fh-aah" secondAttribute="centerX" id="WYm-Oa-zDp"/>
+                            <constraint firstItem="5dB-Fh-aah" firstAttribute="centerX" secondItem="5wA-Ad-zrS" secondAttribute="centerX" id="iRV-wD-Dc2"/>
+                            <constraint firstItem="5dB-Fh-aah" firstAttribute="centerY" secondItem="5wA-Ad-zrS" secondAttribute="centerY" multiplier="0.688889" id="iv8-Eh-w4k"/>
+                            <constraint firstItem="y1d-Sd-Cv6" firstAttribute="top" secondItem="4wA-ew-3zz" secondAttribute="bottom" constant="2" id="rRK-Vh-9wv"/>
+                            <constraint firstItem="GcS-8E-U69" firstAttribute="centerX" secondItem="5dB-Fh-aah" secondAttribute="centerX" id="rth-ph-9S5"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="5wA-Ad-zrS"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <connections>
+                        <outlet property="tt" destination="GcS-8E-U69" id="O59-tz-FzB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Aq-RN-baS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-493" y="52"/>
+        </scene>
+        <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="splashVC" id="BYZ-38-t0r" customClass="SplashViewController" customModule="warmingUpProject_3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginVC" id="BYZ-38-t0r" customClass="LoginViewController" customModule="북쪽으로" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fdB-Or-kk3">
-                                <rect key="frame" x="20" y="788" width="374" height="50"/>
+                                <rect key="frame" x="20" y="704" width="335" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="lDn-Tm-u8L"/>
@@ -41,7 +110,7 @@
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P6B-34-i9L">
-                                <rect key="frame" x="20" y="724" width="374" height="50"/>
+                                <rect key="frame" x="20" y="640" width="335" height="50"/>
                                 <color key="backgroundColor" red="1" green="0.92156862750000001" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="oYY-uo-Jah"/>
@@ -52,29 +121,29 @@
                                 </state>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgJsonLogin" translatesAutoresizingMaskIntoConstraints="NO" id="qIW-2r-TsT">
-                                <rect key="frame" x="0.0" y="78" width="414" height="563"/>
+                                <rect key="frame" x="0.0" y="78" width="375" height="479"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnKakao24" translatesAutoresizingMaskIntoConstraints="NO" id="Wlb-pI-45T">
-                                <rect key="frame" x="98" y="737" width="24" height="24"/>
+                                <rect key="frame" x="78.333333333333329" y="653" width="24" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="MWl-JH-vVa"/>
                                     <constraint firstAttribute="width" constant="24" id="s9M-2b-E9X"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="카카오톡으로 로그인하기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vlN-sM-eti">
-                                <rect key="frame" x="124" y="739" width="166.5" height="20.5"/>
+                                <rect key="frame" x="104.33333333333333" y="654.66666666666663" width="166.33333333333337" height="20.666666666666629"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.24313725489999999" green="0.1529411765" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apple로 로그인하기" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YCA-bl-fyW">
-                                <rect key="frame" x="138.5" y="803" width="137" height="20.5"/>
+                                <rect key="frame" x="119" y="718.66666666666663" width="137" height="20.666666666666629"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnApple24" translatesAutoresizingMaskIntoConstraints="NO" id="ily-lb-Ybp">
-                                <rect key="frame" x="112.5" y="801" width="24" height="24"/>
+                                <rect key="frame" x="93" y="717" width="24" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="kV5-9G-IGe"/>
                                     <constraint firstAttribute="height" constant="24" id="txG-6r-jC3"/>
@@ -111,12 +180,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-36.231884057971016" y="51.5625"/>
+            <point key="canvasLocation" x="306" y="52"/>
         </scene>
     </scenes>
     <resources>
         <image name="icnApple24" width="24" height="24"/>
         <image name="icnKakao24" width="24" height="24"/>
         <image name="imgJsonLogin" width="375" height="479"/>
+        <image name="imgLogo" width="149" height="40"/>
+        <image name="imgSplashBg" width="375" height="340"/>
     </resources>
 </document>

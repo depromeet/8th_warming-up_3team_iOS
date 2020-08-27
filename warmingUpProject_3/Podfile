@@ -13,6 +13,7 @@ target 'warmingUpProject_3' do
   pod 'NMapsMap'
   pod 'Action'	
   pod 'NSObject+Rx'
+  pod 'lottie-ios'
 
   # 카카오 로그인을 위한. Rx가 있네 띠용
   pod 'RxKakaoSDKAuth'
