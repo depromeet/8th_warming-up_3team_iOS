@@ -14,7 +14,8 @@ class ProfileCollectionCell: UICollectionViewCell {
     let ivProfile: UIImageView = {
         let ivProfile = UIImageView()
         ivProfile.contentMode = .scaleAspectFill
-        ivProfile.image = #imageLiteral(resourceName: "Profile").withAlignmentRectInsets(UIEdgeInsets(top: -7, left: -7, bottom: -7, right: -7))
+        ivProfile.layer.cornerRadius = 35
+        ivProfile.layer.masksToBounds = true
         return ivProfile
     }()
 

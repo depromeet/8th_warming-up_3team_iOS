@@ -34,8 +34,6 @@ class MainViewController: UIViewController, ViewModelBindableType {
         locationOverlay.subIcon = nil
         
         naverMapView.mapView.touchDelegate = self
-        //        locationOverlay.touchHandler = { [unowned self] Bool in
-        //        }
         return naverMapView.mapView
     }
     
@@ -45,13 +43,36 @@ class MainViewController: UIViewController, ViewModelBindableType {
         profileView.layer.cornerRadius = 23
         
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "Profile")
+        switch UserUtils.getType() {
+        case 0:
+            imageView.image = UIImage(named: "img28Profile1")
+            
+        case 1:
+            imageView.image = UIImage(named: "img28Profile2")
+            
+        case 2:
+            imageView.image = UIImage(named: "img28Profile3")
+            
+        case 3:
+            imageView.image = UIImage(named: "img28Profile4")
+            
+        case 4:
+            imageView.image = UIImage(named: "img28Profile5")
+            
+        case 5:
+            imageView.image = UIImage(named: "img28Profile6")
+            
+        default:
+            break
+        }
+        
         imageView.layer.cornerRadius = 19
+        imageView.layer.masksToBounds = true
         
         let lbTitle = UILabel()
         lbTitle.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         lbTitle.textAlignment = .center
-        lbTitle.setTextWithLetterSpacing(text: "외로운 규현", letterSpacing: -0.06, lineHeight: 16)
+        lbTitle.setTextWithLetterSpacing(text: UserUtils.getNickName(), letterSpacing: -0.06, lineHeight: 16)
         profileView.addSubview(imageView)
         profileView.addSubview(lbTitle)
         
@@ -214,6 +235,8 @@ class MainViewController: UIViewController, ViewModelBindableType {
         super.viewDidLayoutSubviews()
         
         naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: baseView.frame.height, right: 0)
+        
+        
     }
     
     override func viewDidLoad() {
@@ -238,6 +261,9 @@ class MainViewController: UIViewController, ViewModelBindableType {
     }
     
     func bindViewModel() {
+        viewModel.requsTest()
+        
+        
         btnWrite.rx.action = viewModel.writeAction()
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapProfile))
         profileBaseView.addGestureRecognizer(tap)

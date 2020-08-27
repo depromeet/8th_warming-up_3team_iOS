@@ -115,6 +115,7 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         selectBtnView.setTitle("선택하기 >", for: .normal)
         selectBtnView.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         selectBtnView.setTitleColor(ColorUtils.color170, for: .normal)
+        selectBtnView.addTarget(self, action:  #selector(tapLocationView), for: .touchUpInside)
         
         locationTitle.addSubview(titleLabel)
         locationTitle.addSubview(selectBtnView)
@@ -222,7 +223,12 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         
     }
     
+    @objc func tapLocationView() {
+        viewModel.actionLocationView()
+    }
+    
     func bindViewModel() {
+        
         viewModel.success.bind(to: colorListCollectionView.rx.items(cellIdentifier: String(describing: RoundCollectionCell.self), cellType: RoundCollectionCell.self)) { (row, element, cell) in
             cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 20)
             

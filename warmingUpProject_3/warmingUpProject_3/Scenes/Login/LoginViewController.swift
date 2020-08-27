@@ -11,6 +11,7 @@ import RxSwift
 import RxCocoa
 import AuthenticationServices
 import NSObject_Rx
+import Lottie
 
 final class LoginViewController: UIViewController, ViewModelBindableType {
 
@@ -19,6 +20,8 @@ final class LoginViewController: UIViewController, ViewModelBindableType {
     @IBOutlet weak var btnKakao: UIButton!
 
     @IBOutlet weak var btnApple: UIButton!
+    
+    @IBOutlet weak var lottieView: AnimationView!
     
     override func loadView() {
         super.loadView()
@@ -29,9 +32,25 @@ final class LoginViewController: UIViewController, ViewModelBindableType {
         btnApple.layer.cornerRadius = 6
         btnKakao.layer.cornerRadius = 6
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        lottieView.play()
+    }
+    
     func bindViewModel() {
-        btnKakao.rx.action = viewModel.kakaoLoingAction()
+        let loginAnimation = Animation.named("login")
+        lottieView.animation = loginAnimation
+        lottieView.loopMode = .loop
+        
+//        btnKakao.rx.action = viewModel.kakaoLoingAction()
+        btnKakao.rx
+            .controlEvent(.touchUpInside)
+            .subscribe(onNext: { [unowned self]_ in
+                self.viewModel.kakaoLoingAction()
+            })
+            .disposed(by: rx.disposeBag)
         btnApple.rx.action = viewModel.mainAction()
             
     }

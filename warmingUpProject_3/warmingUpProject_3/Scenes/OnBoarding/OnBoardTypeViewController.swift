@@ -29,8 +29,7 @@ class OnBoardTypeViewController: UIViewController, ViewModelBindableType {
         lbTitle.numberOfLines = 0
         lbTitle.textColor = #colorLiteral(red: 0.1333333333, green: 0.1333333333, blue: 0.1333333333, alpha: 1)
         lbTitle.font = UIFont(name: TextUtils.FontType.NanumMyeongjoRegular.rawValue, size: 20)
-        //        lbTitle.setTextWithLetterSpacing(text: "외로운 규현님의\n독서 유형에 맞는\n프로필사진을 골라주세요.", letterSpacing: -0.1, lineHeight: 30)
-        lbTitle.setFocusTextWithLetterSpacing(text: "외로운 규현님의\n독서 유형에 맞는\n프로필사진을 골라주세요.", focusText: "외로운 규현님", focusFont: UIFont(name: TextUtils.FontType.NanumMyeongjoBold.rawValue, size: 20) ?? UIFont.systemFont(ofSize: 20), focusColor: #colorLiteral(red: 0.1333333333, green: 0.1333333333, blue: 0.1333333333, alpha: 1), letterSpacing: -0.1, lineHeight: 30)
+        lbTitle.setFocusTextWithLetterSpacing(text: "\(UserUtils.getNickName())님의\n독서 유형에 맞는\n프로필사진을 골라주세요.", focusText: UserUtils.getNickName(), focusFont: UIFont(name: TextUtils.FontType.NanumMyeongjoBold.rawValue, size: 20) ?? UIFont.systemFont(ofSize: 20), focusColor: #colorLiteral(red: 0.1333333333, green: 0.1333333333, blue: 0.1333333333, alpha: 1), letterSpacing: -0.1, lineHeight: 30)
         
         lbTitle.textAlignment = .center
         return lbTitle
@@ -80,10 +79,30 @@ class OnBoardTypeViewController: UIViewController, ViewModelBindableType {
     func bindViewModel() {
         let profile = Observable.of(["장르 박애주의", "속독가", "올빼미족", "상상 대마왕", "나노 분석가", "꿈나라"])
         profile.bind(to: profileCollectionView.rx.items(cellIdentifier: String(describing: ProfileCollectionCell.self), cellType: ProfileCollectionCell.self)) { (row, element, cell) in
-            
+            switch row {
+            case 0:
+                cell.ivProfile.image = UIImage(named: "img70Profile1")?.withAlignmentRectInsets(UIEdgeInsets(top: -7, left: -7, bottom: -7, right: -7))
+                
+            case 1:
+                cell.ivProfile.image = UIImage(named: "img70Profile2")?.withAlignmentRectInsets(UIEdgeInsets(top: -7, left: -7, bottom: -7, right: -7))
+                
+            case 2:
+                cell.ivProfile.image = UIImage(named: "img70Profile3")?.withAlignmentRectInsets(UIEdgeInsets(top: -7, left: -7, bottom: -7, right: -7))
+                
+            case 3:
+                cell.ivProfile.image = UIImage(named: "img70Profile4")?.withAlignmentRectInsets(UIEdgeInsets(top: -7, left: -7, bottom: -7, right: -7))
+                
+            case 4:
+                cell.ivProfile.image = UIImage(named: "img70Profile5")?.withAlignmentRectInsets(UIEdgeInsets(top: -7, left: -7, bottom: -7, right: -7))
+                
+            case 5:
+                cell.ivProfile.image = UIImage(named: "img70Profile6")?.withAlignmentRectInsets(UIEdgeInsets(top: -7, left: -7, bottom: -7, right: -7))
+                
+            default:
+                break
+            }
             cell.lbTypeName.setTextWithLetterSpacing(text: element, letterSpacing: -0.07, lineHeight: 17)
             cell.lbTypeName.textAlignment = .center
-            // cell
             
         }.disposed(by: rx.disposeBag)
         
@@ -98,6 +117,7 @@ class OnBoardTypeViewController: UIViewController, ViewModelBindableType {
                 }
             }).subscribe(onNext: { [unowned self] indexPath in
                 let cell = self.profileCollectionView.cellForItem(at: indexPath) as? ProfileCollectionCell
+                UserUtils.setType(type: indexPath.row + 1)
                 cell?.lbProfileHighLight.layer.borderWidth = 2
                 cell?.lbProfileHighLight.layer.borderColor = ColorUtils.colorProfileBoard.cgColor
                 self.btnNext.isEnabled = true
@@ -105,7 +125,14 @@ class OnBoardTypeViewController: UIViewController, ViewModelBindableType {
             }).disposed(by: rx.disposeBag)
         
         
-        btnNext.rx.action = viewModel?.nextAction()
+        btnNext.rx
+            .controlEvent(.touchUpInside)
+            .subscribe(onNext: { [unowned self] _ in
+                if UserUtils.getType() > 0 {
+                    self.viewModel.nextAction()
+                }
+            })
+            .disposed(by: rx.disposeBag)
     }
 }
 

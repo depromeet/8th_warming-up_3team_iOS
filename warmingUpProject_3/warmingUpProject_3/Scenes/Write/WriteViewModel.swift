@@ -16,4 +16,9 @@ class WriteViewModel: BaseViewModel {
     
     let suggest = Observable.of(["촉촉한 새벽","새로운 아침", "나른한 낯 시간", "빛나는 오후", "밤"])
     
+    func actionLocationView() {
+        let writeViewModel = WriteViewModel(scenCoordinator: self.scenCoordinator)
+        let searchVC = Scene.search(writeViewModel)
+        self.scenCoordinator.transition(to: searchVC, using: .push, animated: true)
+    }
 }

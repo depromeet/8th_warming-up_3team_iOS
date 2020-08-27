@@ -27,6 +27,21 @@ class TextUtils {
         }
         return attrText
     }
+    
+    static func textLetterSpacingAttribute(
+        text: String,
+        letterSpacing: CGFloat,
+        color: UIColor?,
+        font: UIFont
+    ) -> NSMutableAttributedString {
+        let attrText = NSMutableAttributedString(string: text)
+        attrText.addAttribute(.kern, value: letterSpacing, range: NSRange(location: 0, length: attrText.length))
+        attrText.addAttribute(.font, value: font, range: NSRange(location: 0, length: attrText.length))
+        if let inputColor = color {
+            attrText.addAttribute(.foregroundColor, value: inputColor, range: NSRange(location: 0, length: attrText.length))
+        }
+        return attrText
+    }
 
     static func attributedPlaceholder(text: String, letterSpacing: CGFloat) -> NSMutableAttributedString {
         let style = NSMutableParagraphStyle()

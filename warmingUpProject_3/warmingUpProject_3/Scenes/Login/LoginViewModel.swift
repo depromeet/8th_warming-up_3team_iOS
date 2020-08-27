@@ -13,35 +13,45 @@ import Action
 import NSObject_Rx
 import KakaoSDKAuth
 import RxKakaoSDKAuth
+import KakaoSDKUser
 import Moya
 
 class LoginViewModel: BaseViewModel {
     
-    func kakaoLoingAction() -> CocoaAction {
-        return CocoaAction { _ in
-            if (AuthApi.isKakaoTalkLoginAvailable()) {
-                AuthApi.shared.loginWithKakaoTalk {(oauthToken, error) in
-                    if let error = error {
-                        print(error)
-                    }
-                    else {
-                        print("loginWithKakaoTalk() success.")
-                        print("\n====================")
-                        print("oauthToken() success.:  ", oauthToken)
+    func kakaoLoingAction() {
+        UserUtils.setSnsType(name: "kakao")
+        
+        
+        if (AuthApi.isKakaoTalkLoginAvailable()) {
+            AuthApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
+                        if let error = error {
+                            print(error)
+                        }
+                        else {
+                            print("accessTokenInfo() success.")
+                            UserUtils.setSnsID(Id: accessTokenInfo?.id ?? Int64(0))
+
+                            let onboardNammingViewModel = OnBoardNameingViewModel(scenCoordinator: self.scenCoordinator)
+                            let onboardNammingScene = Scene.onboardNamming(onboardNammingViewModel)
+                            
+                            self.scenCoordinator.transition(to: onboardNammingScene, using: .root, animated: true)
+                        }
                     }
                 }
             }
-            
-            
-            let onboardNammingViewModel = OnBoardNameingViewModel(scenCoordinator: self.scenCoordinator)
-            let onboardNammingScene = Scene.onboardNamming(onboardNammingViewModel)
-            
-            return self.scenCoordinator.transition(to: onboardNammingScene, using: .root, animated: true).asObservable().map { _ in }
         }
+        
     }
     
     func appleLoingAction() -> CocoaAction {
         return CocoaAction { _ in
+            
+            UserUtils.setSnsType(name: "apple")
             
             if #available(iOS 13.0, *) {
                 AppleID.login(controller: LoginViewController())

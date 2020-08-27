@@ -10,18 +10,53 @@ import Foundation
 
 class UserUtils: NSObject {
     
-    static let snsId: String             = "SNS_ID"
+    static let snsID: String              = "SNS_ID"
     
-    static let snsType: String           = "SNS_TYPE"
+    static let snsType: String            = "SNS_TYPE"
+    
+    static let nickName: String           = "NickName"
+    
+    static let type: String               = "Type"
     
     
-//    static func isLogin() -> Bool {
-//        let _mem = UserDefaults.standard.value(forKey: userKey)
-//        if _mem == nil {
-//            return false
-//        } else {
-//            return true
-//        }
+    static func setSnsType(name: String) {
+           UserDefaults.standard.set(name, forKey: self.snsType)
+    }
+    
+    static func getSnsType() -> String {
+        let snsType = UserDefaults.standard.value(forKey: self.snsType)
+        return snsType as! String
+    }
+    
+    static func setSnsID(Id: Int64) {
+           UserDefaults.standard.set(Id, forKey: self.snsID)
+    }
+    
+    static func getSnsID() -> Int64? {
+        let snsID = UserDefaults.standard.value(forKey: self.snsID)
+        return snsID as? Int64
+    }
+    
+    static func setNickName(name: String) {
+        UserDefaults.standard.set(name, forKey: self.nickName)
+    }
+    
+    static func getNickName() -> String {
+        let nickName = UserDefaults.standard.value(forKey: self.nickName)
+        return nickName as! String
+    }
+    
+    static func setType(type: Int) {
+        UserDefaults.standard.set(type, forKey: self.type)
+    }
+    
+    static func getType() -> Int {
+        let type = UserDefaults.standard.value(forKey: self.type)
+        return type == nil ? 0 : type as! Int
+    }
+    
+//    static func getNickName() -> String {
+//        let nickName = UserDefaults.standard.value(forKey: self.nickName)
+//        return nickName as! String
 //    }
 }
-

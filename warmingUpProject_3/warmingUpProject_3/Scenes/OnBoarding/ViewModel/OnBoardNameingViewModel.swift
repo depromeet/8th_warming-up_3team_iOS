@@ -13,15 +13,9 @@ import Action
 
 class OnBoardNameingViewModel: BaseViewModel {
     
-    func nextAction() -> CocoaAction {
-        return CocoaAction { _ in
-            /*
-             api 검증 해서 아이디 중복없으면 넘어가고
-             아니면 팝업띄우는걸로 구현해야함
-             */
-            let onboardTypeViewModel = OnBoardTypeViewModel(scenCoordinator: self.scenCoordinator)
-            let onBoardTypeScene = Scene.onboardType(onboardTypeViewModel)
-            return self.scenCoordinator.transition(to: onBoardTypeScene, using: .root, animated: true).asObservable().map { _ in }
-        }
+    func nextAction() {
+        let onboardTypeViewModel = OnBoardTypeViewModel(scenCoordinator: self.scenCoordinator)
+        let onBoardTypeScene = Scene.onboardType(onboardTypeViewModel)
+        self.scenCoordinator.transition(to: onBoardTypeScene, using: .root, animated: true)
     }
 }

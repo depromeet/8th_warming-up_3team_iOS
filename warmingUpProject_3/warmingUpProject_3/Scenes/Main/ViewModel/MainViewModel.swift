@@ -33,6 +33,17 @@ class MainViewModel: BaseViewModel {
         }
     }
     
+    func requsTest() {
+        
+        geoCodeProvider.rx
+            .request(.geocode(addr: "입장면"))
+            .subscribe(onSuccess: { (res) in
+                print(res)
+            }) { (err) in
+                print(err)
+        }
+    }
+    
     func requesBooksList(lat: Double, log: Double) {
         provider.rx
             .request(.booksList(lat: lat, log: log))

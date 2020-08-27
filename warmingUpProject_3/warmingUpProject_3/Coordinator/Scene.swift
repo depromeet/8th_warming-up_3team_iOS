@@ -16,6 +16,7 @@ enum Scene {
     case onboardExplanation(OnBoardExplanationViewModel)
     case main(MainViewModel)
     case write(WriteViewModel)
+    case search(WriteViewModel)
     case mypage(MyPageViewModel)
 }
 
@@ -31,6 +32,7 @@ extension Scene {
             
         case .login(let viewModel):
             guard var loginVC = storyboard.instantiateViewController(withIdentifier: "loginVC") as? LoginViewController else { fatalError() }
+            loginVC.bind(viewModel: viewModel)
             return loginVC
             
         case .onboardNamming(let viewModel):
@@ -57,9 +59,17 @@ extension Scene {
             return naviVC
             
         case .write(let viewModel):
+            let naviVC = UINavigationController()
+            naviVC.isNavigationBarHidden = true
             var writeVC = WriteViewController()
             writeVC.bind(viewModel: viewModel)
+            naviVC.setViewControllers([writeVC], animated: false)
             return writeVC
+            
+        case .search(let viewModel):
+            var searchVC = SearchLocaitonViewController()
+            searchVC.bind(viewModel: viewModel)
+            return searchVC
             
         case .mypage(let viewModel):
             var mypageVC = MyPageViewController()

@@ -60,15 +60,15 @@ class OnBoardNameingViewController: UIViewController, ViewModelBindableType {
     
     var btnNext: UIButton = {
         let btnNext = UIButton(type: .custom)
-        btnNext.isEnabled = false
-        btnNext.setTitle("다음", for: .normal)
-        btnNext.setTitle("다음", for: .selected)
+                btnNext.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         btnNext.setTitleColor(.white, for: .normal)
         btnNext.setTitleColor(.white, for: .selected)
-        btnNext.backgroundColor = #colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 1)
+        btnNext.setAttributedTitle(TextUtils.textLetterSpacingAttribute(text: "다음", letterSpacing: -0.09, color: .white), for: .selected)
+        btnNext.setAttributedTitle(TextUtils.textLetterSpacingAttribute(text: "다음", letterSpacing: -0.09, color: .white), for: .normal)
+        btnNext.setBackgroundColor(UIColor(r: 84, g: 90, b: 124), for: .selected)
+        btnNext.setBackgroundColor(#colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 1), for: .normal)
         btnNext.titleEdgeInsets.top = -Dimens.getSafeAreaBottomMargin() - 17
-        btnNext.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        btnNext.titleLabel?.attributedText = TextUtils.attributedPlaceholder(text: "다음", letterSpacing: -0.09)
+//        btnNext.titleLabel?.attributedText = TextUtils.attributedPlaceholder(text: "다음", letterSpacing: -0.09)
         return btnNext
     }()
     
@@ -79,24 +79,21 @@ class OnBoardNameingViewController: UIViewController, ViewModelBindableType {
     }
     
     override func viewDidLoad() {
-        print("######### OnBoardingViewController ")
-        
-        UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
-            if let error = error {
-                print(error)
-            }
-            else {
-                print("accessTokenInfo() success.")
-                
-                //do something
-                _ = accessTokenInfo
-            }
-        }
-        
     }
     
     func bindViewModel() {
-        btnNext.rx.action = viewModel?.nextAction()
+        btnNext.rx
+            .controlEvent(.touchUpInside)
+            .subscribe(onNext: { [unowned self] isSel in
+                if self.btnNext.isSelected {
+                    print("-----tvNickName.text: \(self.tvNickName.text)")
+                    UserUtils.setNickName(name: self.tvNickName.text)
+                    self.viewModel.nextAction()
+                }
+            })
+            .disposed(by: rx.disposeBag)
+            
+//            .action = viewModel?.nextAction(sel: btnNext.isSelected)
     }
     
 }
@@ -144,7 +141,7 @@ extension OnBoardNameingViewController {
         }
         
         tvNickName.snp.makeConstraints { (make) in
-            make.leading.equalTo(ivTextfieldLeft.snp.leading).offset(25)
+            make.leading.equalTo(ivTextfieldLeft.snp.trailing).offset(25)
             make.trailing.equalTo(ivTextfieldRight.snp.leading).offset(-25)
             make.centerY.equalTo(ivTextfieldLeft.snp.centerY)
             make.height.equalTo(24)
@@ -163,7 +160,6 @@ extension OnBoardNameingViewController {
             } else {
                 bottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0.0
             }
-            print(bottom)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(74 + Dimens.getSafeAreaBottomMargin())
@@ -188,11 +184,13 @@ extension OnBoardNameingViewController {
             NSAttributedString.Key.foregroundColor : ColorUtils.color68,
             NSAttributedString.Key.paragraphStyle: style
             ]
+            btnNext.isSelected = true
             
         } else if tvNickName.text == "" || tvNickName.text.isEmpty {
             
             tvNickName.font = UIFont.systemFont(ofSize: 14)
             tvNickName.attributedText = TextUtils.attributedPlaceholder(text: "최대 8자까지 입력 가능합니다.", letterSpacing: -0.07)
+            btnNext.isSelected = false
         }
     }
 }
@@ -213,6 +211,9 @@ extension OnBoardNameingViewController: UITextViewDelegate {
         guard let str = textView.text else { return true }
         let newLength = str.count + text.count - range.length
         
+        if text == " " {
+            return false
+        }
         return newLength <= 8
     }
     

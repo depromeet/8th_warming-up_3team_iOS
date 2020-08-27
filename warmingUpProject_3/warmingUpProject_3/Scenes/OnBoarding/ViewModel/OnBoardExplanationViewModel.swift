@@ -12,11 +12,27 @@ import RxCocoa
 import Action
 
 class OnBoardExplanationViewModel: BaseViewModel {
-    func nextAction() -> CocoaAction {
-        return CocoaAction { _ in
-             let mainViewModel = MainViewModel(scenCoordinator: self.scenCoordinator)
-            let onBoardTypeScene = Scene.main(mainViewModel)
-            return self.scenCoordinator.transition(to: onBoardTypeScene, using: .root, animated: true).asObservable().map { _ in }
-        }
+    
+    
+    func requestSingUp() {
+        provider.rx
+            .request(.signUp(nickName: UserUtils.getNickName(), type: UserUtils.getType(), snsType: UserUtils.getSnsType(), snsLoginID: String(UserUtils.getSnsID()!)))
+            .filterSuccessfulStatusCodes()
+            .subscribe(onSuccess: { [unowned self] (res) in
+                //TODO: 헤더랑 userID 이거저거 받아와야함.
+                self.nextAction()
+            }) { (err) in
+                print(err)
+                
+        }.disposed(by: rx.disposeBag)
     }
+    
+    func nextAction() {
+        let mainViewModel = MainViewModel(scenCoordinator: self.scenCoordinator)
+        let onBoardTypeScene = Scene.main(mainViewModel)
+        self.scenCoordinator.transition(to: onBoardTypeScene, using: .root, animated: true)
+        
+    }
+    
+    let lotties = ["onboarding1", "onboarding2", "onboarding3"]
 }

@@ -19,6 +19,18 @@ extension UILabel {
         attrText.addAttribute(.paragraphStyle, value: style, range: NSRange(location: 0, length: attrText.length))
         self.attributedText = attrText
     }
+    
+    func setTextWithLetterSpacing(text: String, letterSpacing: CGFloat, lineHeight: CGFloat, font: UIFont, color: UIColor) {
+        let style = NSMutableParagraphStyle()
+        let attrText = NSMutableAttributedString(string: text)
+        style.alignment = self.textAlignment
+        style.lineSpacing = lineHeight - font.lineHeight
+        attrText.addAttribute(.kern, value: letterSpacing, range: NSRange(location: 0, length: attrText.length))
+        attrText.addAttribute(.paragraphStyle, value: style, range: NSRange(location: 0, length: attrText.length))
+        attrText.addAttribute(.font, value: font, range: NSRange(location: 0, length: attrText.length))
+        attrText.addAttribute(.foregroundColor, value: color, range: NSRange(location: 0, length: attrText.length))
+        self.attributedText = attrText
+    }
 
     func setFocusTextWithLetterSpacing(text: String, focusText: String, focusFont: UIFont, focusColor: UIColor, letterSpacing: CGFloat, lineHeight: CGFloat) {
         let style = NSMutableParagraphStyle()
