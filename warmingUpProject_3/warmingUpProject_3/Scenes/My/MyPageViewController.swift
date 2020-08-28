@@ -7,19 +7,26 @@
 //
 
 import Foundation
-
 import UIKit
 import SnapKit
 import Action
+import NMapsMap
 import NSObject_Rx
 import KakaoSDKUser
 
-class MyPageViewController: UIViewController, ViewModelBindableType {
+class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewTouchDelegate {
     var viewModel: MyPageViewModel!
     
     override func loadView() {
         super.loadView()
         setUI()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+//        naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.frame.height, right: 0)
+ 
     }
     
     override func viewDidLoad() {
@@ -49,9 +56,13 @@ class MyPageViewController: UIViewController, ViewModelBindableType {
     //MARK: - UI Component
     let naviView: UIView = {
         let naviView = UIView()
-        naviView.backgroundColor = .red
-        
-        
+        let label = UILabel()
+        label.text = "나의 기록"
+        naviView.backgroundColor = ColorUtils.colorCoverWhite
+        naviView.addSubview(label)
+        label.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
         return naviView
     }()
     
@@ -62,6 +73,51 @@ class MyPageViewController: UIViewController, ViewModelBindableType {
     }()
     
     let bookListCollectionView: UICollectionView = {
+        
+        var profileView: UIView = {
+            let view = UIView()
+            let profileImg = UIImageView()
+            let titleLabel = UILabel()
+            let subLabel = UILabel()
+            
+            profileImg.image = UIImage(named: "img28Profile1")
+            titleLabel.text = "외로운 간고등어님이 남긴 기록"
+            subLabel.text = "총 24권의 기록을 보관 중입니다."
+            titleLabel.font = UIFont.systemFont(ofSize: 16)
+            subLabel.font = UIFont.systemFont(ofSize: 14)
+            subLabel.textColor = ColorUtils.colorProfileBoard
+            
+            view.addSubview(profileImg)
+            view.addSubview(titleLabel)
+            view.addSubview(subLabel)
+            
+            profileImg.snp.makeConstraints {
+                $0.centerX.equalTo(view.snp.centerX)
+                $0.bottom.equalTo(titleLabel.snp.top).offset(-16)
+            }
+            
+            titleLabel.snp.makeConstraints {
+                $0.centerX.equalTo(view.snp.centerX)
+                $0.centerY.equalTo(view.snp.centerY)
+                $0.height.equalTo(16)
+            }
+            
+            subLabel.snp.makeConstraints {
+                $0.top.equalTo(titleLabel.snp.bottom).offset(8)
+                $0.centerX.equalTo(view.snp.centerX)
+                $0.height.equalTo(14)
+            }
+
+            return view
+        }()
+        
+        var mapView: UIView = {
+               let view = UIView()
+//               view.frame.size = CGSize(width: 335, height: 165)
+                view.backgroundColor = .systemGray
+               return view
+           }()
+        
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = .zero
         layout.minimumLineSpacing = 42
@@ -69,13 +125,35 @@ class MyPageViewController: UIViewController, ViewModelBindableType {
         
         layout.itemSize = CGSize(width: (Dimens.deviceWidth * 0.34667), height: (Dimens.deviceWidth * 0.34667) + 38 + 60 + 14)
         layout.scrollDirection = .vertical
-        layout.headerReferenceSize = CGSize(width: Dimens.deviceWidth, height: 300)
-        let bookListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        layout.headerReferenceSize = CGSize(width: Dimens.deviceWidth, height: 324)
+        let bookListCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: Dimens.deviceWidth, height: 1), collectionViewLayout: layout)
         bookListCollectionView.contentInset = UIEdgeInsets(top: 0, left: 34, bottom: 0, right: 39)
-        bookListCollectionView.backgroundColor = .white
+        
+        
+        bookListCollectionView.backgroundColor = ColorUtils.colorCoverWhite
         bookListCollectionView.showsHorizontalScrollIndicator = false
         bookListCollectionView.register(HeaderCollectionCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: HeaderCollectionCell.self))
         bookListCollectionView.register(MyPageBookCollectionCell.self, forCellWithReuseIdentifier: String(describing: MyPageBookCollectionCell.self))
+        
+        bookListCollectionView.addSubview(profileView)
+        bookListCollectionView.addSubview(mapView)
+        
+        profileView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(10)
+            make.width.equalToSuperview().offset(-40)
+            make.height.equalTo(129)
+            make.leading.equalToSuperview().offset(-14)
+//            make.trailing.equalToSuperview().offset(14)
+        }
+        
+        mapView.snp.makeConstraints { (make) in
+            make.top.equalTo(profileView.snp.bottom).offset(0)
+            make.width.equalToSuperview().offset(-40)
+            make.height.equalTo(165)
+            make.leading.equalToSuperview().offset(-14)
+//            make.trailing.equalToSuperview().offset(300)
+        }
+        
         return bookListCollectionView
     }()
     
@@ -89,7 +167,6 @@ extension MyPageViewController {
         self.view.addSubview(naviView)
         self.view.addSubview(btnBack)
         self.view.addSubview(bookListCollectionView)
-        
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
         self.view.setNeedsUpdateConstraints()
         setLayout()
