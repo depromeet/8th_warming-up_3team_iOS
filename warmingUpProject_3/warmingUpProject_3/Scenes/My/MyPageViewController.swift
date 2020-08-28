@@ -64,9 +64,6 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
     
     let naverMapView = NMFNaverMapView()
     
-   
-    
-    
     let btnBack: UIButton = {
         let btnBack = UIButton(type: .custom)
         btnBack.setImage(UIImage(named: "btnLeftarrow24"), for: .normal)
@@ -77,7 +74,7 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
         
         var mapView: UIView = {
                let view = UIView()
-               view.frame.size = CGSize(width: Dimens.deviceWidth, height: 165)
+               view.frame.size = CGSize(width: (Dimens.deviceWidth*0.34667*2+46), height: 165)
                view.backgroundColor = .black
                return view
            }()
