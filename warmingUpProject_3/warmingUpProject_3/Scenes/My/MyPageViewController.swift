@@ -93,7 +93,7 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
             
             profileImg.snp.makeConstraints {
                 $0.centerX.equalTo(view.snp.centerX)
-                $0.top.equalToSuperview().offset(10)
+                $0.bottom.equalTo(titleLabel.snp.top).offset(-16)
             }
             
             titleLabel.snp.makeConstraints {
@@ -103,7 +103,7 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
             }
             
             subLabel.snp.makeConstraints {
-                $0.top.equalTo(titleLabel.snp.bottom).offset(5)
+                $0.top.equalTo(titleLabel.snp.bottom).offset(8)
                 $0.centerX.equalTo(view.snp.centerX)
                 $0.height.equalTo(14)
             }
