@@ -27,7 +27,7 @@ class AdderCollectionCell: UICollectionViewCell {
     
     let lbLine: UILabel = {
        let lbLine = UILabel()
-        lbLine.backgroundColor = ColorUtils.color170
+        lbLine.backgroundColor = ColorUtils.color221
         return lbLine
     }()
     
@@ -54,15 +54,17 @@ class AdderCollectionCell: UICollectionViewCell {
     private func setLayout() {
         lbText.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
-            make.leading.equalToSuperview()
+            make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview()
+            make.width.equalTo(Dimens.deviceWidth - 20)
             make.height.equalTo(18)
         }
         
         lbSubText.snp.makeConstraints { (make) in
             make.top.equalTo(lbText.snp.bottom).offset(4)
-            make.leading.equalToSuperview()
+            make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview()
+            make.width.equalTo(Dimens.deviceWidth - 20)
             make.height.equalTo(14)
         }
         
@@ -70,7 +72,8 @@ class AdderCollectionCell: UICollectionViewCell {
             make.top.equalTo(lbSubText.snp.bottom).offset(16)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
-            make.height.equalTo(14)
+            make.height.equalTo(1)
+            make.width.equalTo(Dimens.deviceWidth - 40)
             make.bottom.equalToSuperview()
         }
     }

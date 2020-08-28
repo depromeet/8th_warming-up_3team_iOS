@@ -24,7 +24,6 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         return img
     }()
     
-    
     let titleLabel: UILabel = {
         let label = UILabel()
         label.frame.size = CGSize(width: 207, height: 18)
@@ -40,8 +39,6 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         btn.setTitleColor(.black, for: .normal)
         return btn
     }()
-    
-    
     
     let scrollView = UIScrollView()
     
@@ -94,17 +91,9 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         let seperLine = UILabel()
         titleLabel.text = "책 제목"
         titleLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        let searchBtnView = UIButton()
-        searchBtnView.setTitle("찾아보기", for: .normal)
-        searchBtnView.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .light)
-        searchBtnView.setImage(UIImage(named: "btnRightarrow24"), for: .normal)
-        searchBtnView.semanticContentAttribute = .forceRightToLeft
-        searchBtnView.setTitleColor(ColorUtils.color170, for: .normal)
-        
         seperLine.backgroundColor = ColorUtils.color242
         
         bookTitle.addSubview(titleLabel)
-        bookTitle.addSubview(searchBtnView)
         bookTitle.addSubview(seperLine)
         bookTitle.backgroundColor = .white
         
@@ -126,14 +115,20 @@ class WriteViewController: UIViewController,ViewModelBindableType {
             $0.height.equalTo(17)
         }
         
-        searchBtnView.snp.makeConstraints {
-            $0.trailing.equalTo(bookTitle.snp.trailing).offset(-20)
-            $0.top.equalTo(bookTitle.snp.top).offset(20)
-            $0.height.equalTo(17)
-        }
         return bookTitle
     }()
     
+
+    let searchBtnView: UIButton = {
+        let searchBtnView = UIButton(type: .custom)
+        searchBtnView.setTitle("찾아보기", for: .normal)
+        searchBtnView.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        searchBtnView.setImage(UIImage(named: "btnRightarrow24"), for: .normal)
+        searchBtnView.semanticContentAttribute = .forceRightToLeft
+        searchBtnView.setTitleColor(ColorUtils.color170, for: .normal)
+        searchBtnView.addTarget(self, action:  #selector(tapBookView), for: .touchUpInside)
+        return searchBtnView
+    }()
     
     let locationView: UIView = {
         let locationTitle = UIView()
@@ -282,19 +277,22 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         setUI()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(touchToExitBtn))
         exitImg.addGestureRecognizer(tapGesture)
-        exitImg.isUserInteractionEnabled = true
+        exitImg.isUserInteractionEnabled = true        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("-------------- \(viewModel.model)")
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        let current_date_string = formatter.string(from: Date())
-        viewModel.model.pubDate = current_date_string
-        print(current_date_string)
-
-        
+        print("-------------- \(viewModel.model)")
     }
     
     @objc func tapLocationView() {
         viewModel.actionLocationView()
+    }
+    
+    @objc func tapBookView() {
+        viewModel.actionBookView()
     }
     
     func bindViewModel() {
@@ -305,6 +303,14 @@ class WriteViewController: UIViewController,ViewModelBindableType {
                 self.viewModel.actionSave {
                     self.navigationController?.popViewController(animated: true)
                 }
+            })
+            .disposed(by: rx.disposeBag)
+        
+        // 위치 바인딩
+        viewModel.adderTitle
+            .subscribe(onNext: { [unowned self] (str) in
+                let attribute = TextUtils.textLetterSpacingAttribute(text: str, letterSpacing: 0, color: UIColor(r: 84, g: 90, b: 124), font: UIFont.systemFont(ofSize: 12, weight: .light))
+                self.searchBtnView.setAttributedTitle(attribute, for: .normal)
             })
             .disposed(by: rx.disposeBag)
         
@@ -351,7 +357,7 @@ class WriteViewController: UIViewController,ViewModelBindableType {
                 cell?.layer.borderColor = ColorUtils.color187.cgColor
                 self.bookCoverView.bind(color: selColor, text: self.writeBookcoverView.text ?? "")
                 self.viewModel.selColor = selColor
-                self.viewModel.model.colorType = selColor
+                self.viewModel.model?.colorType = selColor
         }
         .disposed(by: rx.disposeBag)
         
@@ -372,7 +378,7 @@ class WriteViewController: UIViewController,ViewModelBindableType {
                 cell?.layer.borderWidth = 1
                 cell?.layer.borderColor = UIColor(r: 84, g: 90, b: 124).cgColor
                 cell?.lbRoundText.setTextWithLetterSpacing(text: text, letterSpacing: -0.06, lineHeight: 19.5, font: UIFont.systemFont(ofSize: 13, weight: .regular), color: UIColor(r: 84, g: 90, b: 124))
-                self.viewModel.model.time = text
+                self.viewModel.model?.time = text
         }
         .disposed(by: rx.disposeBag)
         
@@ -405,8 +411,8 @@ class WriteViewController: UIViewController,ViewModelBindableType {
                 cell?.lbRoundText.setTextWithLetterSpacing(text: text, letterSpacing: -0.06, lineHeight: 19.5, font: UIFont.systemFont(ofSize: 13, weight: .regular), color: UIColor(r: 84, g: 90, b: 124))
                 
                 let addText = text.trimmingCharacters(in: ["#"])
-                self.viewModel.model.tags.append(addText)
-                print(self.viewModel.model.tags)
+                self.viewModel.model?.tags.append(addText)
+                print(self.viewModel.model?.tags)
         }
         .disposed(by: rx.disposeBag)
         
@@ -437,6 +443,7 @@ extension WriteViewController {
         mainView.addSubview(bookCoverView)
         writeView.addSubview(colorListCollectionView)
         writeView.addSubview(bookTitleView)
+        bookTitleView.addSubview(searchBtnView)
         writeView.addSubview(locationView)
         writeView.addSubview(writeBookcoverView)
         writeView.addSubview(bookCommentView)
@@ -514,6 +521,12 @@ extension WriteViewController {
             $0.leading.equalTo(writeView.snp.leading)
             $0.trailing.equalTo(writeView.snp.trailing)
             $0.height.equalTo(55)
+        }
+        
+        searchBtnView.snp.makeConstraints { (make) in
+            make.top.equalTo(bookTitleView.snp.top).offset(10)
+            make.trailing.equalTo(bookTitleView.snp.trailing).offset(-20)
+            make.bottom.equalTo(bookTitleView.snp.bottom).offset(-11)
         }
         
         locationView.snp.makeConstraints {
@@ -637,11 +650,11 @@ extension WriteViewController: UITextViewDelegate {
         if textView.tag == 111 {
             let newLength = str.count + text.count - range.length
             
-            self.viewModel.model.phrase = str
+            self.viewModel.model?.phrase = str
             self.bookCoverView.bind(color: self.viewModel.selColor, text: str)
             return newLength <= 32
         } else {
-            self.viewModel.model.reason = str
+            self.viewModel.model?.reason = str
             return true
         }
     }

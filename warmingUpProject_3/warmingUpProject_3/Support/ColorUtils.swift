@@ -22,6 +22,8 @@ class ColorUtils {
     
     static let color187 = UIColor(r: 187, g: 187, b: 187)
     
+    static let color221 = UIColor(r: 221, g: 221, b: 221)
+    
     static let color231 = UIColor(r: 231, g: 231, b: 231)
     
     static let color242 = UIColor(r: 242, g: 242, b: 242)

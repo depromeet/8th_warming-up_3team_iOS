@@ -29,7 +29,7 @@ class OnBoardTypeViewController: UIViewController, ViewModelBindableType {
         lbTitle.numberOfLines = 0
         lbTitle.textColor = #colorLiteral(red: 0.1333333333, green: 0.1333333333, blue: 0.1333333333, alpha: 1)
         lbTitle.font = UIFont(name: TextUtils.FontType.NanumMyeongjoRegular.rawValue, size: 20)
-        lbTitle.setFocusTextWithLetterSpacing(text: "\(UserUtils.getNickName())님의\n독서 유형에 맞는\n프로필사진을 골라주세요.", focusText: UserUtils.getNickName(), focusFont: UIFont(name: TextUtils.FontType.NanumMyeongjoBold.rawValue, size: 20) ?? UIFont.systemFont(ofSize: 20), focusColor: #colorLiteral(red: 0.1333333333, green: 0.1333333333, blue: 0.1333333333, alpha: 1), letterSpacing: -0.1, lineHeight: 30)
+        lbTitle.setFocusTextWithLetterSpacing(text: "\(UserUtils.getNickName())님의\n독서 유형에 맞는\n프로필사진을 골라주세요.", focusText: UserUtils.getNickName(), focusFont: UIFont(name: TextUtils.FontType.NanumMyeongjoBold.rawValue, size: 20) ?? UIFont.systemFont(ofSize: 20), focusColor: #colorLiteral(red: 0.1333333333, green: 0.1333333333, blue: 0.1333333333, alpha: 1), letterSpacing: -0.1, lineHeight: 30, color: ColorUtils.color34)
         
         lbTitle.textAlignment = .center
         return lbTitle

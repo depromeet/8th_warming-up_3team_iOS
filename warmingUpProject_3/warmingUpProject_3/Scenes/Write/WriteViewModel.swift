@@ -15,8 +15,7 @@ class WriteViewModel: BaseViewModel {
     
     var selColor = "NAVY"
     
-    var model = PostModel(title: "", colorType: "NAVY", lat: 0, log: 0, phrase: "", reason: "", time: "", author: "", description: "", thumbnail: "", pubDate: "", publisher: "", tags: [], userID: 1)
-    
+    var model: PostModel?
     
     let success = Observable.of(["NAVY","GRAY", "MINT", "PINK", "LEMON","BLUE","ORANGE","BROWN","GREEN","IVORY","PURPLE","RED","PEACH","BLACK"])
     
@@ -26,24 +25,33 @@ class WriteViewModel: BaseViewModel {
     
     let adderData = PublishSubject<[Address]>()
     
+    let booksData = PublishSubject<[SearchBooks]>()
+    
+    let adderTitle = BehaviorSubject<String>(value: "")
+    
+    override init(scenCoordinator: SceneCoordinatorType) {
+        super.init(scenCoordinator: scenCoordinator)
+        model = PostModel(title: "", colorType: "NAVY", lat: 0, log: 0, phrase: "", reason: "", time: "", author: "", description: "", thumbnail: "", pubDate: "", publisher: "", tags: [], userID: 1)
+    }
+    
     func actionLocationView() {
-        let writeViewModel = WriteViewModel(scenCoordinator: self.scenCoordinator)
+        let writeViewModel = self
         let searchVC = Scene.search(writeViewModel)
         self.scenCoordinator.transition(to: searchVC, using: .push, animated: true)
     }
     
+    func actionBookView() {
+        let writeViewModel = self
+        let searchVC = Scene.searchBook(writeViewModel)
+        self.scenCoordinator.transition(to: searchVC, using: .push, animated: true)
+    }
     
     func actionSave(completion: @escaping () -> Void) {
+        guard let model = self.model else { return }
         provider.rx.request(.writeBook(model: model))
             .subscribe(onSuccess: { (res) in
-                print(self.model)
-                print(res)
-                
                 completion()
-                
             }) { (err) in
-                
-                
                 print(err)
         }
         .disposed(by: rx.disposeBag)

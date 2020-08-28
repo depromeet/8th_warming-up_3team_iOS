@@ -1,8 +1,8 @@
 //
-//  SearchLocaitonViewController.swift
+//  SearchBookViewController.swift
 //  warmingUpProject_3
 //
-//  Created by 이규현 on 2020/08/27.
+//  Created by 이규현 on 2020/08/28.
 //  Copyright © 2020 team3. All rights reserved.
 //
 
@@ -13,8 +13,9 @@ import RxCocoa
 import Action
 import NSObject_Rx
 import NMapsMap
+import Kingfisher
 
-class SearchLocaitonViewController: UIViewController, ViewModelBindableType {
+class SearchBookViewController: UIViewController, ViewModelBindableType {
     
     var viewModel: WriteViewModel!
     
@@ -30,24 +31,53 @@ class SearchLocaitonViewController: UIViewController, ViewModelBindableType {
     }
     
     func bindViewModel() {
-        viewModel.adderData
-            .bind(to: adderCollectionView.rx.items(cellIdentifier: String(describing: AdderCollectionCell.self), cellType: AdderCollectionCell.self)) { (row, element, cell) in
+        viewModel.booksData
+            .bind(to: adderCollectionView.rx.items(cellIdentifier: String(describing: BooksCollectionCell.self), cellType: BooksCollectionCell.self)) { (row, element, cell) in
                 
-                cell.lbText.text = element.roadAddress
-                cell.lbSubText.text = element.jibunAddress
-                
-                
+                //TODO: 캐시로 처리해
+                cell.ivImageView.kf.setImage(with: URL(string: element.image))
+                cell.lbTitle.setTextWithLetterSpacing(text: element.title, letterSpacing: -0.08, lineHeight: 19, font: UIFont.systemFont(ofSize: 16, weight: .medium), color: ColorUtils.color34)
+                cell.lbSubText.setFocusTextWithLetterSpacing(
+                    text: "\(element.author) 지음  |  \(element.publisher)",
+                    focusText: "|",
+                    focusFont: UIFont(name: "AppleSDGothicNeo-Medium", size: 12) ?? UIFont.systemFont(ofSize: 12, weight: .medium) ,
+                    focusColor: ColorUtils.color221,
+                    letterSpacing: -0.06,
+                    lineHeight: 13,
+                    color: ColorUtils.color68
+                )
+                cell.lbDescription.setTextWithLetterSpacing(text: element.description, letterSpacing: -0.06, lineHeight: 14, font: UIFont.systemFont(ofSize: 12, weight: .regular), color: ColorUtils.color136)
+                cell.layoutIfNeeded()
+
+                cell.lbTitle.lineBreakMode = .byTruncatingTail
+                cell.lbSubText.lineBreakMode = .byTruncatingTail
+                cell.lbDescription.lineBreakMode = .byTruncatingTail
         }
         .disposed(by: rx.disposeBag)
         
         Observable
-            .zip(adderCollectionView.rx.itemSelected, adderCollectionView.rx.modelSelected(Address.self))
+            .zip(adderCollectionView.rx.itemSelected, adderCollectionView.rx.modelSelected(SearchBooks.self))
             .bind { [unowned self] indexPath, selData in
-                let lat = Double(selData.y) ?? 0
-                let log = Double(selData.x) ?? 0
-                self.viewModel.model?.lat = lat
-                self.viewModel.model?.log = log
-                self.viewModel.adderTitle.onNext(selData.jibunAddress)
+                
+                let dateFormatter = DateFormatter()
+                let strDateFormatter = DateFormatter()
+                strDateFormatter.dateFormat = "yyyy-MM-dd"
+                dateFormatter.dateFormat = "yyyyMMdd"
+                dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+                let date: Date = dateFormatter.date(from: selData.pubDate)!
+                print(date)
+                
+                let pubDate = strDateFormatter.string(from: date)
+                print(pubDate)
+            
+                self.viewModel.model?.title = selData.title
+                self.viewModel.model?.thumbnail = selData.image
+                self.viewModel.model?.author = selData.author
+                self.viewModel.model?.pubDate = pubDate
+                self.viewModel.model?.publisher = selData.publisher
+                self.viewModel.model?.description = selData.description
+                                
+//                self.viewModel.adderTitle.onNext(selData.jibunAddress)
                 self.navigationController?.popViewController(animated: true)
         }
         .disposed(by: rx.disposeBag)
@@ -63,7 +93,7 @@ class SearchLocaitonViewController: UIViewController, ViewModelBindableType {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.frame.size = CGSize(width: 207, height: 18)
-        label.text = "위치 찾아보기"
+        label.text = "책 찾아보기"
         label.textAlignment = .center
         label.font = label.font.withSize(15)
         return label
@@ -85,27 +115,24 @@ class SearchLocaitonViewController: UIViewController, ViewModelBindableType {
         let adderCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         adderCollectionView.backgroundColor = .white
         adderCollectionView.showsVerticalScrollIndicator = false
-        adderCollectionView.register(AdderCollectionCell.self, forCellWithReuseIdentifier: String(describing: AdderCollectionCell.self))
+        adderCollectionView.register(BooksCollectionCell.self, forCellWithReuseIdentifier: String(describing: BooksCollectionCell.self))
         
         return adderCollectionView
     }()
 }
 
-extension SearchLocaitonViewController: UITextViewDelegate {
+extension SearchBookViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
             textView.resignFirstResponder()
-            viewModel.geoCodeProvider.rx.request(.geocode(addr: textView.text)).subscribe(onSuccess: { (res) in
-                
-                if let geocodeModel = try? JSONDecoder().decode(GeocodeModel.self, from: res.data) {
-                    self.viewModel.adderData.onNext(geocodeModel.addresses)
-                    print(geocodeModel)
-                }
-                
-                
-                print(res)
-            }) { (err) in
-                print(err)
+            viewModel.provider.rx.request(.searchBooks(title: textView.text))
+                .filterSuccessfulStatusCodes()
+                .map(BooksModel.self)
+                .subscribe(onSuccess: { [unowned self] res in
+                    self.viewModel.booksData.onNext(res.data)
+                    
+                }) { (err) in
+                    print(err)
             }
             .disposed(by: rx.disposeBag)
         }
@@ -113,7 +140,7 @@ extension SearchLocaitonViewController: UITextViewDelegate {
     }
 }
 
-extension SearchLocaitonViewController {
+extension SearchBookViewController {
     
     @objc func touchToExitBtn() {
         self.navigationController?.popViewController(animated: true)
@@ -156,7 +183,7 @@ extension SearchLocaitonViewController {
         }
         
         adderCollectionView.snp.makeConstraints { (make) in
-            make.top.equalTo(textView.snp.bottom).offset(24)
+            make.top.equalTo(textView.snp.bottom).offset(14)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()

@@ -50,7 +50,7 @@ extension BookAPI: TargetType {
         case .detailBook(let id):
             return "/books?\(id)"
         case .searchBooks(let title):
-            return "/books/search?\(title)"
+            return "/books/search/\(title)"
         case .booksList:
             return "/books"
         case .writeBook:
@@ -100,7 +100,6 @@ extension BookAPI: TargetType {
             
             
         case .booksList(let lat, let log):
-            
             return .requestParameters(parameters: ["latitude" : lat, "longitude" : log], encoding: URLEncoding.queryString)
             
         // MARK: book

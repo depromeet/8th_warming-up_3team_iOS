@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class PostModel {
+public struct PostModel {
     
     var title: String
     var colorType: String

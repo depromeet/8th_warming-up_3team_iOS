@@ -32,12 +32,13 @@ extension UILabel {
         self.attributedText = attrText
     }
 
-    func setFocusTextWithLetterSpacing(text: String, focusText: String, focusFont: UIFont, focusColor: UIColor, letterSpacing: CGFloat, lineHeight: CGFloat) {
+    func setFocusTextWithLetterSpacing(text: String, focusText: String, focusFont: UIFont, focusColor: UIColor, letterSpacing: CGFloat, lineHeight: CGFloat, color: UIColor) {
         let style = NSMutableParagraphStyle()
         let attrText = NSMutableAttributedString(string: text)
         style.lineSpacing = lineHeight - self.font.lineHeight
         attrText.addAttribute(.kern, value: letterSpacing, range: NSRange(location: 0, length: attrText.length))
         attrText.addAttribute(.paragraphStyle, value: style, range: NSRange(location: 0, length: attrText.length))
+        attrText.addAttribute(.foregroundColor, value: color, range:  NSRange(location: 0, length: attrText.length))
 
 
         //Focus 처리

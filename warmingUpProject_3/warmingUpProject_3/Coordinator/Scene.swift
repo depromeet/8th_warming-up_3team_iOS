@@ -17,6 +17,7 @@ enum Scene {
     case main(MainViewModel)
     case write(WriteViewModel)
     case search(WriteViewModel)
+    case searchBook(WriteViewModel)
     case mypage(MyPageViewModel)
 }
 
@@ -27,8 +28,8 @@ extension Scene {
         
         switch self {
         case .splash:
-                guard let splashVC = storyboard.instantiateViewController(withIdentifier: "splashVC") as? SplashViewController else { fatalError() }
-                return splashVC
+            guard let splashVC = storyboard.instantiateViewController(withIdentifier: "splashVC") as? SplashViewController else { fatalError() }
+            return splashVC
             
         case .login(let viewModel):
             guard var loginVC = storyboard.instantiateViewController(withIdentifier: "loginVC") as? LoginViewController else { fatalError() }
@@ -71,10 +72,16 @@ extension Scene {
             searchVC.bind(viewModel: viewModel)
             return searchVC
             
+        case .searchBook(let viewModel):
+            var searchVC = SearchBookViewController()
+            searchVC.bind(viewModel: viewModel)
+            return searchVC
+            
         case .mypage(let viewModel):
             var mypageVC = MyPageViewController()
             mypageVC.bind(viewModel: viewModel)
             return mypageVC
+            
         }
     }
 }

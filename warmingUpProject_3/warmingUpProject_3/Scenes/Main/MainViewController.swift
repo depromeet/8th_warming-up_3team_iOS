@@ -144,8 +144,6 @@ class MainViewController: UIViewController, ViewModelBindableType {
         return bookListCollectionView
     }()
     
-    
-    // --------------
     let selectedBaseView: UIView = {
         let selectedBaseView = UIView()
         selectedBaseView.backgroundColor = .white
@@ -300,30 +298,29 @@ class MainViewController: UIViewController, ViewModelBindableType {
             })
             .disposed(by: rx.disposeBag)
         
-        /*
-         // 네이버 지도에서 선택된 마커가 들어오는 경우 처리
-         viewModel.selectedData
-         .subscribe(onNext: { [unowned self]values in
-         print("------ value:    \(values)")
-         
-         // 애니메이션 줘야함
-         if values.isEmpty || values == [] {
-         self.baseView.isHidden = false
-         self.btnWrite.isHidden = false
-         self.selectedBaseView.isHidden = true
-         } else {
-         self.baseView.isHidden = true
-         self.btnWrite.isHidden = true
-         self.selectedBaseView.isHidden = false
-         }
-         
-         })
-         .disposed(by: rx.disposeBag)
-         */
-//
-//            .bind(to: bookListCollectionView.rx.items(cellIdentifier: String(describing: EmptyCollectionCell.self), cellType: EmptyCollectionCell.self)) { (row, element, cell) in
-//                print(1)
-//            }.disposed(by: rx.disposeBag)
+        
+        // 네이버 지도에서 선택된 마커가 들어오는 경우 처리
+        viewModel.selectedData
+            .subscribe(onNext: { [unowned self] values in
+                print("------ value:    \(values)")
+                
+                // 애니메이션 줘야함
+                if values.isEmpty || values == [] {
+                    self.baseView.isHidden = false
+                    self.btnWrite.isHidden = false
+                    self.selectedBaseView.isHidden = true
+                } else {
+                    self.baseView.isHidden = true
+                    self.btnWrite.isHidden = true
+                    self.selectedBaseView.isHidden = false
+                }
+                
+            })
+            .disposed(by: rx.disposeBag)
+        //
+        //            .bind(to: bookListCollectionView.rx.items(cellIdentifier: String(describing: EmptyCollectionCell.self), cellType: EmptyCollectionCell.self)) { (row, element, cell) in
+        //                print(1)
+        //            }.disposed(by: rx.disposeBag)
         
         
         viewModel.writeData
@@ -379,6 +376,10 @@ class MainViewController: UIViewController, ViewModelBindableType {
             }).disposed(by: rx.disposeBag)
         
         viewModel.selectedData.bind(to: selectedBookListCollectionView.rx.items(cellIdentifier: String(describing: selectedBookCollectionCell.self), cellType: selectedBookCollectionCell.self)) { (row, element, cell) in
+            
+            element
+            
+            cell.bgBookTitle
             
             //            let sameElement = self.viewModel.copyWriteData.first { $0.id == element }
             //
@@ -567,7 +568,7 @@ extension MainViewController: CLLocationManagerDelegate {
 extension MainViewController: NMFMapViewTouchDelegate {
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        sortingMarker(picks: naverMapView.mapView.pickAll(point, withTolerance: 3))
+        sortingMarker(picks: naverMapView.mapView.pickAll(point, withTolerance: 10))
     }
     
     private func sortingMarker(picks: [NMFPickable]? ) {
