@@ -11,15 +11,24 @@ import Foundation
 import UIKit
 import SnapKit
 import Action
+import NMapsMap
 import NSObject_Rx
 import KakaoSDKUser
 
-class MyPageViewController: UIViewController, ViewModelBindableType {
+class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewTouchDelegate {
     var viewModel: MyPageViewModel!
     
     override func loadView() {
         super.loadView()
         setUI()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.frame.height, right: 0)
+        
+        
     }
     
     override func viewDidLoad() {
@@ -50,10 +59,13 @@ class MyPageViewController: UIViewController, ViewModelBindableType {
     let naviView: UIView = {
         let naviView = UIView()
         naviView.backgroundColor = .red
-        
-        
         return naviView
     }()
+    
+    let naverMapView = NMFNaverMapView()
+    
+   
+    
     
     let btnBack: UIButton = {
         let btnBack = UIButton(type: .custom)
@@ -62,6 +74,14 @@ class MyPageViewController: UIViewController, ViewModelBindableType {
     }()
     
     let bookListCollectionView: UICollectionView = {
+        
+        var mapView: UIView = {
+               let view = UIView()
+               view.frame.size = CGSize(width: Dimens.deviceWidth, height: 165)
+               view.backgroundColor = .black
+               return view
+           }()
+        
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = .zero
         layout.minimumLineSpacing = 42
@@ -69,10 +89,12 @@ class MyPageViewController: UIViewController, ViewModelBindableType {
         
         layout.itemSize = CGSize(width: (Dimens.deviceWidth * 0.34667), height: (Dimens.deviceWidth * 0.34667) + 38 + 60 + 14)
         layout.scrollDirection = .vertical
-        layout.headerReferenceSize = CGSize(width: Dimens.deviceWidth, height: 300)
+        layout.headerReferenceSize = CGSize(width: Dimens.deviceWidth, height: 195)
         let bookListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         bookListCollectionView.contentInset = UIEdgeInsets(top: 0, left: 34, bottom: 0, right: 39)
-        bookListCollectionView.backgroundColor = .white
+        bookListCollectionView.addSubview(mapView)
+        
+        bookListCollectionView.backgroundColor = .systemPink
         bookListCollectionView.showsHorizontalScrollIndicator = false
         bookListCollectionView.register(HeaderCollectionCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: HeaderCollectionCell.self))
         bookListCollectionView.register(MyPageBookCollectionCell.self, forCellWithReuseIdentifier: String(describing: MyPageBookCollectionCell.self))
