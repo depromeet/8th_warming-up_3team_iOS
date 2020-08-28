@@ -46,7 +46,7 @@ class MainViewModel: BaseViewModel {
         }
     }
     
-    func requesBooksList(lat: Double, log: Double) {
+    func requestBooksList(lat: Double, log: Double) {
         provider.rx
             .request(.booksList(lat: lat, log: log))
             .filterSuccessfulStatusCodes()

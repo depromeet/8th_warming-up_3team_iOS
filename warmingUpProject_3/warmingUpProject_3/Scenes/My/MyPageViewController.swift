@@ -51,6 +51,23 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
         bookListCollectionView.rx.willDisplaySupplementaryView.subscribe(onNext: { (view, kind, cell) in
             print(view, kind, cell)
         }).disposed(by: rx.disposeBag)
+        
+    
+        /* 이쪽같긴 한데 ,, data model 을 모르겠슴 
+        viewModel.adderData
+        .do(onNext: { bookList in
+            if bookList.isEmpty {
+                self.bookListCollectionView.addSubview(EmptyView())
+            } else {
+                for subView in self.bookListCollectionView.subviews {
+                    if subView is EmptyView {
+                        subView.removeFromSuperview()
+                    }
+                }
+            }
+        })
+        
+       */
     }
 
     //MARK: - UI Component

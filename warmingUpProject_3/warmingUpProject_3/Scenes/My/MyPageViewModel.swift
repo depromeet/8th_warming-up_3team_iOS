@@ -27,4 +27,8 @@ class MyPageViewModel: BaseViewModel {
                 print("err:    \(err)")
         }.disposed(by: rx.disposeBag)
     }
+    
+    
+    
+    
 }

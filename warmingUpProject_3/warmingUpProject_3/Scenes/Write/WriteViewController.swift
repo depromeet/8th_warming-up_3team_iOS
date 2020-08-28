@@ -282,6 +282,7 @@ class WriteViewController: UIViewController,ViewModelBindableType {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         print("-------------- \(viewModel.model)")
         
         print("-------------- \(viewModel.model)")
@@ -422,6 +423,10 @@ class WriteViewController: UIViewController,ViewModelBindableType {
             cell.layer.borderWidth = 1
             
         }.disposed(by: rx.disposeBag)
+        
+        
+        
+        
     }
 }
 

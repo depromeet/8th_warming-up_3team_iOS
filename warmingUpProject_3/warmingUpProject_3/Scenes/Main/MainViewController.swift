@@ -257,7 +257,7 @@ class MainViewController: UIViewController, ViewModelBindableType {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        viewModel.requesBooksList(lat: locationManager?.location?.coordinate.latitude ?? 37.5666102, log: locationManager?.location?.coordinate.longitude ?? 126.9783881)
+        viewModel.requestBooksList(lat: locationManager?.location?.coordinate.latitude ?? 37.5666102, log: locationManager?.location?.coordinate.longitude ?? 126.9783881)
         
     }
     
@@ -323,7 +323,7 @@ class MainViewController: UIViewController, ViewModelBindableType {
         //            }.disposed(by: rx.disposeBag)
         
         
-        viewModel.writeData
+        viewModel.writeData // write data인지는 모르겠습니다 ... ?
             .do(onNext: { bookList in
                 if bookList.isEmpty {
                     self.bookListCollectionView.addSubview(EmptyView())
