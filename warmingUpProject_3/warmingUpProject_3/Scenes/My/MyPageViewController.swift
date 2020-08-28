@@ -7,7 +7,6 @@
 //
 
 import Foundation
-
 import UIKit
 import SnapKit
 import Action
@@ -26,9 +25,8 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.frame.height, right: 0)
-        
-        
+//        naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.frame.height, right: 0)
+ 
     }
     
     override func viewDidLoad() {
@@ -58,11 +56,9 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
     //MARK: - UI Component
     let naviView: UIView = {
         let naviView = UIView()
-        naviView.backgroundColor = .red
+        naviView.backgroundColor = ColorUtils.color136
         return naviView
     }()
-    
-    let naverMapView = NMFNaverMapView()
     
     let btnBack: UIButton = {
         let btnBack = UIButton(type: .custom)
@@ -72,10 +68,17 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
     
     let bookListCollectionView: UICollectionView = {
         
+        var profileView: UIView = {
+            let view = UIView()
+//            view.frame.size = CGSize(width: 335, height: 129)
+             view.backgroundColor = .systemPink
+            return view
+        }()
+        
         var mapView: UIView = {
                let view = UIView()
-               view.frame.size = CGSize(width: (Dimens.deviceWidth*0.34667*2+46), height: 165)
-               view.backgroundColor = .black
+//               view.frame.size = CGSize(width: 335, height: 165)
+                view.backgroundColor = .systemGray
                return view
            }()
         
@@ -86,15 +89,35 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
         
         layout.itemSize = CGSize(width: (Dimens.deviceWidth * 0.34667), height: (Dimens.deviceWidth * 0.34667) + 38 + 60 + 14)
         layout.scrollDirection = .vertical
-        layout.headerReferenceSize = CGSize(width: Dimens.deviceWidth, height: 195)
-        let bookListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        layout.headerReferenceSize = CGSize(width: Dimens.deviceWidth, height: 400)
+        let bookListCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: Dimens.deviceWidth, height: 1), collectionViewLayout: layout)
         bookListCollectionView.contentInset = UIEdgeInsets(top: 0, left: 34, bottom: 0, right: 39)
-        bookListCollectionView.addSubview(mapView)
         
-        bookListCollectionView.backgroundColor = .systemPink
+        
+        bookListCollectionView.backgroundColor = ColorUtils.colorCoverWhite
         bookListCollectionView.showsHorizontalScrollIndicator = false
         bookListCollectionView.register(HeaderCollectionCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: String(describing: HeaderCollectionCell.self))
         bookListCollectionView.register(MyPageBookCollectionCell.self, forCellWithReuseIdentifier: String(describing: MyPageBookCollectionCell.self))
+        
+        bookListCollectionView.addSubview(profileView)
+        bookListCollectionView.addSubview(mapView)
+        
+        profileView.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(10)
+            make.width.equalToSuperview().offset(-40)
+            make.height.equalTo(129)
+            make.leading.equalToSuperview().offset(-14)
+            make.trailing.equalToSuperview().offset(14)
+        }
+        
+        mapView.snp.makeConstraints { (make) in
+            make.top.equalTo(profileView.snp.bottom).offset(0)
+            make.width.equalToSuperview().offset(-40)
+            make.height.equalTo(165)
+            make.leading.equalToSuperview().offset(-14)
+//            make.trailing.equalToSuperview().offset(300)
+        }
+        
         return bookListCollectionView
     }()
     
@@ -108,7 +131,6 @@ extension MyPageViewController {
         self.view.addSubview(naviView)
         self.view.addSubview(btnBack)
         self.view.addSubview(bookListCollectionView)
-        
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
         self.view.setNeedsUpdateConstraints()
         setLayout()
