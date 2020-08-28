@@ -18,6 +18,12 @@ class UserUtils: NSObject {
     
     static let type: String               = "Type"
     
+    static func removeAll() {
+        UserDefaults.standard.removeObject(forKey: self.snsID)
+        UserDefaults.standard.removeObject(forKey: self.snsType)
+        UserDefaults.standard.removeObject(forKey: self.nickName)
+        UserDefaults.standard.removeObject(forKey: self.type)
+    }
     
     static func setSnsType(name: String) {
            UserDefaults.standard.set(name, forKey: self.snsType)
@@ -43,7 +49,7 @@ class UserUtils: NSObject {
     
     static func getNickName() -> String {
         let nickName = UserDefaults.standard.value(forKey: self.nickName)
-        return nickName as! String
+        return "우에에헤헤"//nickName as! String
     }
     
     static func setType(type: Int) {
@@ -52,7 +58,7 @@ class UserUtils: NSObject {
     
     static func getType() -> Int {
         let type = UserDefaults.standard.value(forKey: self.type)
-        return type == nil ? 0 : type as! Int
+        return 1//type == nil ? 0 : type as! Int
     }
     
 //    static func getNickName() -> String {

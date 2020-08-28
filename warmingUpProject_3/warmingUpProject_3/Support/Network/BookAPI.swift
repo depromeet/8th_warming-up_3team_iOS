@@ -25,12 +25,7 @@ public enum BookAPI {
     
     case booksList(lat: Double, log: Double)
     
-    //TODO: 입력 모델 만들기
-    case writeBook(
-        title: String, colorType: String, lat: CGFloat, lon: CGFloat, phrase: String, reason: String,
-        time: String, author: String, description: String, thumbnail: String, pubDate: String, publisher: String,
-        tag: [String], userID: Int
-    )
+    case writeBook(model: PostModel)
     
     case userBooksInfo(userID: Int)
     
@@ -113,27 +108,23 @@ extension BookAPI: TargetType {
             return .requestPlain
             
         //TODO: 입력 모델 만들기
-        case .writeBook(
-            let title, let colorType, let lat, let log, let phrase, let reason,
-            let time, let author, let description, let thumbnail, let pubDate, let publisher,
-            let tags, let userID
-            ):
+        case .writeBook(let model):
             return .requestParameters(
                 parameters: [
-                    "title": title,
-                    "colorType": colorType,
-                    "latitude": lat,
-                    "longitude": log,
-                    "phrase": phrase,
-                    "reason": reason,
-                    "time": time,
-                    "author": author,
-                    "description": description,
-                    "thumbnail": thumbnail,
-                    "pubDate": pubDate,
-                    "publisher": publisher,
-                    "tags": tags,
-                    "userId": userID
+                    "title": model.title,
+                    "colorType": model.colorType,
+                    "latitude": model.lat,
+                    "longitude": model.log,
+                    "phrase": model.phrase,
+                    "reason": model.reason,
+                    "time": model.time,
+                    "author": model.author,
+                    "description": model.description,
+                    "thumbnail": model.thumbnail,
+                    "pubDate": model.pubDate,
+                    "publisher": model.publisher,
+                    "tags": model.tags,
+                    "userId": model.userID
 
                 ],
                 encoding: JSONEncoding.default)

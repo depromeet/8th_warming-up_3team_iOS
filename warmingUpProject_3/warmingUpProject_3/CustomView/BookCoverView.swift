@@ -33,7 +33,7 @@ class BookCoverView: UIView {
             UIColor(red: 0, green: 0, blue: 0, alpha: 0.06).cgColor
         ]
         gra.type = .axial
-        gra.startPoint = CGPoint(x: 0, y: 0.5)
+        gra.startPoint = CGPoint(x: .zero, y: 0.5)
         gra.endPoint = CGPoint(x: 1, y: 0.5)
         return gra
     }()

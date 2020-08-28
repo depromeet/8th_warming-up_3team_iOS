@@ -37,6 +37,9 @@
 		B882A08524EE8B5D00FC480E /* RoundCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882A08424EE8B5D00FC480E /* RoundCollectionCell.swift */; };
 		B882A08724EFB17C00FC480E /* mapViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882A08624EFB17C00FC480E /* mapViewManager.swift */; };
 		B882A08924EFC9D300FC480E /* ImageUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882A08824EFC9D300FC480E /* ImageUtils.swift */; };
+		B8B7313324F8E01E0046532B /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B7313224F8E01E0046532B /* PostModel.swift */; };
+		B8B7313524F8EBF70046532B /* GeocodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B7313424F8EBF70046532B /* GeocodeModel.swift */; };
+		B8B7313724F8ED1E0046532B /* adderCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B7313624F8ED1E0046532B /* adderCollectionCell.swift */; };
 		B8BCF66224EB5B60006142A7 /* bookListcollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BCF66124EB5B60006142A7 /* bookListcollectionView.swift */; };
 		B8BCF66524EB5BA3006142A7 /* BookCoverCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8BCF66424EB5BA3006142A7 /* BookCoverCollectionCell.swift */; };
 		B8C35FF024E382DF002D2E75 /* TransitionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C35FEF24E382DF002D2E75 /* TransitionModel.swift */; };
@@ -72,6 +75,7 @@
 		B8EB092D24F7C8DB00C926CC /* HeaderCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EB092C24F7C8DB00C926CC /* HeaderCollectionCell.swift */; };
 		B8EB092F24F7EDBF00C926CC /* GeoCodeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EB092E24F7EDBF00C926CC /* GeoCodeAPI.swift */; };
 		B8EB093224F7F1D700C926CC /* SearchLocaitonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EB093124F7F1D700C926CC /* SearchLocaitonViewController.swift */; };
+		B8EE7E1724F839DD008932BF /* emptyCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EE7E1624F839DD008932BF /* emptyCollectionCell.swift */; };
 		B8F8830324E00C2000EED1C1 /* NanumMyeongjoBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8F8830124E00C2000EED1C1 /* NanumMyeongjoBold.ttf */; };
 		B8F8830424E00C2000EED1C1 /* NanumMyeongjo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B8F8830224E00C2000EED1C1 /* NanumMyeongjo.ttf */; };
 /* End PBXBuildFile section */
@@ -112,6 +116,9 @@
 		B882A08424EE8B5D00FC480E /* RoundCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundCollectionCell.swift; sourceTree = "<group>"; };
 		B882A08624EFB17C00FC480E /* mapViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewManager.swift; sourceTree = "<group>"; };
 		B882A08824EFC9D300FC480E /* ImageUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUtils.swift; sourceTree = "<group>"; };
+		B8B7313224F8E01E0046532B /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
+		B8B7313424F8EBF70046532B /* GeocodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodeModel.swift; sourceTree = "<group>"; };
+		B8B7313624F8ED1E0046532B /* adderCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = adderCollectionCell.swift; sourceTree = "<group>"; };
 		B8BCF66124EB5B60006142A7 /* bookListcollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bookListcollectionView.swift; sourceTree = "<group>"; };
 		B8BCF66424EB5BA3006142A7 /* BookCoverCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCoverCollectionCell.swift; sourceTree = "<group>"; };
 		B8C35FEF24E382DF002D2E75 /* TransitionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionModel.swift; sourceTree = "<group>"; };
@@ -147,6 +154,7 @@
 		B8EB092C24F7C8DB00C926CC /* HeaderCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCollectionCell.swift; sourceTree = "<group>"; };
 		B8EB092E24F7EDBF00C926CC /* GeoCodeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoCodeAPI.swift; sourceTree = "<group>"; };
 		B8EB093124F7F1D700C926CC /* SearchLocaitonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocaitonViewController.swift; sourceTree = "<group>"; };
+		B8EE7E1624F839DD008932BF /* emptyCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = emptyCollectionCell.swift; sourceTree = "<group>"; };
 		B8F8830124E00C2000EED1C1 /* NanumMyeongjoBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjoBold.ttf; sourceTree = "<group>"; };
 		B8F8830224E00C2000EED1C1 /* NanumMyeongjo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjo.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -273,6 +281,7 @@
 				56871D4E24F06D2B00E1F863 /* WriteScrollViewController.swift */,
 				B823CCD224EC0701009C734F /* WriteViewModel.swift */,
 				B823CCD024EC06DA009C734F /* WriteViewController.swift */,
+				B8B7313224F8E01E0046532B /* PostModel.swift */,
 			);
 			path = Write;
 			sourceTree = "<group>";
@@ -306,6 +315,7 @@
 				B882A08424EE8B5D00FC480E /* RoundCollectionCell.swift */,
 				B82BEBDA24F0DB6300E3B375 /* selectedBookCollectionCell.swift */,
 				56871D5D24F29E5A00E1F863 /* ColorCollectionCell.swift */,
+				B8EE7E1624F839DD008932BF /* emptyCollectionCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -501,6 +511,8 @@
 			isa = PBXGroup;
 			children = (
 				B8EB093124F7F1D700C926CC /* SearchLocaitonViewController.swift */,
+				B8B7313424F8EBF70046532B /* GeocodeModel.swift */,
+				B8B7313624F8ED1E0046532B /* adderCollectionCell.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -636,6 +648,7 @@
 				B882A07E24EE1E0E00FC480E /* UserUtils.swift in Sources */,
 				B8C35FF824E38425002D2E75 /* Constants.swift in Sources */,
 				56CF14CE24D53533008BDCEF /* ViewController.swift in Sources */,
+				B8B7313724F8ED1E0046532B /* adderCollectionCell.swift in Sources */,
 				B882A08924EFC9D300FC480E /* ImageUtils.swift in Sources */,
 				B8C35FF224E38312002D2E75 /* Scene.swift in Sources */,
 				B85F608C24E43368004B2EEE /* MainViewModel.swift in Sources */,
@@ -651,6 +664,7 @@
 				B8EB092424F7AE1000C926CC /* MyPageViewController.swift in Sources */,
 				B8CD07FA24DB0FFF007579FA /* Extension+UILabel.swift in Sources */,
 				B882A08524EE8B5D00FC480E /* RoundCollectionCell.swift in Sources */,
+				B8B7313324F8E01E0046532B /* PostModel.swift in Sources */,
 				B8D1E2A324F7492800C669B7 /* SplashViewController.swift in Sources */,
 				B8EB093224F7F1D700C926CC /* SearchLocaitonViewController.swift in Sources */,
 				B85DF84A24ED0F6B00963927 /* BookCoverView.swift in Sources */,
@@ -665,10 +679,12 @@
 				B8C35FF024E382DF002D2E75 /* TransitionModel.swift in Sources */,
 				B8C3600B24E39519002D2E75 /* ViewModelBindableType.swift in Sources */,
 				B8CD079F24D7C971007579FA /* LoginViewController.swift in Sources */,
+				B8B7313524F8EBF70046532B /* GeocodeModel.swift in Sources */,
 				B82F617F24E39CCF006A7F91 /* LoginViewModel.swift in Sources */,
 				B8EB092B24F7C5E400C926CC /* MyPageBookCollectionCell.swift in Sources */,
 				B823CCD324EC0701009C734F /* WriteViewModel.swift in Sources */,
 				B8C3600224E387E2002D2E75 /* OnBoardNameingViewModel.swift in Sources */,
+				B8EE7E1724F839DD008932BF /* emptyCollectionCell.swift in Sources */,
 				B82F618124E3B37C006A7F91 /* Extension+UIButton.swift in Sources */,
 				B882A08124EE484D00FC480E /* AppleID.swift in Sources */,
 				B8D1E2AA24F76ADB00C669B7 /* UrlAPI.swift in Sources */,

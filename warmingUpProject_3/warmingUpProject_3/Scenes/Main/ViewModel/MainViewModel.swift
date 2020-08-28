@@ -15,9 +15,11 @@ class MainViewModel: BaseViewModel {
     
     let selectedData = PublishSubject<[UInt]>()
     
-    let times = Observable.of(["모든 시간", "촉촉한 새벽", "새로운 아침", "나른한 낮 시간", "별 헤는 밤"])
+    let times = Observable.of(["모든 시간", "촉촉한 새벽", "새로운 아침", "나른한 낮 시간", "빛나는 오후", "별 헤는 밤"])
     
     let writeData = BehaviorSubject<[BookList]>(value: [])
+    
+    let emptyData = PublishSubject<Bool>()
     
     func myPageAction() {
         let myPageViewModel = MyPageViewModel(scenCoordinator: self.scenCoordinator)
@@ -50,7 +52,14 @@ class MainViewModel: BaseViewModel {
             .filterSuccessfulStatusCodes()
             .map(BookListModel.self)
             .subscribe(onSuccess: { [unowned self] (res) in
-                self.writeData.onNext(res.data ?? [])
+                print(lat)
+                print(log)
+                if res.data?.isEmpty ?? true {
+                    print(res.data?.isEmpty)
+                    self.emptyData.onNext(true)
+                } else {
+                    self.writeData.onNext(res.data ?? [])
+                }
             }) { (err) in
                 print(err)
         }

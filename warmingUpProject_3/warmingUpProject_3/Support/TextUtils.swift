@@ -54,4 +54,14 @@ class TextUtils {
         return attrText
     }
 
+    static func attributedPlaceholder(text: String, letterSpacing: CGFloat, aligment: NSTextAlignment ) -> NSMutableAttributedString {
+            let style = NSMutableParagraphStyle()
+    //        style.
+            style.alignment = aligment
+            let attrText = NSMutableAttributedString(string: text)
+            attrText.addAttribute(.kern, value: letterSpacing, range: NSRange(location: 0, length: attrText.length))
+            attrText.addAttribute(.foregroundColor, value: ColorUtils.color170, range: NSRange(location: 0, length: attrText.length))
+            attrText.addAttribute(.paragraphStyle, value: style, range: NSRange(location: 0, length: attrText.length))
+            return attrText
+        }
 }

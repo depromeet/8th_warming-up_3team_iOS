@@ -68,7 +68,6 @@ class OnBoardNameingViewController: UIViewController, ViewModelBindableType {
         btnNext.setBackgroundColor(UIColor(r: 84, g: 90, b: 124), for: .selected)
         btnNext.setBackgroundColor(#colorLiteral(red: 0.8666666667, green: 0.8666666667, blue: 0.8666666667, alpha: 1), for: .normal)
         btnNext.titleEdgeInsets.top = -Dimens.getSafeAreaBottomMargin() - 17
-//        btnNext.titleLabel?.attributedText = TextUtils.attributedPlaceholder(text: "다음", letterSpacing: -0.09)
         return btnNext
     }()
     
@@ -86,14 +85,12 @@ class OnBoardNameingViewController: UIViewController, ViewModelBindableType {
             .controlEvent(.touchUpInside)
             .subscribe(onNext: { [unowned self] isSel in
                 if self.btnNext.isSelected {
-                    print("-----tvNickName.text: \(self.tvNickName.text)")
                     UserUtils.setNickName(name: self.tvNickName.text)
                     self.viewModel.nextAction()
                 }
             })
             .disposed(by: rx.disposeBag)
             
-//            .action = viewModel?.nextAction(sel: btnNext.isSelected)
     }
     
 }

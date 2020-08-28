@@ -115,7 +115,7 @@ class MainViewController: UIViewController, ViewModelBindableType {
         layout.estimatedItemSize = CGSize(width: 10, height: 34)
         layout.scrollDirection = .horizontal
         let timeListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        timeListCollectionView.contentInset = UIEdgeInsets(top: 16, left: 20, bottom: 12, right: 20)
+        timeListCollectionView.contentInset = UIEdgeInsets(top: 16, left: 20, bottom: 12, right: 60)
         timeListCollectionView.backgroundColor = .white
         timeListCollectionView.showsHorizontalScrollIndicator = false
         timeListCollectionView.register(RoundCollectionCell.self, forCellWithReuseIdentifier: String(describing: RoundCollectionCell.self))
@@ -256,18 +256,24 @@ class MainViewController: UIViewController, ViewModelBindableType {
         lbSelecteLocation.setTextWithLetterSpacing(text: "망원동, 아틀리에 크레타", letterSpacing: -0.07, lineHeight: 17)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.requesBooksList(lat: locationManager?.location?.coordinate.latitude ?? 37.5666102, log: locationManager?.location?.coordinate.longitude ?? 126.9783881)
+        
+    }
+    
     @objc func tapProfile() {
         viewModel.myPageAction()
     }
     
     func bindViewModel() {
-        viewModel.requsTest()
-        
-        
         btnWrite.rx.action = viewModel.writeAction()
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapProfile))
         profileBaseView.addGestureRecognizer(tap)
         
+        //FIXME: 현재 위치 동작안함 이벤트가 왜 안걸리지?!
         btnCurrentLocation.rx
             .controlEvent(.touchUpInside)
             .subscribe(onNext: { _ in
@@ -314,15 +320,45 @@ class MainViewController: UIViewController, ViewModelBindableType {
          })
          .disposed(by: rx.disposeBag)
          */
-        viewModel.writeData.bind(to: bookListCollectionView.rx.items(cellIdentifier: String(describing: BookCoverCollectionCell.self), cellType: BookCoverCollectionCell.self)) { (row, element, cell) in
-            cell.bookCover.bind(color: element.colorType, text: element.reason)
-            cell.lbBookTitle.setTextWithLetterSpacing(text: element.title, letterSpacing: -0.07, lineHeight: 17)
-            cell.lbWriter.setTextWithLetterSpacing(text: element.author, letterSpacing: -0.06, lineHeight: 14)
+//
+//            .bind(to: bookListCollectionView.rx.items(cellIdentifier: String(describing: EmptyCollectionCell.self), cellType: EmptyCollectionCell.self)) { (row, element, cell) in
+//                print(1)
+//            }.disposed(by: rx.disposeBag)
+        
+        
+        viewModel.writeData
+            .do(onNext: { bookList in
+                if bookList.isEmpty {
+                    self.bookListCollectionView.addSubview(EmptyView())
+                } else {
+                    for subView in self.bookListCollectionView.subviews {
+                        if subView is EmptyView {
+                            subView.removeFromSuperview()
+                        }
+                    }
+                }
+            })
+            .bind(to: bookListCollectionView.rx.items(cellIdentifier: String(describing: BookCoverCollectionCell.self), cellType: BookCoverCollectionCell.self)) { (row, element, cell) in
+                print(element)
+                
+                cell.bookCover.bind(color: element.colorType, text: element.reason)
+                cell.lbBookTitle.setTextWithLetterSpacing(text: element.title, letterSpacing: -0.07, lineHeight: 17)
+                cell.lbWriter.setTextWithLetterSpacing(text: element.author, letterSpacing: -0.06, lineHeight: 14)
         }.disposed(by: rx.disposeBag)
         
         
         viewModel.times.bind(to: timeListCollectionView.rx.items(cellIdentifier: String(describing: RoundCollectionCell.self), cellType: RoundCollectionCell.self)) { (row, element, cell) in
             cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 20)
+            if row == 0 {
+                cell.lbRoundText.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+                cell.lbRoundText.textColor = .white
+                cell.backgroundColor = ColorUtils.colorTimeSelected
+            } else {
+                cell.lbRoundText.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+                cell.lbRoundText.textColor = ColorUtils.color68
+                cell.backgroundColor = ColorUtils.color243
+            }
+            
         }.disposed(by: rx.disposeBag)
         
         timeListCollectionView.rx
@@ -333,16 +369,13 @@ class MainViewController: UIViewController, ViewModelBindableType {
                     let cell = self.timeListCollectionView.cellForItem(at: indexPath) as? RoundCollectionCell
                     cell?.lbRoundText.font = UIFont.systemFont(ofSize: 13, weight: .regular)
                     cell?.lbRoundText.textColor = ColorUtils.color68
-                    cell?.layer.borderWidth = 1
-                    cell?.layer.borderColor = ColorUtils.color231.cgColor
-                    cell?.backgroundColor = .white
+                    cell?.backgroundColor = ColorUtils.color243
                 }
             }).subscribe(onNext: { [unowned self] indexPath in
                 let cell = self.timeListCollectionView.cellForItem(at: indexPath) as? RoundCollectionCell
                 cell?.lbRoundText.font = UIFont.systemFont(ofSize: 13, weight: .medium)
                 cell?.lbRoundText.textColor = .white
                 cell?.backgroundColor = ColorUtils.colorTimeSelected
-                cell?.layer.borderWidth = 0
             }).disposed(by: rx.disposeBag)
         
         viewModel.selectedData.bind(to: selectedBookListCollectionView.rx.items(cellIdentifier: String(describing: selectedBookCollectionCell.self), cellType: selectedBookCollectionCell.self)) { (row, element, cell) in
@@ -518,7 +551,6 @@ extension MainViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locations.forEach { (location) in
             mapView.locationOverlay.location = NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
-            viewModel.requesBooksList(lat: location.coordinate.latitude, log: location.coordinate.longitude)
             print("location:  ",location.coordinate)
         }
     }

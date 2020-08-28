@@ -30,8 +30,6 @@ class RoundCollectionCell: UICollectionViewCell {
     
     private func setUI() {
         self.layer.cornerRadius = 17
-        self.layer.borderColor = ColorUtils.color231.cgColor
-        self.layer.borderWidth = 1
         self.addSubview(lbRoundText)
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
         self.setNeedsUpdateConstraints()

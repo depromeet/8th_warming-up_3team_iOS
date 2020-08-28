@@ -20,7 +20,7 @@ class BaseViewModel: NSObject {
     }
     
     
-    let provider = MoyaProvider<BookAPI>()
+    let provider = MoyaProvider<BookAPI>(plugins: [NetworkLoggerPlugin()])
     
     let geoCodeProvider = MoyaProvider<GeoCodeAPI>()
         
