@@ -76,8 +76,35 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
         
         var profileView: UIView = {
             let view = UIView()
-//            view.frame.size = CGSize(width: 335, height: 129)
-             view.backgroundColor = .systemPink
+            let profileImg = UIImageView()
+            let titleLabel = UILabel()
+            let subLabel = UILabel()
+            
+            profileImg.image = UIImage(named: "img28Profile1")
+            titleLabel.text = "외로운 간고등어님이 남긴 기록"
+            subLabel.text = "총 24권의 기록을 보관 중입니다."
+            
+            view.addSubview(profileImg)
+            view.addSubview(titleLabel)
+            view.addSubview(subLabel)
+            
+            profileImg.snp.makeConstraints {
+                $0.centerX.equalTo(view.snp.centerX)
+                $0.top.equalToSuperview().offset(10)
+            }
+            
+            titleLabel.snp.makeConstraints {
+                $0.centerX.equalTo(view.snp.centerX)
+                $0.centerY.equalTo(view.snp.centerY)
+                $0.height.equalTo(16)
+            }
+            
+            subLabel.snp.makeConstraints {
+                $0.top.equalTo(titleLabel.snp.bottom).offset(5)
+                $0.centerX.equalTo(view.snp.centerX)
+                $0.height.equalTo(14)
+            }
+
             return view
         }()
         
