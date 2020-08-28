@@ -22,13 +22,6 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
         setUI()
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-//        naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.frame.height, right: 0)
- 
-    }
-    
     override func viewDidLoad() {
         viewModel.requestUserInfo(userID: 1)
         
@@ -42,7 +35,21 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
             })
             .disposed(by: rx.disposeBag)
         
-        viewModel.bookList.bind(to: bookListCollectionView.rx.items(cellIdentifier: String(describing: MyPageBookCollectionCell.self), cellType: MyPageBookCollectionCell.self)) { (row, element, cell) in
+        viewModel.bookList
+            .do(onNext: { bookList in
+                if bookList.isEmpty {
+                    self.bookListCollectionView.addSubview(EmptyMyPage())
+                } else {
+                    for subView in self.bookListCollectionView.subviews {
+                        if subView is EmptyMyPage {
+                            subView.removeFromSuperview()
+                        }
+                    }
+                }
+            })
+
+            .bind(to: bookListCollectionView.rx.items(cellIdentifier: String(describing: MyPageBookCollectionCell.self), cellType: MyPageBookCollectionCell.self)) { (row, element, cell) in
+            
             cell.bookCover.bind(color: element.colorType, text: element.title)
             cell.lbBookTitle.setTextWithLetterSpacing(text: element.title, letterSpacing: -0.07, lineHeight: 17)
             cell.lbWriter.setTextWithLetterSpacing(text: element.author, letterSpacing: -0.06, lineHeight: 14)
@@ -53,21 +60,7 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
         }).disposed(by: rx.disposeBag)
         
     
-        /* 이쪽같긴 한데 ,, data model 을 모르겠슴 
-        viewModel.adderData
-        .do(onNext: { bookList in
-            if bookList.isEmpty {
-                self.bookListCollectionView.addSubview(EmptyView())
-            } else {
-                for subView in self.bookListCollectionView.subviews {
-                    if subView is EmptyView {
-                        subView.removeFromSuperview()
-                    }
-                }
-            }
-        })
         
-       */
     }
 
     //MARK: - UI Component
