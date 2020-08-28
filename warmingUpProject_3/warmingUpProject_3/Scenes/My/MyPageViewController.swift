@@ -83,6 +83,8 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
             profileImg.image = UIImage(named: "img28Profile1")
             titleLabel.text = "외로운 간고등어님이 남긴 기록"
             subLabel.text = "총 24권의 기록을 보관 중입니다."
+            titleLabel.font = UIFont.systemFont(ofSize: 16)
+            subLabel.font = UIFont.systemFont(ofSize: 14)
             
             view.addSubview(profileImg)
             view.addSubview(titleLabel)
