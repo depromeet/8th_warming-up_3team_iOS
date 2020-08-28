@@ -85,6 +85,7 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
             subLabel.text = "총 24권의 기록을 보관 중입니다."
             titleLabel.font = UIFont.systemFont(ofSize: 16)
             subLabel.font = UIFont.systemFont(ofSize: 14)
+            subLabel.textColor = ColorUtils.colorProfileBoard
             
             view.addSubview(profileImg)
             view.addSubview(titleLabel)
