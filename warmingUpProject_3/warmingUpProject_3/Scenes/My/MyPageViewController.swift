@@ -56,7 +56,13 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
     //MARK: - UI Component
     let naviView: UIView = {
         let naviView = UIView()
-        naviView.backgroundColor = ColorUtils.color136
+        let label = UILabel()
+        label.text = "나의 기록"
+        naviView.backgroundColor = ColorUtils.colorCoverWhite
+        naviView.addSubview(label)
+        label.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
         return naviView
     }()
     
