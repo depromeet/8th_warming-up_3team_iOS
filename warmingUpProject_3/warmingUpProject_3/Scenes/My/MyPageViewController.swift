@@ -89,7 +89,7 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
         
         layout.itemSize = CGSize(width: (Dimens.deviceWidth * 0.34667), height: (Dimens.deviceWidth * 0.34667) + 38 + 60 + 14)
         layout.scrollDirection = .vertical
-        layout.headerReferenceSize = CGSize(width: Dimens.deviceWidth, height: 400)
+        layout.headerReferenceSize = CGSize(width: Dimens.deviceWidth, height: 324)
         let bookListCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: Dimens.deviceWidth, height: 1), collectionViewLayout: layout)
         bookListCollectionView.contentInset = UIEdgeInsets(top: 0, left: 34, bottom: 0, right: 39)
         
@@ -107,7 +107,7 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
             make.width.equalToSuperview().offset(-40)
             make.height.equalTo(129)
             make.leading.equalToSuperview().offset(-14)
-            make.trailing.equalToSuperview().offset(14)
+//            make.trailing.equalToSuperview().offset(14)
         }
         
         mapView.snp.makeConstraints { (make) in
