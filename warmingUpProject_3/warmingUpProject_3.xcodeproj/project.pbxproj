@@ -862,7 +862,7 @@
 				CODE_SIGN_ENTITLEMENTS = warmingUpProject_3/warmingUpProject_3.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 001;
+				CURRENT_PROJECT_VERSION = 003;
 				DEVELOPMENT_TEAM = 4693VAH9ZM;
 				INFOPLIST_FILE = warmingUpProject_3/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -870,7 +870,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.bookjjogeuro;
 				PRODUCT_NAME = "북쪽으로";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -887,7 +887,7 @@
 				CODE_SIGN_ENTITLEMENTS = warmingUpProject_3/warmingUpProject_3.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 001;
+				CURRENT_PROJECT_VERSION = 003;
 				DEVELOPMENT_TEAM = 4693VAH9ZM;
 				INFOPLIST_FILE = warmingUpProject_3/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -895,7 +895,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.depromeet.bookjjogeuro;
 				PRODUCT_NAME = "북쪽으로";
 				PROVISIONING_PROFILE_SPECIFIER = "";
