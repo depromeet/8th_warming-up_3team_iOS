@@ -86,7 +86,9 @@ class OnBoardNameingViewController: UIViewController, ViewModelBindableType {
             .subscribe(onNext: { [unowned self] isSel in
                 if self.btnNext.isSelected {
                     UserUtils.setNickName(name: self.tvNickName.text)
+//                    if !self.tvNickName.text.isEmpty {
                     self.viewModel.nextAction()
+//                    }
                 }
             })
             .disposed(by: rx.disposeBag)

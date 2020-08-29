@@ -49,7 +49,7 @@ class UserUtils: NSObject {
     
     static func getNickName() -> String {
         let nickName = UserDefaults.standard.value(forKey: self.nickName)
-        return nickName as! String
+        return nickName as? String ?? "닉네임 미설정" // 이름 설정 안했을 시 에러에 대한 빈값으로 임시처리
     }
     
     static func setType(type: Int) {
@@ -58,7 +58,7 @@ class UserUtils: NSObject {
     
     static func getType() -> Int {
         let type = UserDefaults.standard.value(forKey: self.type)
-        return 1//type == nil ? 0 : type as! Int
+        return 1 //type == nil ? 0 : type as! Int
     }
     
 //    static func getNickName() -> String {
