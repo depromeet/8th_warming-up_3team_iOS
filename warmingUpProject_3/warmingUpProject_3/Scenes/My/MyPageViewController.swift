@@ -12,7 +12,6 @@ import SnapKit
 import Action
 import NMapsMap
 import NSObject_Rx
-import KakaoSDKUser
 
 class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewTouchDelegate {
     var viewModel: MyPageViewModel!
@@ -38,7 +37,7 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
         viewModel.bookList
             .do(onNext: { bookList in
                 if bookList.isEmpty {
-                    self.bookListCollectionView.addSubview(EmptyMyPage())
+                    self.bookListCollectionView.addSubview(EmptyMyPage(frame: CGRect(x: .zero, y: .zero, width: Dimens.deviceWidth, height: Dimens.deviceHeight)))
                 } else {
                     for subView in self.bookListCollectionView.subviews {
                         if subView is EmptyMyPage {
@@ -58,9 +57,6 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
         bookListCollectionView.rx.willDisplaySupplementaryView.subscribe(onNext: { (view, kind, cell) in
             print(view, kind, cell)
         }).disposed(by: rx.disposeBag)
-        
-    
-        
     }
 
     //MARK: - UI Component
@@ -91,8 +87,8 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
             let subLabel = UILabel()
             
             profileImg.image = UIImage(named: "img28Profile1")
-            titleLabel.text = "외로운 간고등어님이 남긴 기록"
-            subLabel.text = "총 24권의 기록을 보관 중입니다."
+            titleLabel.text = "\(UserUtils.getNickName())님이 남긴 기록"
+            subLabel.text = "총 \(0) 권의 기록을 보관 중입니다."
             titleLabel.font = UIFont.systemFont(ofSize: 16)
             subLabel.font = UIFont.systemFont(ofSize: 14)
             subLabel.textColor = ColorUtils.colorProfileBoard
@@ -121,12 +117,12 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
             return view
         }()
         
-        var mapView: UIView = {
-               let view = UIView()
-//               view.frame.size = CGSize(width: 335, height: 165)
-                view.backgroundColor = .systemGray
-               return view
-           }()
+        var mapView: NMFMapView = {
+            let view = NMFMapView()
+            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: 36.9204599, lng: 127.2158979))
+            view.moveCamera(cameraUpdate)
+            return view
+        }()
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = .zero

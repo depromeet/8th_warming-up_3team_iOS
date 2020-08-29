@@ -118,7 +118,7 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         return bookTitle
     }()
     
-
+    
     let searchBtnView: UIButton = {
         let searchBtnView = UIButton(type: .custom)
         searchBtnView.setTitle("찾아보기", for: .normal)
@@ -137,17 +137,9 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         titleLabel.text = "기록을 남길 위치"
         titleLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         
-        let selectBtnView = UIButton()
-        selectBtnView.setTitle("선택하기", for: .normal)
-        selectBtnView.setImage(UIImage(named: "btnRightarrow24"), for: .normal)
-        selectBtnView.semanticContentAttribute = .forceRightToLeft
-        selectBtnView.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .light)
-        selectBtnView.setTitleColor(ColorUtils.color170, for: .normal)
-        selectBtnView.addTarget(self, action:  #selector(tapLocationView), for: .touchUpInside)
         seperLine.backgroundColor = ColorUtils.color242
         
         locationTitle.addSubview(titleLabel)
-        locationTitle.addSubview(selectBtnView)
         locationTitle.addSubview(seperLine)
         locationTitle.backgroundColor = .white
         
@@ -169,12 +161,19 @@ class WriteViewController: UIViewController,ViewModelBindableType {
             $0.height.equalTo(17)
         }
         
-        selectBtnView.snp.makeConstraints {
-            $0.trailing.equalTo(locationTitle.snp.trailing).offset(-20)
-            $0.top.equalTo(locationTitle.snp.top).offset(20)
-            $0.height.equalTo(17)
-        }
         return locationTitle
+    }()
+    
+    let selectBtnView: UIButton = {
+        let b = UIButton()
+        b.setTitle("선택하기", for: .normal)
+        b.setImage(UIImage(named: "btnRightarrow24"), for: .normal)
+        b.semanticContentAttribute = .forceRightToLeft
+        b.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        b.titleLabel?.textAlignment = .right
+        b.setTitleColor(ColorUtils.color170, for: .normal)
+        b.addTarget(self, action:  #selector(tapLocationView), for: .touchUpInside)
+        return b
     }()
     
     let writeBookcoverView: UITextView = {
@@ -236,7 +235,7 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         let lbTime = UILabel()
         lbTime.setTextWithLetterSpacing(text: "이 시간에 추천해요", letterSpacing: 0, lineHeight: 17, font: UIFont.systemFont(ofSize: 14, weight: .medium), color: ColorUtils.color34)
         
-       return lbTime
+        return lbTime
     }()
     
     let lbTag: UILabel = {
@@ -280,14 +279,6 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         exitImg.isUserInteractionEnabled = true        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        print("-------------- \(viewModel.model)")
-        
-        print("-------------- \(viewModel.model)")
-    }
-    
     @objc func tapLocationView() {
         viewModel.actionLocationView()
     }
@@ -296,19 +287,32 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         viewModel.actionBookView()
     }
     
+    //MAKR: 바인딩 처리
     func bindViewModel() {
         
         saveBtn.rx
             .controlEvent(.touchUpInside)
             .subscribe(onNext: { [unowned self]_ in
+                print("lat", self.viewModel.model?.lat)
+                print("log", self.viewModel.model?.log)
+                
+                
                 self.viewModel.actionSave {
                     self.navigationController?.popViewController(animated: true)
                 }
             })
             .disposed(by: rx.disposeBag)
         
-        // 위치 바인딩
+        //MARK: 위치 바인딩
         viewModel.adderTitle
+            .subscribe(onNext: { [unowned self] (str) in
+                let attribute = TextUtils.textLetterSpacingAttribute(text: str, letterSpacing: 0, color: UIColor(r: 84, g: 90, b: 124), font: UIFont.systemFont(ofSize: 12, weight: .light))
+                self.selectBtnView.setAttributedTitle(attribute, for: .normal)
+            })
+            .disposed(by: rx.disposeBag)
+        
+        //MARK: 책 제목 바인딩
+        viewModel.bookTitle
             .subscribe(onNext: { [unowned self] (str) in
                 let attribute = TextUtils.textLetterSpacingAttribute(text: str, letterSpacing: 0, color: UIColor(r: 84, g: 90, b: 124), font: UIFont.systemFont(ofSize: 12, weight: .light))
                 self.searchBtnView.setAttributedTitle(attribute, for: .normal)
@@ -390,7 +394,7 @@ class WriteViewController: UIViewController,ViewModelBindableType {
             if row == 0 {
                 cell.layer.borderColor = UIColor(r: 84, g: 90, b: 124).cgColor
                 cell.layer.borderWidth = 1
-                 cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 19.5, font: UIFont.systemFont(ofSize: 13, weight: .regular), color: UIColor(r: 84, g: 90, b: 124))
+                cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 19.5, font: UIFont.systemFont(ofSize: 13, weight: .regular), color: UIColor(r: 84, g: 90, b: 124))
                 
             } else {
                 cell.layer.borderColor = ColorUtils.color231.cgColor
@@ -450,6 +454,7 @@ extension WriteViewController {
         writeView.addSubview(bookTitleView)
         bookTitleView.addSubview(searchBtnView)
         writeView.addSubview(locationView)
+        locationView.addSubview(selectBtnView)
         writeView.addSubview(writeBookcoverView)
         writeView.addSubview(bookCommentView)
         writeView.addSubview(commentTextView)
@@ -539,6 +544,13 @@ extension WriteViewController {
             $0.leading.equalTo(writeView.snp.leading)
             $0.trailing.equalTo(writeView.snp.trailing)
             $0.height.equalTo(55)
+        }
+
+        selectBtnView.snp.makeConstraints {
+            $0.trailing.equalTo(locationView.snp.trailing).offset(-20)
+            $0.top.equalTo(locationView.snp.top).offset(10)
+            $0.bottom.equalTo(locationView.snp.bottom).offset(-11)
+            $0.height.equalTo(24)
         }
         
         writeBookcoverView.snp.makeConstraints {

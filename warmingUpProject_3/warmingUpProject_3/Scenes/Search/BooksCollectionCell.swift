@@ -35,6 +35,12 @@ class BooksCollectionCell: UICollectionViewCell {
         return lbDescription
     }()
     
+    let lbSeparLine: UILabel = {
+        let lbSeparLine = UILabel()
+        lbSeparLine.backgroundColor = ColorUtils.color242
+        return lbSeparLine
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .clear
@@ -51,6 +57,7 @@ class BooksCollectionCell: UICollectionViewCell {
         self.addSubview(lbTitle)
         self.addSubview(lbSubText)
         self.addSubview(lbDescription)
+        self.addSubview(lbSeparLine)
         
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
         self.setNeedsUpdateConstraints()
@@ -94,6 +101,14 @@ class BooksCollectionCell: UICollectionViewCell {
             make.trailing.equalTo(lbTitle.snp.trailing)
             make.height.equalTo(14)
             make.bottom.equalToSuperview().offset(-19)
+        }
+        
+        lbSeparLine.snp.makeConstraints { (make) in
+            make.top.equalTo(ivImageView.snp.bottom).offset(18)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+            make.height.equalTo(1)
+            make.bottom.equalToSuperview()
         }
     }
 }

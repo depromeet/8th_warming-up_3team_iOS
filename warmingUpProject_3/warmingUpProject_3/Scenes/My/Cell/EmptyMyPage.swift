@@ -11,73 +11,76 @@ import SnapKit
 
 class EmptyMyPage: UIView {
     
-    let emptyView: UIView = {
-        
-        let view = UIView()
-        view.frame.size = CGSize(width: view.frame.width, height: view.frame.height)
-        
-        let emptyImg: UIImageView = {
-            let emptyImg = UIImageView()
-            emptyImg.image = UIImage(named: "imgMypageEmpty")
-            return emptyImg
-        }()
-        
-        let lbEmpty: UIView = {
-            
-            let uiview = UIView()
-            let lbEmpty1 = UILabel()
-            let lbEmpty2 = UILabel()
-            
-            lbEmpty1.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-            lbEmpty2.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-            lbEmpty1.setTextWithLetterSpacing(text: "책장에 기록이 없네요 ㅜ.ㅠ", letterSpacing: -0.08, lineHeight: 16, font: .systemFont(ofSize: 16, weight: .medium), color: ColorUtils.color170)
-            lbEmpty2.setTextWithLetterSpacing(text: "글쓰기 버튼을 눌러 기록해보세요", letterSpacing: -0.08, lineHeight: 16, font: .systemFont(ofSize: 16, weight: .medium), color: ColorUtils.color170)
-            
-            uiview.addSubview(lbEmpty1)
-            uiview.addSubview(lbEmpty2)
-            
-            lbEmpty1.snp.makeConstraints {
-                $0.top.equalTo(uiview.snp.top)
-                $0.leading.equalTo(uiview.snp.leading)
-                $0.trailing.equalTo(uiview.snp.trailing)
-            }
-            
-            lbEmpty2.snp.makeConstraints {
-                $0.top.equalTo(lbEmpty1.snp.top)
-                $0.leading.equalTo(uiview.snp.leading)
-                $0.trailing.equalTo(uiview.snp.trailing)
-                $0.bottom.equalTo(uiview.snp.bottom)
-            }
-            
-            return uiview
-        }()
-        
-        view.addSubview(emptyImg)
-        view.addSubview(lbEmpty)
+    let emptyImg = UIImageView(image: UIImage(named: "imgMypageEmpty"))
     
-        emptyImg.snp.makeConstraints {
-            $0.centerX.equalTo(view.snp.centerX)
-            $0.top.equalTo(view.snp.top).offset(47)
-            $0.width.equalTo(189)
-            $0.height.equalTo(148)
-        }
-        
-        lbEmpty.snp.makeConstraints {
-            $0.centerX.equalTo(view.snp.centerX)
-            $0.top.equalTo(emptyImg.snp.bottom).offset(31)
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-        }
-        return view
+    let lbEmptyText: UILabel = {
+        let l = UILabel()
+        l.numberOfLines = 2
+        l.textAlignment = .center
+        l.setTextWithLetterSpacing(text: "책장에 기록이 없네요 ㅜ.ㅠ\n글쓰기 버튼을 눌러 기록해 보세요", letterSpacing: -0.08, lineHeight: 20, font: .systemFont(ofSize: 14, weight: .medium), color: ColorUtils.color170)
+        return l
     }()
     
+    let gradientView = UILabel()
     
+    let gradientLayer: CAGradientLayer = {
+        let gra = CAGradientLayer()
+        gra.colors = [
+            UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1).cgColor,
+            UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1).cgColor
+        ]
+        gra.type = .axial
+        gra.startPoint = CGPoint(x: .zero, y: 0.5)
+        gra.endPoint = CGPoint(x: 1, y: 0.5)
+        return gra
+    }()
     
+    var btnWrite: UIButton = {
+        let btnWrite = UIButton(type: .custom)
+        btnWrite.backgroundColor = .white
+        btnWrite.setImage(#imageLiteral(resourceName: "icnWrite"), for: .normal)
+        
+//        btnWrite.layer.masksToBounds = false
+        btnWrite.layer.cornerRadius = 29
+        
+        btnWrite.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.05).cgColor
+        btnWrite.layer.shadowOpacity = 1
+        btnWrite.layer.shadowOffset = CGSize(width: 0, height: 2)
+        btnWrite.layer.shadowRadius = 4 / 2
+        btnWrite.layer.shadowPath = nil
+        
+        
+        let radius: CGFloat = btnWrite.frame.width / 2.0
+        let shadowPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: 2.1 * radius, height: btnWrite.frame.height)).cgPath
+        
+        let layer1 = CALayer()
+//        btnWrite.layer.masksToBounds = false
+        layer1.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.025).cgColor
+        layer1.shadowOpacity = 1
+        layer1.cornerRadius = 29
+        layer1.shadowOffset = CGSize(width: 0, height: 4)
+        layer1.shadowRadius = 10 / 2
+        layer1.shadowPath = shadowPath
+        layer1.shouldRasterize = true // 초기화중에는 복사 안됨
+        
+        btnWrite.layer.addSublayer(layer1)
+        
+        return btnWrite
+    }()
     
+    //TODO: 왜 이걸 넣어야 작동합니꽈?
+    // https://stackoverflow.com/questions/25255770/multiple-drop-shadows-on-single-view-ios
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        layer.sublayers?.forEach { (sublayer) in
+//            sublayer.shadowPath = UIBezierPath(rect: bounds).cgPath
+//        }
+//    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .clear
+        
         setUI()
     }
     
@@ -86,18 +89,49 @@ class EmptyMyPage: UIView {
     }
     
     private func setUI() {
-        self.addSubview(emptyView)
+        gradientView.backgroundColor = UIColor(r: 242, g: 242, b: 242)
+        gradientView.layer.addSublayer(gradientLayer)
+        gradientView.layer.masksToBounds = true
+        
+        self.addSubview(emptyImg)
+        self.addSubview(lbEmptyText)
+        self.addSubview(gradientView)
+        self.addSubview(btnWrite)
+        
+        gradientView.layer.addSublayer(gradientLayer)
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
         self.setNeedsUpdateConstraints()
         setLayout()
     }
     
     private func setLayout() {
-        emptyView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.height.equalTo(226+40)
+        
+        emptyImg.snp.makeConstraints { (make) in
+            make.top.equalToSuperview().offset(341)
+            make.leading.equalToSuperview().offset(73)
+            make.height.equalTo(148)
         }
+        
+        gradientView.snp.makeConstraints { (make) in
+            make.top.equalTo(emptyImg.snp.bottom).offset(-13)
+            make.leading.equalToSuperview().offset(-30)
+            make.trailing.equalToSuperview()
+            make.height.equalTo(25)
+        }
+        
+        lbEmptyText.snp.makeConstraints { (make) in
+            make.top.equalTo(gradientView.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(28)
+            make.trailing.equalToSuperview().offset(-48)
+            make.height.equalTo(40)
+        }
+        
+        btnWrite.snp.makeConstraints { (make) in
+            make.width.equalTo(58)
+            make.height.equalTo(58)
+            make.bottom.equalToSuperview().offset(-124)
+            make.trailing.equalTo(lbEmptyText.snp.trailing).offset(-12)
+        }
+        
     }
 }

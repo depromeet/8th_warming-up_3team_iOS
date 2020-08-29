@@ -23,7 +23,7 @@ class MainViewController: UIViewController, ViewModelBindableType {
     
     let naverMapView = NMFNaverMapView()
     
-    var markers: [NMFMarker] = [NMFMarker(position: NMGLatLng(lat: 37.5666102, lng: 126.9783881))]
+    var markers: [NMFMarker] = []
     
     var mapView: NMFMapView {
         let locationOverlay = naverMapView.mapView.locationOverlay
@@ -275,7 +275,10 @@ class MainViewController: UIViewController, ViewModelBindableType {
         btnCurrentLocation.rx
             .controlEvent(.touchUpInside)
             .subscribe(onNext: { _ in
-                print(1232131)
+
+                let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: self.locationManager?.location?.coordinate.latitude ?? 37.5666102, lng: self.locationManager?.location?.coordinate.longitude ?? 126.9783881))
+                cameraUpdate.pivot = CGPoint(x: 0.5, y: 0.3)
+                self.mapView.moveCamera(cameraUpdate)
             })
             .disposed(by: rx.disposeBag)
         
@@ -377,10 +380,6 @@ class MainViewController: UIViewController, ViewModelBindableType {
         
         viewModel.selectedData.bind(to: selectedBookListCollectionView.rx.items(cellIdentifier: String(describing: selectedBookCollectionCell.self), cellType: selectedBookCollectionCell.self)) { (row, element, cell) in
             
-            element
-            
-            cell.bgBookTitle
-            
             //            let sameElement = self.viewModel.copyWriteData.first { $0.id == element }
             //
             //            cell.bookCover.bind(color: sameElement!.color, text: sameElement!.content)
@@ -402,7 +401,7 @@ extension MainViewController {
         self.baseView.addSubview(timeListCollectionView)
         self.baseView.addSubview(separateLine)
         self.baseView.addSubview(bookListCollectionView)
-        self.baseView.addSubview(btnCurrentLocation)
+        self.naverMapView.addSubview(btnCurrentLocation)
         self.view.addSubview(selectedBaseView)
         self.selectedBaseView.addSubview(selectedBookListCollectionView)
         self.selectedBaseView.addSubview(lbSelecteTime)
@@ -410,6 +409,8 @@ extension MainViewController {
         self.selectedBaseView.addSubview(lbSelecteLocation)
         self.selectedBaseView.addSubview(selectedSeparateLine)
         self.view.addSubview(btnWrite)
+        
+        naverMapView.bringSubviewToFront(btnCurrentLocation)
         
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
         self.view.setNeedsUpdateConstraints()

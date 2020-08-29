@@ -77,7 +77,7 @@ class SearchBookViewController: UIViewController, ViewModelBindableType {
                 self.viewModel.model?.publisher = selData.publisher
                 self.viewModel.model?.description = selData.description
                                 
-//                self.viewModel.adderTitle.onNext(selData.jibunAddress)
+                self.viewModel.bookTitle.onNext(selData.title)
                 self.navigationController?.popViewController(animated: true)
         }
         .disposed(by: rx.disposeBag)
@@ -102,7 +102,23 @@ class SearchBookViewController: UIViewController, ViewModelBindableType {
     let textView: UITextView = {
         let textView = UITextView()
         textView.backgroundColor = ColorUtils.color247
+        textView.textContainerInset = UIEdgeInsets(top: 11, left: 48, bottom: 10, right: 40)
+
+        textView.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        textView.attributedText = TextUtils.attributedPlaceholder(text: "책 제목이나 작가를 찾아보세요.", letterSpacing: -0.07, aligment: .left)
         return textView
+    }()
+    
+    let btnSearch: UIButton = {
+        let b = UIButton()
+        b.setImage(UIImage(named: "icnSearch24"), for: .normal)
+        return b
+    }()
+    
+    let btnDelete: UIButton = {
+        let b = UIButton()
+        b.setImage(UIImage(named: "btnDelete24"), for: .normal)
+        return b
     }()
     
     let adderCollectionView: UICollectionView = {
@@ -138,6 +154,32 @@ extension SearchBookViewController: UITextViewDelegate {
         }
         return true
     }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+            setPlaceholder()
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty || textView.text == "" {
+            setPlaceholder()
+        }
+    }
+    
+    private func setPlaceholder() {
+        if textView.text == "책 제목이나 작가를 찾아보세요." {
+            
+            textView.text = ""
+            textView.typingAttributes = [
+                NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium),
+                NSAttributedString.Key.foregroundColor : ColorUtils.color34
+            ]
+            
+        } else if textView.text == "" || textView.text.isEmpty {
+            
+            textView.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+            textView.attributedText = TextUtils.attributedPlaceholder(text: "책 제목이나 작가를 찾아보세요.", letterSpacing: -0.07)
+        }
+    }
 }
 
 extension SearchBookViewController {
@@ -150,9 +192,10 @@ extension SearchBookViewController {
         self.view.addSubview(exitImg)
         self.view.addSubview(titleLabel)
         self.view.addSubview(textView)
+        self.textView.addSubview(btnSearch)
+        self.textView.addSubview(btnDelete)
         self.view.addSubview(adderCollectionView)
         
-        //
         textView.delegate = self
         
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
@@ -178,8 +221,24 @@ extension SearchBookViewController {
         textView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(100)
             $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-52)
+            $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(40)
+        }
+        
+        btnSearch.snp.makeConstraints {
+            $0.top.equalTo(textView.snp.top).offset(8)
+            $0.leading.equalTo(textView.snp.leading).offset(12)
+            $0.width.equalTo(24)
+            $0.height.equalTo(24)
+        }
+        
+        //FIXME: 버튼 노출 안되네
+        btnDelete.snp.makeConstraints {
+            $0.top.equalTo(textView.snp.top).offset(8)
+            $0.leading.equalTo(Dimens.deviceWidth * 0.94)
+            $0.width.equalTo(24)
+            $0.height.equalTo(24)
+            $0.bottom.equalTo(textView.snp.bottom).offset(-8)
         }
         
         adderCollectionView.snp.makeConstraints { (make) in

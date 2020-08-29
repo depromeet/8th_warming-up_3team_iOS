@@ -49,7 +49,7 @@ class UserUtils: NSObject {
     
     static func getNickName() -> String {
         let nickName = UserDefaults.standard.value(forKey: self.nickName)
-        return "우에에헤헤"//nickName as! String
+        return nickName as! String
     }
     
     static func setType(type: Int) {

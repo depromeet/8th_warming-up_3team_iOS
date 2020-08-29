@@ -29,25 +29,21 @@ final class SplashViewController: UIViewController {
          SNS 로그인이 불안정 함으로
          */
         
-        if (UserUtils.getSnsID() != nil) {
-            let coordinator = SceneCoordinator(window:
-                UIApplication.shared.windows.first!)
-            let mainViewModel = MainViewModel(scenCoordinator: coordinator)
-            let mainScene = Scene.main(mainViewModel)
-            coordinator.transition(to: mainScene, using: .root, animated: true)
-        } else {
-            let coordinator = SceneCoordinator(window:
-                UIApplication.shared.windows.first!)
-            let loginViewModel = LoginViewModel(scenCoordinator: coordinator)
-            let loginScene = Scene.login(loginViewModel)
-            coordinator.transition(to: loginScene, using: .root, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            if (UserUtils.getSnsID() != nil) {
+                let coordinator = SceneCoordinator(window:
+                    UIApplication.shared.windows.first!)
+                let mainViewModel = MainViewModel(scenCoordinator: coordinator)
+                let mainScene = Scene.main(mainViewModel)
+                coordinator.transition(to: mainScene, using: .root, animated: true)
+            } else {
+                let coordinator = SceneCoordinator(window:
+                    UIApplication.shared.windows.first!)
+                let loginViewModel = LoginViewModel(scenCoordinator: coordinator)
+                let loginScene = Scene.login(loginViewModel)
+                coordinator.transition(to: loginScene, using: .root, animated: true)
+            }
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        lottieView.play()
     }
     
     private func setUI() {
@@ -55,5 +51,6 @@ final class SplashViewController: UIViewController {
         let splashAnimation = Animation.named("splash")
         lottieView.animation = splashAnimation
         lottieView.loopMode = .loop
+        lottieView.play()
     }
 }

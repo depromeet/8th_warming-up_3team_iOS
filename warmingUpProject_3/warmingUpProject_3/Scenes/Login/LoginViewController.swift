@@ -31,18 +31,18 @@ final class LoginViewController: UIViewController, ViewModelBindableType {
         super.viewDidLoad()
         btnApple.layer.cornerRadius = 6
         btnKakao.layer.cornerRadius = 6
+        let loginAnimation = Animation.named("login")
+        lottieView.animation = loginAnimation
+        lottieView.loopMode = .loop
+        lottieView.play()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        lottieView.play()
     }
     
     func bindViewModel() {
-        let loginAnimation = Animation.named("login")
-        lottieView.animation = loginAnimation
-        lottieView.loopMode = .loop
         
 //        btnKakao.rx.action = viewModel.kakaoLoingAction()
         btnKakao.rx
