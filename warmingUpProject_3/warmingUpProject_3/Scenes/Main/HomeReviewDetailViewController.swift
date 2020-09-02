@@ -141,26 +141,34 @@ UIViewController,ViewModelBindableType, UITextViewDelegate {
         
         return bookView
     }()
+
     
-    let selectBtnView: UIButton = {
-        let b = UIButton()
-        b.setTitle("선택하기", for: .normal)
-        b.setImage(UIImage(named: "btnRightarrow24"), for: .normal)
-        b.semanticContentAttribute = .forceRightToLeft
-        b.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .light)
-        b.titleLabel?.textAlignment = .right
-        b.setTitleColor(ColorUtils.color170, for: .normal)
-        b.addTarget(self, action:  #selector(tapLocationView), for: .touchUpInside)
-        return b
-    }()
-    
-    let writeBookcoverView: UITextView = {
-        let bookcoverView = UITextView()
-        bookcoverView.tag = 111
-        bookcoverView.textContainer.maximumNumberOfLines = 2
-        bookcoverView.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        bookcoverView.attributedText = TextUtils.attributedPlaceholder(text: "북커버에 남길 감상이나 문구를 적어주세요 (32자)", letterSpacing: -0.07)
-        return bookcoverView
+    let bookInfoView: UIView = {
+        let infoView = UIView()
+        
+        let timeLabel = UILabel() // 나른한 낮시간,
+        timeLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        timeLabel.text = "나른한 낮시간,"
+        
+//        timeLabel.attributedText = TextUtils.attributedPlaceholder(text: "북커버에 남길 감상이나 문구를 적어주세요 (32자)", letterSpacing: -0.07)
+        
+        let locationImg = UIImageView(image: UIImage(named: "locationImg"))
+        let locationLabel = UILabel() // 망원동, 아틀리에 크레타
+        locationLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        locationLabel.text = "망원동, 아틀리에 크레타"
+        
+        let quotesImg = UIImageView(image: UIImage(named: "icnDoubleQuotes")) // 따옴표 이미지
+        
+        let opinionLabel = UILabel()
+        opinionLabel.text = "나도 언젠간 예쁜 카페 같은 공간을 가지고 싶다는 생각을 줄곧 해왔습니다. 예쁘고 감각적이 인테리어 소품들이 즐비한 카페에서 이 책을 읽다보니. 더 늦기 전에 내 취향에 맞는 집을 짓고 소중한 사람들과 함께하는 행복한 삶을 살고 싶다는 생각이 들었습니다. 햇빛이 잘드는 예쁜 카페에서 저의 꿈같은 책을 읽다보니 저절로 힐링이 되네요."
+        opinionLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        
+        infoView.addSubview(timeLabel)
+        infoView.addSubview(locationImg)
+        infoView.addSubview(quotesImg)
+        infoView.addSubview(opinionLabel)
+        
+        return infoView
     }()
     
     let bookCommentView: UIView = {
@@ -289,8 +297,8 @@ extension HomeReviewDetailViewController {
         mainView.addSubview(bookCoverView)
         writeView.addSubview(userTitleView)
         writeView.addSubview(detailBookView)
-        detailBookView.addSubview(selectBtnView)
-        writeView.addSubview(writeBookcoverView)
+
+        writeView.addSubview(bookInfoView)
         writeView.addSubview(bookCommentView)
         writeView.addSubview(commentTextView)
         writeView.addSubview(lbTime)
@@ -299,7 +307,7 @@ extension HomeReviewDetailViewController {
         writeView.addSubview(tagCollectionView)
         
 //        scrollView.keyboardDismissMode = .onDrag
-        writeBookcoverView.delegate = self
+        bookInfoView.delegate = self
         commentTextView.delegate = self
         //TODO: 스냅킷 데모에서 사용하던데 이유는?
         self.view.setNeedsUpdateConstraints()
@@ -361,15 +369,8 @@ extension HomeReviewDetailViewController {
             $0.trailing.equalTo(writeView.snp.trailing)
             $0.height.equalTo(55)
         }
-
-        selectBtnView.snp.makeConstraints {
-            $0.trailing.equalTo(detailBookView.snp.trailing).offset(-20)
-            $0.top.equalTo(detailBookView.snp.top).offset(10)
-            $0.bottom.equalTo(detailBookView.snp.bottom).offset(-11)
-            $0.height.equalTo(24)
-        }
         
-        writeBookcoverView.snp.makeConstraints {
+        bookInfoView.snp.makeConstraints {
             $0.top.equalTo(detailBookView.snp.bottom).offset(14)
             $0.leading.equalTo(writeView.snp.leading).offset(20)
             $0.trailing.equalTo(writeView.snp.trailing).offset(-20)
@@ -377,7 +378,7 @@ extension HomeReviewDetailViewController {
         }
         
         bookCommentView.snp.makeConstraints {
-            $0.top.equalTo(writeBookcoverView.snp.bottom).offset(14)
+            $0.top.equalTo(bookInfoView.snp.bottom).offset(14)
             $0.leading.equalTo(writeView.snp.leading).offset(20)
             $0.trailing.equalTo(writeView.snp.trailing).offset(-20)
             $0.height.equalTo(146)
@@ -420,21 +421,21 @@ extension HomeReviewDetailViewController {
     }
     
     func setPlaceholder() {
-        if writeBookcoverView.text == "북커버에 남길 감상이나 문구를 적어주세요 (32자)" {
+        if bookInfoView.text == "북커버에 남길 감상이나 문구를 적어주세요 (32자)" {
             
-            writeBookcoverView.text = ""
+            bookInfoView.text = ""
             let style = NSMutableParagraphStyle()
             style.alignment = .center
-            writeBookcoverView.typingAttributes = [
+            bookInfoView.typingAttributes = [
                 NSAttributedString.Key.font : UIFont.systemFont(ofSize: 14, weight: .medium),
                 NSAttributedString.Key.foregroundColor : ColorUtils.color34,
                 NSAttributedString.Key.paragraphStyle: style
             ]
             
-        } else if writeBookcoverView.text == "" || writeBookcoverView.text.isEmpty {
+        } else if bookInfoView.text == "" || bookInfoView.text.isEmpty {
             
-            writeBookcoverView.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-            writeBookcoverView.attributedText = TextUtils.attributedPlaceholder(text: "북커버에 남길 감상이나 문구를 적어주세요 (32자)", letterSpacing: -0.07)
+            bookInfoView.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+            bookInfoView.attributedText = TextUtils.attributedPlaceholder(text: "북커버에 남길 감상이나 문구를 적어주세요 (32자)", letterSpacing: -0.07)
         }
     }
     

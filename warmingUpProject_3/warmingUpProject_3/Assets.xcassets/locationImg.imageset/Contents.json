@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "icnDoubleQuotes.png"
+      "filename" : "locationImg.png"
     },
     {
+      "filename" : "locationImg@2x.png",
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "icnDoubleQuotes@2x.png"
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "icnDoubleQuotes@3x.png"
+      "filename" : "locationImg@3x.png"
     }
   ],
   "info" : {
