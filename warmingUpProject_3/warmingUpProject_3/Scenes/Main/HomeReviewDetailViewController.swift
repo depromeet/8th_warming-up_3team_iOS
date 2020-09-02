@@ -14,7 +14,8 @@ import Action
 import NSObject_Rx
 import NMapsMap
 
-class HomeReviewDetail: UIViewController,ViewModelBindableType, UITextViewDelegate {
+class HomeReviewDetailViewController:
+UIViewController,ViewModelBindableType, UITextViewDelegate {
     
     var viewModel: ReviewDetailModel!
     
@@ -37,12 +38,13 @@ class HomeReviewDetail: UIViewController,ViewModelBindableType, UITextViewDelega
     
     let mainView: UIView = {
         let view = UIView()
-        view.backgroundColor = ColorUtils.color242
+        view.backgroundColor = ColorUtils.colorCoverWhite
         return view
     }()
     
     let bookCoverView: BookCoverView = {
-        let book = BookCoverView(colorChip: "NAVY", text: "")
+        let book = BookCoverView()
+        book.backgroundColor = ColorUtils.color217
         return book
     }()
     
@@ -54,107 +56,90 @@ class HomeReviewDetail: UIViewController,ViewModelBindableType, UITextViewDelega
         return view
     }()
     
-    let colorListCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = .zero
-        layout.minimumLineSpacing = 7
-        layout.minimumInteritemSpacing = 0
-        layout.estimatedItemSize = CGSize(width: 10, height: 34)
-        layout.scrollDirection = .horizontal
-        let colorListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        colorListCollectionView.layer.cornerRadius = 12
-        colorListCollectionView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        colorListCollectionView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.05).cgColor
-        colorListCollectionView.layer.shadowOpacity = 1
-        colorListCollectionView.layer.shadowOffset = CGSize(width: 0, height: -2)
-        colorListCollectionView.layer.shadowRadius = 6 / 2
-        
-        colorListCollectionView.contentInset = UIEdgeInsets(top: 22, left: 20, bottom: 2, right: 20)
-        colorListCollectionView.backgroundColor = .white
-        colorListCollectionView.showsHorizontalScrollIndicator = false
-        colorListCollectionView.register(RoundCollectionCell.self, forCellWithReuseIdentifier: String(describing: RoundCollectionCell.self))
-        
-        
-        return colorListCollectionView
-    }()
-    
-    let bookTitleView: UIView = {
-        let bookTitle = UIView()
+    let userTitleView: UIView = { // userView
+        let userTitleView = UIView()
         let titleLabel = UILabel()
-        let seperLine = UILabel()
-        titleLabel.text = "책 제목"
-        titleLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        seperLine.backgroundColor = ColorUtils.color242
+        let userImg = UIImageView()
         
-        bookTitle.addSubview(titleLabel)
-        bookTitle.addSubview(seperLine)
-        bookTitle.backgroundColor = .white
+        titleLabel.text = "외로운 간고등어님 이 남긴 기록입니다."
+        titleLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        
+        userTitleView.addSubview(titleLabel)
+        userTitleView.addSubview(userImg)
+        
+        userTitleView.backgroundColor = .clear
+        
+        userTitleView.snp.makeConstraints {
+            $0.height.equalTo(80)
+        }
+        
+        userImg.snp.makeConstraints {
+            $0.leading.equalTo(userTitleView.snp.leading).offset(20)
+            $0.top.equalTo(userTitleView.snp.top).offset(28)
+            $0.height.equalTo(28)
+            $0.width.equalTo(28)
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.leading.equalTo(userTitleView.snp.leading).offset(56)
+            $0.top.equalTo(userTitleView.snp.top).offset(28)
+        }
+        
+        return userTitleView
+    }()
+
+    
+    let detailBookView: UIView = {
+        
+        let bookView = UIView()
+        let bookImg = UIImageView(image: UIImage(named: "btnLeftarrow24")) // 이미지
+        let bookTitle = UILabel() // 집의 귓속말
+        let authorTitle = UILabel() // 최준석 지음
+        let detailLabel = UILabel() // 처음 내 집을 지으며
+        
+ 
+        bookTitle.text = "집의 귓속말"
+        bookTitle.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        
+        authorTitle.text = "최준석 지음 | 아트북스"
+        authorTitle.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        
+        detailLabel.text = "처음 내 집을 지으며 ~"
+        detailLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        
+        
+        bookView.addSubview(bookImg)
+        bookView.addSubview(bookTitle)
+        bookView.addSubview(authorTitle)
+        bookView.addSubview(detailLabel)
+
+        bookView.snp.makeConstraints {
+            $0.height.equalTo(88)
+        }
+            
+        bookImg.snp.makeConstraints {
+            $0.leading.equalTo(bookView.snp.bottom)
+            $0.top.equalTo(bookView.snp.top).offset(14)
+            $0.height.equalTo(60)
+            $0.width.equalTo(46)
+        }
         
         bookTitle.snp.makeConstraints {
-            $0.height.equalTo(55)
+            $0.leading.equalTo(bookImg.snp.leading).offset(16)
+            $0.top.equalTo(bookView.snp.top).offset(14)
         }
         
-        seperLine.snp.makeConstraints { (make) in
-            make.width.equalToSuperview().offset(-40)
-            make.height.equalTo(1)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.bottom.equalTo(bookTitle.snp.bottom)
+        authorTitle.snp.makeConstraints {
+            $0.leading.equalTo(bookImg.snp.leading).offset(15)
+            $0.top.equalTo(bookTitle.snp.bottom).offset(5)
         }
         
-        titleLabel.snp.makeConstraints {
-            $0.leading.equalTo(bookTitle.snp.leading).offset(20)
-            $0.top.equalTo(bookTitle.snp.top).offset(20)
-            $0.height.equalTo(17)
+        detailLabel.snp.makeConstraints {
+            $0.leading.equalTo(bookImg.snp.leading).offset(15)
+            $0.top.equalTo(authorTitle.snp.bottom).offset(9)
         }
         
-        return bookTitle
-    }()
-    
-    
-    let searchBtnView: UIButton = {
-        let searchBtnView = UIButton(type: .custom)
-        searchBtnView.setTitle("찾아보기", for: .normal)
-        searchBtnView.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .light)
-        searchBtnView.setImage(UIImage(named: "btnRightarrow24"), for: .normal)
-        searchBtnView.semanticContentAttribute = .forceRightToLeft
-        searchBtnView.setTitleColor(ColorUtils.color170, for: .normal)
-        searchBtnView.addTarget(self, action:  #selector(tapBookView), for: .touchUpInside)
-        return searchBtnView
-    }()
-    
-    let locationView: UIView = {
-        let locationTitle = UIView()
-        let titleLabel = UILabel()
-        let seperLine = UILabel()
-        titleLabel.text = "기록을 남길 위치"
-        titleLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        
-        seperLine.backgroundColor = ColorUtils.color242
-        
-        locationTitle.addSubview(titleLabel)
-        locationTitle.addSubview(seperLine)
-        locationTitle.backgroundColor = .white
-        
-        locationTitle.snp.makeConstraints {
-            $0.height.equalTo(55)
-        }
-        
-        seperLine.snp.makeConstraints { (make) in
-            make.width.equalToSuperview().offset(-40)
-            make.height.equalTo(1)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
-            make.bottom.equalTo(locationTitle.snp.bottom)
-        }
-        
-        titleLabel.snp.makeConstraints {
-            $0.leading.equalTo(locationTitle.snp.leading).offset(20)
-            $0.top.equalTo(locationTitle.snp.top).offset(20)
-            $0.height.equalTo(17)
-        }
-        
-        return locationTitle
+        return bookView
     }()
     
     let selectBtnView: UIButton = {
@@ -286,7 +271,7 @@ class HomeReviewDetail: UIViewController,ViewModelBindableType, UITextViewDelega
     }
 }
 
-extension HomeReviewDetail {
+extension HomeReviewDetailViewController {
     
     @objc func touchToExitBtn() {
         self.navigationController?.popViewController(animated: true)
@@ -302,11 +287,9 @@ extension HomeReviewDetail {
         scrollView.addSubview(mainView)
         scrollView.addSubview(writeView)
         mainView.addSubview(bookCoverView)
-        writeView.addSubview(colorListCollectionView)
-        writeView.addSubview(bookTitleView)
-        bookTitleView.addSubview(searchBtnView)
-        writeView.addSubview(locationView)
-        locationView.addSubview(selectBtnView)
+        writeView.addSubview(userTitleView)
+        writeView.addSubview(detailBookView)
+        detailBookView.addSubview(selectBtnView)
         writeView.addSubview(writeBookcoverView)
         writeView.addSubview(bookCommentView)
         writeView.addSubview(commentTextView)
@@ -363,42 +346,31 @@ extension HomeReviewDetail {
             make.height.equalTo(168)
         }
         
-        colorListCollectionView.snp.makeConstraints {
-            $0.top.equalTo(writeView.snp.top)
-            $0.leading.equalTo(writeView.snp.leading)
-            $0.trailing.equalTo(writeView.snp.trailing)
-            $0.height.equalTo(62)
-        }
         
-        bookTitleView.snp.makeConstraints {
-            $0.top.equalTo(colorListCollectionView.snp.bottom)
+        userTitleView.snp.makeConstraints {
+//            $0.top.equalTo(colorListCollectionView.snp.bottom)
             $0.leading.equalTo(writeView.snp.leading)
             $0.trailing.equalTo(writeView.snp.trailing)
             $0.height.equalTo(55)
         }
         
-        searchBtnView.snp.makeConstraints { (make) in
-            make.top.equalTo(bookTitleView.snp.top).offset(10)
-            make.trailing.equalTo(bookTitleView.snp.trailing).offset(-20)
-            make.bottom.equalTo(bookTitleView.snp.bottom).offset(-11)
-        }
         
-        locationView.snp.makeConstraints {
-            $0.top.equalTo(bookTitleView.snp.bottom)
+        detailBookView.snp.makeConstraints {
+            $0.top.equalTo(userTitleView.snp.bottom)
             $0.leading.equalTo(writeView.snp.leading)
             $0.trailing.equalTo(writeView.snp.trailing)
             $0.height.equalTo(55)
         }
 
         selectBtnView.snp.makeConstraints {
-            $0.trailing.equalTo(locationView.snp.trailing).offset(-20)
-            $0.top.equalTo(locationView.snp.top).offset(10)
-            $0.bottom.equalTo(locationView.snp.bottom).offset(-11)
+            $0.trailing.equalTo(detailBookView.snp.trailing).offset(-20)
+            $0.top.equalTo(detailBookView.snp.top).offset(10)
+            $0.bottom.equalTo(detailBookView.snp.bottom).offset(-11)
             $0.height.equalTo(24)
         }
         
         writeBookcoverView.snp.makeConstraints {
-            $0.top.equalTo(locationView.snp.bottom).offset(14)
+            $0.top.equalTo(detailBookView.snp.bottom).offset(14)
             $0.leading.equalTo(writeView.snp.leading).offset(20)
             $0.trailing.equalTo(writeView.snp.trailing).offset(-20)
             $0.height.equalTo(40)

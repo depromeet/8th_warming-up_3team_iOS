@@ -84,7 +84,7 @@ extension Scene {
             return mypageVC
             
         case .reviewDetail(let viewModel):
-        var detailVC = HomeReviewDetail()
+        var detailVC = HomeReviewDetailViewController()
         detailVC.bind(viewModel: viewModel)
         return detailVC
         }
