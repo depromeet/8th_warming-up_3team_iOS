@@ -22,6 +22,9 @@
 		56CF14D624D53536008BDCEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56CF14D424D53536008BDCEF /* LaunchScreen.storyboard */; };
 		B823CCD124EC06DA009C734F /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B823CCD024EC06DA009C734F /* WriteViewController.swift */; };
 		B823CCD324EC0701009C734F /* WriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B823CCD224EC0701009C734F /* WriteViewModel.swift */; };
+		B827CA272505D66A008013DF /* SingUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CA262505D66A008013DF /* SingUpModel.swift */; };
+		B827CA2925061673008013DF /* MainViewController+Bind.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CA2825061673008013DF /* MainViewController+Bind.swift */; };
+		B827CA2B25061C54008013DF /* MainViewController+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CA2A25061C54008013DF /* MainViewController+Delegate.swift */; };
 		B82BEBDB24F0DB6300E3B375 /* selectedBookCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82BEBDA24F0DB6300E3B375 /* selectedBookCollectionCell.swift */; };
 		B82F617F24E39CCF006A7F91 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82F617E24E39CCF006A7F91 /* LoginViewModel.swift */; };
 		B82F618124E3B37C006A7F91 /* Extension+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82F618024E3B37C006A7F91 /* Extension+UIButton.swift */; };
@@ -106,6 +109,9 @@
 		8C7D9095C67FE9D7B9A2BE0D /* Pods-warmingUpProject_3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-warmingUpProject_3.debug.xcconfig"; path = "Target Support Files/Pods-warmingUpProject_3/Pods-warmingUpProject_3.debug.xcconfig"; sourceTree = "<group>"; };
 		B823CCD024EC06DA009C734F /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		B823CCD224EC0701009C734F /* WriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewModel.swift; sourceTree = "<group>"; };
+		B827CA262505D66A008013DF /* SingUpModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingUpModel.swift; sourceTree = "<group>"; };
+		B827CA2825061673008013DF /* MainViewController+Bind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Bind.swift"; sourceTree = "<group>"; };
+		B827CA2A25061C54008013DF /* MainViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainViewController+Delegate.swift"; sourceTree = "<group>"; };
 		B82BEBDA24F0DB6300E3B375 /* selectedBookCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = selectedBookCollectionCell.swift; sourceTree = "<group>"; };
 		B82F617E24E39CCF006A7F91 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		B82F618024E3B37C006A7F91 /* Extension+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIButton.swift"; sourceTree = "<group>"; };
@@ -250,6 +256,7 @@
 		B82F618624E3BD13006A7F91 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B827CA262505D66A008013DF /* SingUpModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -435,6 +442,8 @@
 				B85DF84624ED08ED00963927 /* MainViewController.swift */,
 				B8EB092024F7849D00C926CC /* BookListModel.swift */,
 				5699AF5624FF6C2E004EB80D /* HomeReviewDetailViewController.swift */,
+				B827CA2825061673008013DF /* MainViewController+Bind.swift */,
+				B827CA2A25061C54008013DF /* MainViewController+Delegate.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -662,6 +671,7 @@
 			files = (
 				B85F608524E42F26004B2EEE /* OnBoardExplanationViewController.swift in Sources */,
 				B8EB092824F7B6D000C926CC /* UserModel.swift in Sources */,
+				B827CA2B25061C54008013DF /* MainViewController+Delegate.swift in Sources */,
 				B8CD07A324D7C9E0007579FA /* BaseViewController.swift in Sources */,
 				B882A07E24EE1E0E00FC480E /* UserUtils.swift in Sources */,
 				B8C35FF824E38425002D2E75 /* Constants.swift in Sources */,
@@ -689,7 +699,9 @@
 				B8EB093224F7F1D700C926CC /* SearchLocaitonViewController.swift in Sources */,
 				B85DF84A24ED0F6B00963927 /* BookCoverView.swift in Sources */,
 				B8C3600624E3938D002D2E75 /* OnBoardTypeViewController.swift in Sources */,
+				B827CA2925061673008013DF /* MainViewController+Bind.swift in Sources */,
 				B8D1E2A624F760A900C669B7 /* BookAPI.swift in Sources */,
+				B827CA272505D66A008013DF /* SingUpModel.swift in Sources */,
 				B82F618B24E3DB00006A7F91 /* Extension+UIColor.swift in Sources */,
 				B8EB092D24F7C8DB00C926CC /* HeaderCollectionCell.swift in Sources */,
 				B82F618924E3C10E006A7F91 /* ProfileCollectionCell.swift in Sources */,

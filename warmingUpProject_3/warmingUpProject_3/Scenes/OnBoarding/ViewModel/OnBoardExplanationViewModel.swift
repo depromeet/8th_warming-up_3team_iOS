@@ -18,8 +18,10 @@ class OnBoardExplanationViewModel: BaseViewModel {
         provider.rx
             .request(.signUp(nickName: UserUtils.getNickName(), type: UserUtils.getType(), snsType: UserUtils.getSnsType(), snsLoginID: String(UserUtils.getSnsID()!)))
             .filterSuccessfulStatusCodes()
+            .map(SingUpModel.self)
             .subscribe(onSuccess: { [unowned self] (res) in
-                //TODO: 헤더랑 userID 이거저거 받아와야함.
+                //TODO: API 응답 데이터가 바뀌야함
+             
                 self.nextAction()
             }) { (err) in
                 print(err)
