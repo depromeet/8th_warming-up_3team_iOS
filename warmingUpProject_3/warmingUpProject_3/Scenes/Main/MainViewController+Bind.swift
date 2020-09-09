@@ -153,7 +153,7 @@ extension MainViewController: ViewModelBindableType {
             
             
             self.lbSelecteTime.setTextWithLetterSpacing(text: info.time, letterSpacing: -0.08, lineHeight: 19)
-//            lbSelecteLocation.setTextWithLetterSpacing(text: info.i, letterSpacing: -0.07, lineHeight: 17)
+            self.lbSelecteLocation.setTextWithLetterSpacing(text: "\(info.jibunAddress ?? ""), \(info.roadAddress ?? "")", letterSpacing: -0.07, lineHeight: 17)
             
             // 본문 내용
             cell.bookCover.bind(color: info.colorType, text: info.reason)

@@ -71,7 +71,6 @@ class MainViewController: UIViewController {
         naverMapView.mapView.touchDelegate = self
         naverMapView.mapView.addCameraDelegate(delegate: self)
         naverMapView.showScaleBar = true
-//        naverMapView.mapView.cent
 
         return naverMapView.mapView
     }

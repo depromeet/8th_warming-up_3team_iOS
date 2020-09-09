@@ -32,24 +32,37 @@ class SearchLocaitonViewController: UIViewController, ViewModelBindableType {
     func bindViewModel() {
         viewModel.adderData
             .bind(to: adderCollectionView.rx.items(cellIdentifier: String(describing: AdderCollectionCell.self), cellType: AdderCollectionCell.self)) { (row, element, cell) in
-                cell.lbText.text = element.roadAddress
-                cell.lbSubText.text = element.jibunAddress
-                
-                
+                if let adder = element as? Address {
+                    cell.lbText.text = adder.roadAddress
+                    cell.lbSubText.text = adder.jibunAddress
+                } else if let place = element as? Document {
+                    cell.lbText.text = place.placeName
+                    cell.lbSubText.text = place.addressName
+                }
         }
         .disposed(by: rx.disposeBag)
         
+        // 주소 검색일 경우
         Observable
-            .zip(adderCollectionView.rx.itemSelected, adderCollectionView.rx.modelSelected(Address.self))
-            .bind { [unowned self] indexPath, selData in
-                let lat = Double(selData.y) ?? 0
-                let log = Double(selData.x) ?? 0
-                self.viewModel.model?.lat = lat
-                self.viewModel.model?.log = log
-                self.viewModel.model?.roadAddress = selData.roadAddress
-                self.viewModel.model?.jibunAddress = selData.jibunAddress
-                self.viewModel.model?.addressElements = selData.addressElements
-                self.viewModel.adderTitle.onNext(selData.jibunAddress)
+            .zip(adderCollectionView.rx.itemSelected, adderCollectionView.rx.modelSelected(Any.self))
+            .bind { [unowned self] indexPath, element in
+                if let adder = element as? Address {
+                    let lat = Double(adder.y) ?? 0
+                    let log = Double(adder.x) ?? 0
+                    self.viewModel.model?.lat = lat
+                    self.viewModel.model?.log = log
+                    self.viewModel.model?.roadAddress = adder.roadAddress
+                    self.viewModel.model?.jibunAddress = adder.jibunAddress
+                    self.viewModel.adderTitle.onNext(adder.jibunAddress)
+                } else if let place = element as? Document {
+                    let lat = Double(place.y) ?? 0
+                    let log = Double(place.x) ?? 0
+                    self.viewModel.model?.lat = lat
+                    self.viewModel.model?.log = log
+                    self.viewModel.model?.roadAddress = place.placeName
+                    self.viewModel.model?.jibunAddress = place.addressName
+                    self.viewModel.adderTitle.onNext(place.placeName)
+                }
                 self.navigationController?.popViewController(animated: true)
         }
         .disposed(by: rx.disposeBag)
@@ -60,7 +73,6 @@ class SearchLocaitonViewController: UIViewController, ViewModelBindableType {
         img.image = UIImage(named: "btnClose24")
         return img
     }()
-    
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -75,7 +87,7 @@ class SearchLocaitonViewController: UIViewController, ViewModelBindableType {
         let textView = UITextView()
         textView.backgroundColor = ColorUtils.color247
         textView.textContainerInset = UIEdgeInsets(top: 11, left: 48, bottom: 10, right: 40)
-
+        
         textView.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         textView.attributedText = TextUtils.attributedPlaceholder(text: "주소나 장소명을 찾아보세요.", letterSpacing: -0.07, aligment: .left)
         return textView
@@ -122,12 +134,25 @@ extension SearchLocaitonViewController: UITextViewDelegate {
             textView.resignFirstResponder()
             viewModel.geoCodeProvider.rx.request(.geocode(addr: textView.text)).subscribe(onSuccess: { (res) in
                 
+                // 지번으로 검색하면
                 if let geocodeModel = try? JSONDecoder().decode(GeocodeModel.self, from: res.data) {
                     self.viewModel.adderData.onNext(geocodeModel.addresses)
-                    print(geocodeModel)
                 }
-                
-                
+                    // 검색해서 결과가 없는 경우
+                else {
+                    self.viewModel.placeProvider
+                        .rx.request(.place(addr: textView.text))
+                        .subscribe(onSuccess: { (response) in
+                            
+                        if let placeModel = try? JSONDecoder().decode(PlaceModel.self, from: response.data) {
+                            self.viewModel.adderData.onNext(placeModel.documents)
+                        }
+                            
+                        }) { (err) in
+                            print(err)
+                    }
+                    .disposed(by: self.rx.disposeBag)
+                }
                 print(res)
             }) { (err) in
                 print(err)
@@ -138,7 +163,7 @@ extension SearchLocaitonViewController: UITextViewDelegate {
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-            setPlaceholder()
+        setPlaceholder()
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {

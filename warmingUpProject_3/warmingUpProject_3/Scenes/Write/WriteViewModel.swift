@@ -25,7 +25,9 @@ class WriteViewModel: BaseViewModel {
     let tag = Observable.of(["#따뜻한","#유쾌한", "#가벼운", "#무거운", "#묘한", "#몽환적인", "#쓸쓸한", "#강렬한", "#사랑스러운", "#희망적인", "#철학적인", "#여운", "#사색", "#재해석", "#명작"])
     
     
-    let adderData = PublishSubject<[Address]>()
+    let adderData = PublishSubject<[Any]>()
+    
+//    let placeData = PublishSubject<[Document]>()
     
     let booksData = PublishSubject<[SearchBooks]>()
     
