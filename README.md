@@ -13,6 +13,23 @@ MVVM + Coordinator
 - ViewModel의 의존성 주입은 클래스 생성 시 이전 클래스에서
 
 
+
+백엔드 API 방식에서 파이어베이스로 전환
+
+
+
+검색 주소 API : 네이버 지도 - Geocoding
+https://docs.ncloud.com/ko/naveropenapi_v3/maps/geocoding/geocoding.html
+
+상호 주소 API : 카카오 로컬 - 키워드 검색
+https://developers.kakao.com/docs/latest/ko/local/common
+
+책 검색 API : 아직 백엔드 -> 전환해야함 
+https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book
+
+
+
+
 #### 구현 방법?
 
 - View init - 클로저 초기화
