@@ -10,6 +10,8 @@ import UIKit
 import SnapKit
 import Action
 import Lottie
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 class OnBoardExplanationViewController: UIViewController, ViewModelBindableType {
     
@@ -54,12 +56,12 @@ class OnBoardExplanationViewController: UIViewController, ViewModelBindableType 
             .controlEvent(.touchUpInside)
             .subscribe(onNext: { [unowned self]_ in
                 if self.btnNext.isSelected {
-                    self.viewModel.requestSingUp()
+                    self.viewModel.nextAction()
                 }
             })
             .disposed(by: rx.disposeBag)
-            
-//            .action = viewModel?.nextAction()
+        
+        //            .action = viewModel?.nextAction()
     }
     
 }

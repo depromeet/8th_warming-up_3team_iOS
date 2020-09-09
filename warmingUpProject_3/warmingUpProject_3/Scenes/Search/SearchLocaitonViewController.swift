@@ -32,7 +32,6 @@ class SearchLocaitonViewController: UIViewController, ViewModelBindableType {
     func bindViewModel() {
         viewModel.adderData
             .bind(to: adderCollectionView.rx.items(cellIdentifier: String(describing: AdderCollectionCell.self), cellType: AdderCollectionCell.self)) { (row, element, cell) in
-                
                 cell.lbText.text = element.roadAddress
                 cell.lbSubText.text = element.jibunAddress
                 
@@ -47,6 +46,9 @@ class SearchLocaitonViewController: UIViewController, ViewModelBindableType {
                 let log = Double(selData.x) ?? 0
                 self.viewModel.model?.lat = lat
                 self.viewModel.model?.log = log
+                self.viewModel.model?.roadAddress = selData.roadAddress
+                self.viewModel.model?.jibunAddress = selData.jibunAddress
+                self.viewModel.model?.addressElements = selData.addressElements
                 self.viewModel.adderTitle.onNext(selData.jibunAddress)
                 self.navigationController?.popViewController(animated: true)
         }

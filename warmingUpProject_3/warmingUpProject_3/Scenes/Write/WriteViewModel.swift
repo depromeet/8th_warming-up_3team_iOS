@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import Action
+import FirebaseFirestore
 
 class WriteViewModel: BaseViewModel {
     
@@ -34,7 +35,7 @@ class WriteViewModel: BaseViewModel {
     
     override init(scenCoordinator: SceneCoordinatorType) {
         super.init(scenCoordinator: scenCoordinator)
-        model = PostModel(title: "", colorType: "NAVY", lat: 0, log: 0, phrase: "", reason: "", time: "2020-08-29", author: "", description: "", thumbnail: "", pubDate: "", publisher: "", tags: [], userID: 1)
+        model = PostModel(title: "", colorType: "NAVY", lat: 0, log: 0, phrase: "", reason: "", time: "촉촉한 새벽", author: "", description: "", thumbnail: "", pubDate: "", publisher: "", tags: [], userID: 1, roadAddress: "", jibunAddress: "", addressElements: [])
     }
     
     func actionLocationView() {
@@ -51,14 +52,16 @@ class WriteViewModel: BaseViewModel {
     
     func actionSave(completion: @escaping () -> Void) {
         guard let model = self.model else { return }
-        provider.rx.request(.writeBook(model: model))
-            .subscribe(onSuccess: { (res) in
-                print("-----res :   \(res)  \(print(self.model))")
-                completion()
-            }) { (err) in
-                print(err)
+        
+        
+        //TODO: 저장하는 부분
+        let setWrite = FBWriteModel(title: model.title, colorType: model.colorType, location: GeoPoint(latitude: model.lat, longitude: model.log), phrase: model.phrase, reason: model.reason, time: model.time, author: model.author, description: model.description, thumbnail: model.thumbnail, pubDate: model.pubDate, publisher: model.publisher, tags: model.tags, userID: FirebaseManager.getUID(), roadAddress: model.roadAddress, jibunAddress: model.jibunAddress)
+        
+        
+        FirebaseManager.setWrite(data: setWrite) {
+            completion()
         }
-        .disposed(by: rx.disposeBag)
+        
         
     }
 }

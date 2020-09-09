@@ -10,15 +10,18 @@ import Foundation
 import RxSwift
 import RxSwift
 import Moya
+import FirebaseFirestore
 
 class BaseViewModel: NSObject {
 
     let scenCoordinator: SceneCoordinatorType
+    
 
     init(scenCoordinator: SceneCoordinatorType) {
         self.scenCoordinator = scenCoordinator
     }
     
+    let db = Firestore.firestore()
     
     let provider = MoyaProvider<BookAPI>(plugins: [NetworkLoggerPlugin()])
     

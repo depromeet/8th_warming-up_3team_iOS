@@ -34,7 +34,7 @@ extension MainViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locations.forEach { (location) in
             mapView.locationOverlay.location = NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
-            print("location:  ",location.coordinate)
+            viewModel.beforeCameraPosition = NMFCameraPosition(NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude), zoom: mapView.zoomLevel)
         }
     }
     
@@ -56,15 +56,32 @@ extension MainViewController: NMFMapViewTouchDelegate {
     private func sortingMarker(picks: [NMFPickable]? ) {
         let sortMarkers = picks?.filter { $0.isKind(of: NMFMarker.self) }
         let count = sortMarkers?.count ?? 0
-        var selectedMarkers: [UInt] = []
+        var selectedMarkers: [[AnyHashable : Any]] = []
         
         for idx in 0..<count {
             if let marker = sortMarkers?[idx] as? NMFMarker {
-                selectedMarkers.append(marker.tag)
+                selectedMarkers.append(marker.userInfo)
             }
         }
         
         viewModel.selectedData.onNext(selectedMarkers)
     }
     
+}
+
+extension MainViewController: NMFMapViewCameraDelegate {
+    
+    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
+        guard let coordinate = locationManager?.location?.coordinate else { return }
+        
+        let currentLocationFromDistance = mapView.cameraPosition.target.distance(to: NMGLatLng(lat: viewModel.beforeCameraPosition?.target.lat ?? NMGLatLng.init(from: coordinate).lat, lng: viewModel.beforeCameraPosition?.target.lng ?? NMGLatLng.init(from: coordinate).lng))
+
+        
+        // 카메라 현재 위치 기준으로 요청하면 다시 카메라 센터 기준으로 3km
+        if currentLocationFromDistance >= 3_000 {
+            viewModel.beforeCameraPosition = NMFCameraPosition(mapView.cameraPosition.target, zoom: mapView.zoomLevel)
+            viewModel.getDocumentNearBy(latitude: mapView.cameraPosition.target.lat , longitude: mapView.cameraPosition.target.lng, distance: 1)
+        }
+        
+    }
 }

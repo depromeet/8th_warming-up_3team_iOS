@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 import NMapsMap
 import RxKakaoSDKCommon
 import KakaoSDKAuth
@@ -16,7 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // 파베 초기화
+        FirebaseApp.configure()
+        
+        // Cloud Firestore 인스턴스를 초기화
+        let db = Firestore.firestore()
         
         // 카카오 로그인 연동
         RxKakaoSDKCommon.initSDK(appKey: "cca84244b21a13a5c1652e37106c9203")

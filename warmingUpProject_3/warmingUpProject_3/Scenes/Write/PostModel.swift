@@ -24,8 +24,11 @@ public struct PostModel {
     var publisher: String
     var tags: [String]
     var userID: Int
+    var roadAddress: String
+    var jibunAddress: String
+    var addressElements: [AddressElement]
     
-    init(title: String, colorType: String, lat: Double, log: Double, phrase: String, reason: String, time: String, author: String, description: String, thumbnail: String, pubDate: String, publisher: String, tags: [String], userID: Int) {
+    init(title: String, colorType: String, lat: Double, log: Double, phrase: String, reason: String, time: String, author: String, description: String, thumbnail: String, pubDate: String, publisher: String, tags: [String], userID: Int, roadAddress: String, jibunAddress: String, addressElements: [AddressElement]  ) {
         
         self.title = title
         self.colorType = colorType
@@ -41,5 +44,8 @@ public struct PostModel {
         self.publisher = pubDate
         self.tags = tags
         self.userID = 1
+        self.roadAddress = roadAddress
+        self.jibunAddress = jibunAddress
+        self.addressElements = addressElements
     }
 }

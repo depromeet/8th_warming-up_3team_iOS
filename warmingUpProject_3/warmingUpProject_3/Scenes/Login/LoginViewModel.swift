@@ -48,6 +48,13 @@ class LoginViewModel: BaseViewModel {
         
     }
     
+    func appleLoingSucceed() {
+        let onboardNammingViewModel = OnBoardNameingViewModel(scenCoordinator: self.scenCoordinator)
+        let onboardNammingScene = Scene.onboardNamming(onboardNammingViewModel)
+        
+        self.scenCoordinator.transition(to: onboardNammingScene, using: .root, animated: true)
+    }
+    
     func appleLoingAction() -> CocoaAction {
         return CocoaAction { _ in
             

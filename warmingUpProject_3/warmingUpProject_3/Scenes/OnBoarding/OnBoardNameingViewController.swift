@@ -11,6 +11,7 @@ import SnapKit
 import Action
 import NSObject_Rx
 import KakaoSDKUser
+import FirebaseFirestore
 
 class OnBoardNameingViewController: UIViewController, ViewModelBindableType {
     
@@ -40,6 +41,8 @@ class OnBoardNameingViewController: UIViewController, ViewModelBindableType {
     
     let tvNickName: UITextView = {
         let tfNickName = UITextView()
+        tfNickName.textContainer.maximumNumberOfLines = 1
+        tfNickName.returnKeyType = .done
         return tfNickName
     }()
     
@@ -85,10 +88,35 @@ class OnBoardNameingViewController: UIViewController, ViewModelBindableType {
             .controlEvent(.touchUpInside)
             .subscribe(onNext: { [unowned self] isSel in
                 if self.btnNext.isSelected {
-                    UserUtils.setNickName(name: self.tvNickName.text)
-//                    if !self.tvNickName.text.isEmpty {
-                    self.viewModel.nextAction()
-//                    }
+
+                    let db = Firestore.firestore()
+                    
+                    db.collection("users").whereField(FBUserModel.CodingKeys.nickName.rawValue, isEqualTo: self.tvNickName.text ?? "")
+                        .getDocuments() { (querySnapshot, err) in
+                            if let err = err {
+                                print("Error getting documents: \(err)")
+                            } else {
+                                if querySnapshot?.count == 0 {
+
+                                    UserUtils.setNickName(name: self.tvNickName.text ?? "")
+                                    //TODO: 문서 업데이트 하는 부분
+                                    let washingtonRef = db.collection("users").document(FirebaseManager.getUID())
+
+                                    washingtonRef.updateData([
+                                        FBUserModel.CodingKeys.nickName.rawValue: self.tvNickName.text ?? ""
+                                    ]) { err in
+                                        if let err = err {
+                                            print("Error updating document: \(err)")
+                                        } else {
+                                            print("Document successfully updated")
+                                        }
+                                    }
+                                    self.viewModel.nextAction()
+                                } else {
+                                    AlertUtils.showPermissionAlarmAlert(self)
+                                }
+                            }
+                    }
                 }
             })
             .disposed(by: rx.disposeBag)
@@ -153,12 +181,6 @@ extension OnBoardNameingViewController {
         }
         
         btnNext.snp.makeConstraints { (make) in
-            var bottom: CGFloat = 0
-            if #available(iOS 13.0, *) {
-                bottom = UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.safeAreaInsets.bottom ?? 0.0
-            } else {
-                bottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0.0
-            }
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.height.equalTo(74 + Dimens.getSafeAreaBottomMargin())
@@ -207,14 +229,23 @@ extension OnBoardNameingViewController: UITextViewDelegate {
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        guard let str = textView.text else { return true }
-        let newLength = str.count + text.count - range.length
+//        guard let str = textView.text else { return true }
         
-        if text == " " {
+        let utf8Char = text.cString(using: .utf8)
+        let isBackSpace = strcmp(utf8Char, "\\b")
+        
+        // .done
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        } else if text.nicknameCheck() || isBackSpace == -92 {
+            return true
+        }  else {
             return false
         }
-        return newLength <= 8
     }
+    
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)

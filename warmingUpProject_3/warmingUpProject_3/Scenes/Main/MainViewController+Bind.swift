@@ -8,6 +8,9 @@
 
 import UIKit
 import NMapsMap
+import RxSwift
+import RxCocoa
+import FirebaseFirestore
 
 extension MainViewController: ViewModelBindableType {
     
@@ -23,38 +26,45 @@ extension MainViewController: ViewModelBindableType {
             .subscribe(onNext: { _ in
                 
                 let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: self.locationManager?.location?.coordinate.latitude ?? 37.5666102, lng: self.locationManager?.location?.coordinate.longitude ?? 126.9783881))
-                cameraUpdate.pivot = CGPoint(x: 0.5, y: 0.3)
                 self.mapView.moveCamera(cameraUpdate)
             })
             .disposed(by: rx.disposeBag)
         
         
+        //MARK: getDocumentNearBy 통해 가져온 데이터 기준으로 마커 찍기
         viewModel.writeData
             .subscribe(onNext: { [unowned self ] value in
                 
-                // 다 지우고
-                self.markers.forEach { $0.mapView = nil }
+                //FIXME: 다 지우고 - 비효윯인데, 매번 다시 그려야하다니
+                self.viewModel.markers.forEach { $0.mapView = nil }
                 
-                // 한방에 들어오네
-                for (idx, value) in value.enumerated() {
-                    self.markers.append(NMFMarker(position: NMGLatLng(lat: value.latitude, lng: value.longitude)))
-                    self.markers[idx].iconImage = NMFOverlayImage(image: ImageUtils.getColorBookIcon(value.colorType))
-                    self.markers[idx].mapView = self.naverMapView.mapView
-                    self.markers[idx].tag = UInt(value.id)
-                    //                    self.markers[idx].isHideCollidedMarkers = true
-                    //                    self.markers[idx].isHideCollidedCaptions = true
+                for value in value {
+                    do {
+                        if let model = try value.data(as: FBWriteModel.self) {
+                            let marker = NMFMarker(position: NMGLatLng(lat: model.location.latitude, lng: model.location.longitude))
+                            
+                            self.viewModel.markers.append(marker)
+                            marker.iconImage = NMFOverlayImage(image: ImageUtils.getColorBookIcon(model.colorType))
+                            marker.mapView = self.naverMapView.mapView
+                            marker.tag = UInt(model.userID) ?? 0
+                            marker.userInfo = ["info" : model]
+                        }
+
+                    } catch let err {
+                        print("err : \(err)")
+                    }
                 }
             })
             .disposed(by: rx.disposeBag)
         
         
-        // 네이버 지도에서 선택된 마커가 들어오는 경우 처리
+        //MARK:  네이버 지도에서 선택된 마커가 들어오는 경우 처리
         viewModel.selectedData
             .subscribe(onNext: { [unowned self] values in
                 print("------ value:    \(values)")
                 
                 // 애니메이션 줘야함
-                if values.isEmpty || values == [] {
+                if values.isEmpty || values.count == 0 {
                     self.baseView.isHidden = false
                     self.btnWrite.isHidden = false
                     self.selectedBaseView.isHidden = true
@@ -66,12 +76,8 @@ extension MainViewController: ViewModelBindableType {
                 
             })
             .disposed(by: rx.disposeBag)
-        //
-        //            .bind(to: bookListCollectionView.rx.items(cellIdentifier: String(describing: EmptyCollectionCell.self), cellType: EmptyCollectionCell.self)) { (row, element, cell) in
-        //                print(1)
-        //            }.disposed(by: rx.disposeBag)
         
-        
+        //MARK: 책 리스트
         viewModel.writeData // write data인지는 모르겠습니다 ... ?
             .do(onNext: { bookList in
                 if bookList.isEmpty {
@@ -85,14 +91,20 @@ extension MainViewController: ViewModelBindableType {
                 }
             })
             .bind(to: bookListCollectionView.rx.items(cellIdentifier: String(describing: BookCoverCollectionCell.self), cellType: BookCoverCollectionCell.self)) { (row, element, cell) in
-                print(element)
+                do {
+                    if let model = try element.data(as: FBWriteModel.self) {
+                        
+                        cell.bookCover.bind(color: model.colorType, text: model.reason)
+                        cell.lbBookTitle.setTextWithLetterSpacing(text: model.title, letterSpacing: -0.07, lineHeight: 17)
+                        cell.lbWriter.setTextWithLetterSpacing(text: model.author, letterSpacing: -0.06, lineHeight: 14)
+                    }
+                } catch let err {
+                    print("err : \(err)")
+                }
                 
-                cell.bookCover.bind(color: element.colorType, text: element.reason)
-                cell.lbBookTitle.setTextWithLetterSpacing(text: element.title, letterSpacing: -0.07, lineHeight: 17)
-                cell.lbWriter.setTextWithLetterSpacing(text: element.author, letterSpacing: -0.06, lineHeight: 14)
         }.disposed(by: rx.disposeBag)
         
-        
+        //MARK: 시간 때 클릭UI 처리
         viewModel.times.bind(to: timeListCollectionView.rx.items(cellIdentifier: String(describing: RoundCollectionCell.self), cellType: RoundCollectionCell.self)) { (row, element, cell) in
             cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 20)
             if row == 0 {
@@ -107,8 +119,10 @@ extension MainViewController: ViewModelBindableType {
             
         }.disposed(by: rx.disposeBag)
         
-        timeListCollectionView.rx
-            .itemSelected
+        
+        //MARK: 타임 선택 시 처리 하기
+        Observable
+            .zip(timeListCollectionView.rx.itemSelected, timeListCollectionView.rx.modelSelected(String.self))
             .do(onNext: { [unowned self] indexPath in
                 self.timeListCollectionView.indexPathsForVisibleItems.forEach { indexPath in
                     // 레이어 보더 모두 해제
@@ -117,23 +131,37 @@ extension MainViewController: ViewModelBindableType {
                     cell?.lbRoundText.textColor = ColorUtils.color68
                     cell?.backgroundColor = ColorUtils.color243
                 }
-            }).subscribe(onNext: { [unowned self] indexPath in
+            })
+            .bind { [unowned self] indexPath, selTime in
+                
                 let cell = self.timeListCollectionView.cellForItem(at: indexPath) as? RoundCollectionCell
                 cell?.lbRoundText.font = UIFont.systemFont(ofSize: 13, weight: .medium)
                 cell?.lbRoundText.textColor = .white
                 cell?.backgroundColor = ColorUtils.colorTimeSelected
-            }).disposed(by: rx.disposeBag)
+                
+                // 데이터 날리기 위해서
+                self.viewModel.writeData.onNext([])
+                
+                self.viewModel.getTimeDocumentNearBy(time: selTime, latitude: self.locationManager?.location?.coordinate.latitude ?? 37.5666102, longitude: self.locationManager?.location?.coordinate.longitude ?? 126.9783881, distance: 1)
+        }
+        .disposed(by: rx.disposeBag)
         
-        viewModel.selectedData.bind(to: selectedBookListCollectionView.rx.items(cellIdentifier: String(describing: selectedBookCollectionCell.self), cellType: selectedBookCollectionCell.self)) { (row, element, cell) in
+        // 선택됬을 때
+        
+        viewModel.selectedData.bind(to: selectedBookListCollectionView.rx.items(cellIdentifier: String(describing: selectedBookCollectionCell.self), cellType: selectedBookCollectionCell.self)) { [unowned self] (row, element, cell) in
+            guard let info = element["info"] as? FBWriteModel else { return }
             
-            //            let sameElement = self.viewModel.copyWriteData.first { $0.id == element }
-            //
-            //            cell.bookCover.bind(color: sameElement!.color, text: sameElement!.content)
-            //            cell.lbBookTitle.setTextWithLetterSpacing(text: sameElement!.book, letterSpacing: -0.08, lineHeight: 16)
-            //            cell.lbWriter.setTextWithLetterSpacing(text: sameElement!.write, letterSpacing: -0.07, lineHeight: 17)
-            //            cell.lbBookSummary.setTextWithLetterSpacing(text: "1줄\n2줄\n불라불라라라라라라라라라라라라라라라라라라", letterSpacing: 0, lineHeight: 18)
-            //            cell.layoutIfNeeded()
-            //            cell.lbBookSummary.lineBreakMode = .byTruncatingTail
+            
+            self.lbSelecteTime.setTextWithLetterSpacing(text: info.time, letterSpacing: -0.08, lineHeight: 19)
+//            lbSelecteLocation.setTextWithLetterSpacing(text: info.i, letterSpacing: -0.07, lineHeight: 17)
+            
+            // 본문 내용
+            cell.bookCover.bind(color: info.colorType, text: info.reason)
+            cell.lbBookTitle.setTextWithLetterSpacing(text: info.title, letterSpacing: -0.08, lineHeight: 16)
+            cell.lbWriter.setTextWithLetterSpacing(text: info.author, letterSpacing: -0.07, lineHeight: 17)
+            cell.lbBookSummary.setTextWithLetterSpacing(text: info.description, letterSpacing: 0, lineHeight: 18)
+            cell.layoutIfNeeded()
+            cell.lbBookSummary.lineBreakMode = .byTruncatingTail
         }.disposed(by: rx.disposeBag)
     }
     
@@ -160,6 +188,7 @@ extension MainViewController: ViewModelBindableType {
         self.view.setNeedsUpdateConstraints()
         setLayout()
         setNaverMap()
+        setProfile()
     }
     
     func setLayout() {
@@ -269,5 +298,18 @@ extension MainViewController: ViewModelBindableType {
         naverMapView.showZoomControls = false
         naverMapView.showLocationButton = false
         naverMapView.showScaleBar = false
+    }
+    
+    private func setProfile() {
+        
+        viewModel.getUserInfo { (model) in
+            
+            
+            
+            
+            
+            
+            
+        }
     }
 }

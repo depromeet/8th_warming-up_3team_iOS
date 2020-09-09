@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 import Action
 import NSObject_Rx
+import FirebaseFirestore
 
 class OnBoardTypeViewController: UIViewController, ViewModelBindableType {
     
@@ -129,6 +130,24 @@ class OnBoardTypeViewController: UIViewController, ViewModelBindableType {
             .controlEvent(.touchUpInside)
             .subscribe(onNext: { [unowned self] _ in
                 if UserUtils.getType() > 0 {
+                    
+                    
+                    let db = Firestore.firestore()
+                    
+                    //TODO: 문서 업데이트 하는 부분
+                    let washingtonRef = db.collection("users").document(FirebaseManager.getUID())
+                    
+                    // Set the "capital" field of the city 'DC'
+                    washingtonRef.updateData([
+                        FBUserModel.CodingKeys.type.rawValue: UserUtils.getType()
+                    ]) { err in
+                        if let err = err {
+                            print("Error updating document: \(err)")
+                        } else {
+                            print("Document successfully updated")
+                        }
+                    }
+                    
                     self.viewModel.nextAction()
                 }
             })

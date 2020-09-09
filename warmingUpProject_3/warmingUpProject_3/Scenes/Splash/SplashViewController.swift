@@ -8,6 +8,7 @@
 
 import UIKit
 import Lottie
+import FirebaseAuth
 
 final class SplashViewController: UIViewController {
     
@@ -30,7 +31,9 @@ final class SplashViewController: UIViewController {
          */
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            if (UserUtils.getSnsID() != nil) {
+            // 파베를 통해 이미 로그인 되어 있는 경우
+            if let user = Auth.auth().currentUser {
+                print("You're sign in as \(user.uid)")
                 let coordinator = SceneCoordinator(window:
                     UIApplication.shared.windows.first!)
                 let mainViewModel = MainViewModel(scenCoordinator: coordinator)

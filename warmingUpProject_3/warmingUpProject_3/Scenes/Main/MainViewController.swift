@@ -13,6 +13,8 @@ import RxCocoa
 import Action
 import NSObject_Rx
 import NMapsMap
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 class MainViewController: UIViewController {
     
@@ -29,9 +31,6 @@ class MainViewController: UIViewController {
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager?.location?.coordinate.latitude ?? 37.5666102, lng: locationManager?.location?.coordinate.longitude ?? 126.9783881))
         cameraUpdate.pivot = CGPoint(x: 0.5, y: 0.3)
         mapView.moveCamera(cameraUpdate)
-        
-        lbSelecteTime.setTextWithLetterSpacing(text: "나른한 낮 시간", letterSpacing: -0.08, lineHeight: 19)
-        lbSelecteLocation.setTextWithLetterSpacing(text: "망원동, 아틀리에 크레타", letterSpacing: -0.07, lineHeight: 17)
     }
     
     
@@ -46,9 +45,9 @@ class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        viewModel.requestBooksList(lat: locationManager?.location?.coordinate.latitude ?? 37.5666102, log: locationManager?.location?.coordinate.longitude ?? 126.9783881)
-        
+        viewModel.getTimeDocumentNearBy(time: "모든 시간", latitude: locationManager?.location?.coordinate.latitude ?? 37.5666102, longitude: locationManager?.location?.coordinate.longitude ?? 126.9783881, distance: 1) // 10 == 16km, 5 == 8km, 2.5 == 4km, 23
     }
+    
     
     @objc func tapProfile() {
         viewModel.myPageAction()
@@ -61,8 +60,6 @@ class MainViewController: UIViewController {
     
     let naverMapView = NMFNaverMapView()
     
-    var markers: [NMFMarker] = []
-    
     var mapView: NMFMapView {
         let locationOverlay = naverMapView.mapView.locationOverlay
         locationOverlay.circleOutlineWidth = 50
@@ -72,6 +69,10 @@ class MainViewController: UIViewController {
         locationOverlay.subIcon = nil
         
         naverMapView.mapView.touchDelegate = self
+        naverMapView.mapView.addCameraDelegate(delegate: self)
+        naverMapView.showScaleBar = true
+//        naverMapView.mapView.cent
+
         return naverMapView.mapView
     }
     
@@ -81,6 +82,7 @@ class MainViewController: UIViewController {
         profileView.layer.cornerRadius = 23
         
         let imageView = UIImageView()
+        
         switch UserUtils.getType() {
         case 0:
             imageView.image = UIImage(named: "img28Profile1")

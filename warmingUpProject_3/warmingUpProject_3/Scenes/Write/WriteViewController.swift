@@ -293,9 +293,6 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         saveBtn.rx
             .controlEvent(.touchUpInside)
             .subscribe(onNext: { [unowned self]_ in
-                print("lat", self.viewModel.model?.lat)
-                print("log", self.viewModel.model?.log)
-                
                 
                 self.viewModel.actionSave {
                     self.navigationController?.popViewController(animated: true)
@@ -410,14 +407,12 @@ class WriteViewController: UIViewController,ViewModelBindableType {
             })
             .bind { [unowned self] indexPath, text in
                 let cell = self.tagCollectionView.cellForItem(at: indexPath) as? RoundCollectionCell
-                print(cell?.isSelected)
                 cell?.layer.borderWidth = 1
                 cell?.layer.borderColor = UIColor(r: 84, g: 90, b: 124).cgColor
                 cell?.lbRoundText.setTextWithLetterSpacing(text: text, letterSpacing: -0.06, lineHeight: 19.5, font: UIFont.systemFont(ofSize: 13, weight: .regular), color: UIColor(r: 84, g: 90, b: 124))
                 
                 let addText = text.trimmingCharacters(in: ["#"])
                 self.viewModel.model?.tags.append(addText)
-                print(self.viewModel.model?.tags)
         }
         .disposed(by: rx.disposeBag)
         
