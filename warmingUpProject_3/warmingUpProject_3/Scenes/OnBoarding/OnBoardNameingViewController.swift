@@ -11,9 +11,20 @@ import SnapKit
 import Action
 import NSObject_Rx
 import KakaoSDKUser
-import FirebaseFirestore
 
-class OnBoardNameingViewController: UIViewController, ViewModelBindableType {
+class OnBoardNameingViewController: UIViewController {
+    
+    
+    override func loadView() {
+        super.loadView()
+        setUI()
+    }
+    
+    override func viewDidLoad() {
+        
+    }
+    
+    //MARK: Properties
     
     var viewModel: OnBoardNameingViewModel!
     
@@ -75,53 +86,7 @@ class OnBoardNameingViewController: UIViewController, ViewModelBindableType {
     }()
     
     
-    override func loadView() {
-        super.loadView()
-        setUI()
-    }
     
-    override func viewDidLoad() {
-    }
-    
-    func bindViewModel() {
-        btnNext.rx
-            .controlEvent(.touchUpInside)
-            .subscribe(onNext: { [unowned self] isSel in
-                if self.btnNext.isSelected {
-
-                    let db = Firestore.firestore()
-                    
-                    db.collection("users").whereField(FBUserModel.CodingKeys.nickName.rawValue, isEqualTo: self.tvNickName.text ?? "")
-                        .getDocuments() { (querySnapshot, err) in
-                            if let err = err {
-                                print("Error getting documents: \(err)")
-                            } else {
-                                if querySnapshot?.count == 0 {
-
-                                    UserUtils.setNickName(name: self.tvNickName.text ?? "")
-                                    //TODO: 문서 업데이트 하는 부분
-                                    let washingtonRef = db.collection("users").document(FirebaseManager.getUID())
-
-                                    washingtonRef.updateData([
-                                        FBUserModel.CodingKeys.nickName.rawValue: self.tvNickName.text ?? ""
-                                    ]) { err in
-                                        if let err = err {
-                                            print("Error updating document: \(err)")
-                                        } else {
-                                            print("Document successfully updated")
-                                        }
-                                    }
-                                    self.viewModel.nextAction()
-                                } else {
-                                    AlertUtils.showPermissionAlarmAlert(self)
-                                }
-                            }
-                    }
-                }
-            })
-            .disposed(by: rx.disposeBag)
-            
-    }
     
 }
 
@@ -213,42 +178,5 @@ extension OnBoardNameingViewController {
             tvNickName.attributedText = TextUtils.attributedPlaceholder(text: "최대 8자까지 입력 가능합니다.", letterSpacing: -0.07)
             btnNext.isSelected = false
         }
-    }
-}
-
-extension OnBoardNameingViewController: UITextViewDelegate {
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        setPlaceholder()
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty || textView.text == "" {
-            setPlaceholder()
-        }
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-//        guard let str = textView.text else { return true }
-        
-        let utf8Char = text.cString(using: .utf8)
-        let isBackSpace = strcmp(utf8Char, "\\b")
-        
-        // .done
-        if text == "\n" {
-            textView.resignFirstResponder()
-            return false
-        } else if text.nicknameCheck() || isBackSpace == -92 {
-            return true
-        }  else {
-            return false
-        }
-    }
-    
-    
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
-        super.touchesBegan(touches, with: event)
     }
 }

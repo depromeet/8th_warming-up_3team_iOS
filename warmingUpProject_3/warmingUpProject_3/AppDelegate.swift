@@ -22,7 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         
         // Cloud Firestore 인스턴스를 초기화
-        let db = Firestore.firestore()
         
         // 카카오 로그인 연동
         RxKakaoSDKCommon.initSDK(appKey: "cca84244b21a13a5c1652e37106c9203")

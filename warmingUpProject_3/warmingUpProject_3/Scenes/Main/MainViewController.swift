@@ -13,8 +13,6 @@ import RxCocoa
 import Action
 import NSObject_Rx
 import NMapsMap
-import FirebaseFirestore
-import FirebaseFirestoreSwift
 
 class MainViewController: UIViewController {
     
@@ -80,56 +78,22 @@ class MainViewController: UIViewController {
         profileView.backgroundColor = .white
         profileView.layer.cornerRadius = 23
         
+        return profileView
+    }()
+    
+    let profileTypeImageView: UIImageView = {
         let imageView = UIImageView()
-        
-        switch UserUtils.getType() {
-        case 0:
-            imageView.image = UIImage(named: "img28Profile1")
-            
-        case 1:
-            imageView.image = UIImage(named: "img28Profile2")
-            
-        case 2:
-            imageView.image = UIImage(named: "img28Profile3")
-            
-        case 3:
-            imageView.image = UIImage(named: "img28Profile4")
-            
-        case 4:
-            imageView.image = UIImage(named: "img28Profile5")
-            
-        case 5:
-            imageView.image = UIImage(named: "img28Profile6")
-            
-        default:
-            break
-        }
-        
         imageView.layer.cornerRadius = 19
         imageView.layer.masksToBounds = true
-        
+        return imageView
+    }()
+    
+    let lbNickName: UILabel = {
         let lbTitle = UILabel()
         lbTitle.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         lbTitle.textAlignment = .center
-        lbTitle.setTextWithLetterSpacing(text: UserUtils.getNickName(), letterSpacing: -0.06, lineHeight: 16)
-        profileView.addSubview(imageView)
-        profileView.addSubview(lbTitle)
         
-        imageView.snp.makeConstraints { (make) in
-            make.top.equalTo(4)
-            make.leading.equalTo(4)
-            make.width.equalTo(38)
-            make.bottom.equalTo(-4)
-        }
-        
-        lbTitle.snp.makeConstraints { (make) in
-            make.top.equalTo(15)
-            make.leading.equalTo(imageView.snp.trailing).offset(9)
-            make.trailing.equalTo(-16)
-            make.bottom.equalTo(-15)
-        }
-        
-        return profileView
+        return lbTitle
     }()
     
     let baseView: UIView = {

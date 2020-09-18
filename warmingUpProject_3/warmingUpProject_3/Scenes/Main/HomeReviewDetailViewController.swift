@@ -28,7 +28,6 @@ UIViewController,ViewModelBindableType, UITextViewDelegate {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.frame.size = CGSize(width: 207, height: 18)
-        label.text = "외로운 간고등어님의 기록"
         label.textAlignment = .center
         label.font = label.font.withSize(15)
         return label

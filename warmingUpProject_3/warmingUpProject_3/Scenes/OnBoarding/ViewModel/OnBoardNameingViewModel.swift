@@ -13,8 +13,9 @@ import Action
 
 class OnBoardNameingViewModel: BaseViewModel {
     
-    func nextAction() {
+    func nextAction(nickname: String) {
         let onboardTypeViewModel = OnBoardTypeViewModel(scenCoordinator: self.scenCoordinator)
+        onboardTypeViewModel.nickName = nickname
         let onBoardTypeScene = Scene.onboardType(onboardTypeViewModel)
         self.scenCoordinator.transition(to: onBoardTypeScene, using: .root, animated: true)
     }

@@ -14,10 +14,6 @@ MVVM + Coordinator
 
 
 
-백엔드 API 방식에서 파이어베이스로 전환
-
-
-
 검색 주소 API : 네이버 지도 - Geocoding
 https://docs.ncloud.com/ko/naveropenapi_v3/maps/geocoding/geocoding.html
 
@@ -84,6 +80,26 @@ https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book
      네. 우리 앱 지도 기반 ㄱㅅ
      ```
 
+   - FireStroe 
+
+     ```
+     백엔드 없이 처리하기 위해 사용
+     ```
+     
+- FirebaseDatabase
+
+  ```
+  반경 내 위치 정보를 가져오기 위해서 FireStroe 대신 사용
+  ```
+
+- GeoFire
+
+  ```swift
+  아래 쿼리로 FirebaseDatabase == 리얼타임 디비에서
+  데이터를 가져올 수 있다고 하는데 테스트가 필요
+  geoFire.queryAtLocation(center, withRadius: 0.6)
+  ```
+
    - Action
 
      ```
@@ -104,6 +120,22 @@ https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book
 --------------------
 --------------------
 
+#### 테스트플라이트 1.04 피드백
+
+- [ ]  더미 이미지 깔린거 빼주시면 감사하겠습니닷...!
+   Bg이미지 바로 위에 로티 얹어주시면
+
+- [ ] FireStroe GeoPoint distance 계산이 올바르지 않아
+  아래와 같이 문제 됨
+
+  1.한강에 글 남김
+  2.울집이랑 한강이랑 먼데 책이 모달창에 뜸
+  3.한강쪽으로 지도 움직이니까 똑같은 책이 한개씩 증가
+
+- [ ] 그리고 기록하기 페이지에서는 괜찮은데 북커버에 최종으로 표출되는 내용이 본문내용이에요! > 타이틀이 노출되어야함
+
+  
+
 #### 테스트플라이트 1.01 피드백
 
 - [x] 스플래쉬 화면 - 로티 작동안함
@@ -122,3 +154,4 @@ https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book
   ➡️ 책 제목, 위치 매핑 되도록 수정함
 - [ ] 글쓰기 - 글쓰는 부분, 키보드에 퀵버튼(닫기) 달기
 - [ ] 글쓰기 - 태그 부분 양쪽 정렬 말고 좌측정렬
+

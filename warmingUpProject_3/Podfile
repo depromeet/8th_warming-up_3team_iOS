@@ -1,4 +1,4 @@
-# Uncomment the next line to define a global platform for your project
+#Uncomment the next line to define a global platform for your project
 # platform :ios, '13.0'
 
 target 'warmingUpProject_3' do
@@ -27,6 +27,7 @@ target 'warmingUpProject_3' do
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'FirebaseFirestoreSwift'
-
+  pod 'Firebase/Database'
+  pod 'GeoFire', '~> 4.0'
 
 end

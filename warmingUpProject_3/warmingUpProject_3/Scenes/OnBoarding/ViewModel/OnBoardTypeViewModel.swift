@@ -12,6 +12,11 @@ import RxCocoa
 import Action
 
 class OnBoardTypeViewModel: BaseViewModel {
+    
+    var nickName = ""
+    
+    var profileType = 0
+    
     func nextAction()  {
         let onboardExplanationViewModel = OnBoardExplanationViewModel(scenCoordinator: self.scenCoordinator)
         let onBoardTypeScene = Scene.onboardExplanation(onboardExplanationViewModel)

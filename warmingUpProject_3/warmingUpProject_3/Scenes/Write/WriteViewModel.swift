@@ -10,11 +10,17 @@ import Foundation
 import RxSwift
 import RxCocoa
 import Action
-import FirebaseFirestore
+import CoreLocation
+import FirebaseDatabase
+import GeoFire
 
 class WriteViewModel: BaseViewModel {
     
     var selColor = "NAVY"
+    
+    var selColorIndex: IndexPath = [0, 0]
+    
+    var selTimeIndex: IndexPath = [0, 0]
     
     var model: PostModel?
     
@@ -26,8 +32,6 @@ class WriteViewModel: BaseViewModel {
     
     
     let adderData = PublishSubject<[Any]>()
-    
-//    let placeData = PublishSubject<[Document]>()
     
     let booksData = PublishSubject<[SearchBooks]>()
     
@@ -57,13 +61,14 @@ class WriteViewModel: BaseViewModel {
         
         
         //TODO: 저장하는 부분
-        let setWrite = FBWriteModel(title: model.title, colorType: model.colorType, location: GeoPoint(latitude: model.lat, longitude: model.log), phrase: model.phrase, reason: model.reason, time: model.time, author: model.author, description: model.description, thumbnail: model.thumbnail, pubDate: model.pubDate, publisher: model.publisher, tags: model.tags, userID: FirebaseManager.getUID(), roadAddress: model.roadAddress, jibunAddress: model.jibunAddress)
+        let setWrite = FBWriteModel(title: model.title, colorType: model.colorType, latitude: model.lat, longitude: model.log, phrase: model.phrase, reason: model.reason, time: model.time, author: model.author, description: model.description, thumbnail: model.thumbnail, pubDate: model.pubDate, publisher: model.publisher, tags: model.tags, userID: FirebaseManager.getUID(), roadAddress: model.roadAddress, jibunAddress: model.jibunAddress)
         
-        
-        FirebaseManager.setWrite(data: setWrite) {
-            completion()
-        }
-        
-        
+        let autoIdKey = ref.childByAutoId().key ?? ""
+        // 1.위치를 geoFire를 이용하여 디비에 저장한다
+        geoFire.setLocation(CLLocation(latitude: self.model?.lat ?? 0, longitude: self.model?.log ?? 0), forKey: autoIdKey) { [unowned self] _ in
+            // 2. autoIdKey 기준으로 books에 데이터를 쌓는다.
+            print(autoIdKey)
+            self.ref.child("books").setValue([autoIdKey : setWrite])
+        }        
     }
 }

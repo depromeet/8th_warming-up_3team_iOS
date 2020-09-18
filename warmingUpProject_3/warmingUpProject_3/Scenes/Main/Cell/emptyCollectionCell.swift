@@ -21,7 +21,6 @@ class EmptyView: UIView {
     let ivImage: UIImageView = {
         let ivImage = UIImageView()
         ivImage.image = #imageLiteral(resourceName: "imgEmpty")
-        print(1231)
         return ivImage
     }()
     

@@ -19,6 +19,9 @@
 		56CF14D124D53533008BDCEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56CF14CF24D53533008BDCEF /* Main.storyboard */; };
 		56CF14D324D53536008BDCEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56CF14D224D53536008BDCEF /* Assets.xcassets */; };
 		56CF14D624D53536008BDCEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56CF14D424D53536008BDCEF /* LaunchScreen.storyboard */; };
+		B817395B2509EC6100263BD4 /* OnBoardNameingViewController+Bind.swift in Sources */ = {isa = PBXBuildFile; fileRef = B817395A2509EC6100263BD4 /* OnBoardNameingViewController+Bind.swift */; };
+		B817395D2509ECF600263BD4 /* OnBoardNameingViewController+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B817395C2509ECF600263BD4 /* OnBoardNameingViewController+Delegate.swift */; };
+		B817395F2509FF2600263BD4 /* OnBoardTypeViewController+Bind.swift in Sources */ = {isa = PBXBuildFile; fileRef = B817395E2509FF2600263BD4 /* OnBoardTypeViewController+Bind.swift */; };
 		B823CCD124EC06DA009C734F /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B823CCD024EC06DA009C734F /* WriteViewController.swift */; };
 		B823CCD324EC0701009C734F /* WriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B823CCD224EC0701009C734F /* WriteViewModel.swift */; };
 		B827CA272505D66A008013DF /* SingUpModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B827CA262505D66A008013DF /* SingUpModel.swift */; };
@@ -112,6 +115,9 @@
 		56CF14D724D53536008BDCEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		618F7D2538EA098E978C7BEB /* Pods_warmingUpProject_3.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_warmingUpProject_3.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C7D9095C67FE9D7B9A2BE0D /* Pods-warmingUpProject_3.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-warmingUpProject_3.debug.xcconfig"; path = "Target Support Files/Pods-warmingUpProject_3/Pods-warmingUpProject_3.debug.xcconfig"; sourceTree = "<group>"; };
+		B817395A2509EC6100263BD4 /* OnBoardNameingViewController+Bind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnBoardNameingViewController+Bind.swift"; sourceTree = "<group>"; };
+		B817395C2509ECF600263BD4 /* OnBoardNameingViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnBoardNameingViewController+Delegate.swift"; sourceTree = "<group>"; };
+		B817395E2509FF2600263BD4 /* OnBoardTypeViewController+Bind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnBoardTypeViewController+Bind.swift"; sourceTree = "<group>"; };
 		B823CCD024EC06DA009C734F /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		B823CCD224EC0701009C734F /* WriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewModel.swift; sourceTree = "<group>"; };
 		B827CA262505D66A008013DF /* SingUpModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingUpModel.swift; sourceTree = "<group>"; };
@@ -472,10 +478,10 @@
 				B8BCF65E24EB5A8D006142A7 /* View */,
 				B85F608A24E43348004B2EEE /* ViewModel */,
 				B85DF84624ED08ED00963927 /* MainViewController.swift */,
-				B8EB092024F7849D00C926CC /* BookListModel.swift */,
-				5699AF5624FF6C2E004EB80D /* HomeReviewDetailViewController.swift */,
 				B827CA2825061673008013DF /* MainViewController+Bind.swift */,
 				B827CA2A25061C54008013DF /* MainViewController+Delegate.swift */,
+				B8EB092024F7849D00C926CC /* BookListModel.swift */,
+				5699AF5624FF6C2E004EB80D /* HomeReviewDetailViewController.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -487,7 +493,10 @@
 				B82F618624E3BD13006A7F91 /* Model */,
 				B8C3600024E387A7002D2E75 /* ViewModel */,
 				B8CD07AC24D7CE04007579FA /* OnBoardNameingViewController.swift */,
+				B817395C2509ECF600263BD4 /* OnBoardNameingViewController+Delegate.swift */,
+				B817395A2509EC6100263BD4 /* OnBoardNameingViewController+Bind.swift */,
 				B8C3600524E3938D002D2E75 /* OnBoardTypeViewController.swift */,
+				B817395E2509FF2600263BD4 /* OnBoardTypeViewController+Bind.swift */,
 				B85F608424E42F26004B2EEE /* OnBoardExplanationViewController.swift */,
 			);
 			path = OnBoarding;
@@ -709,6 +718,7 @@
 				B827CA2B25061C54008013DF /* MainViewController+Delegate.swift in Sources */,
 				B8CD07A324D7C9E0007579FA /* BaseViewController.swift in Sources */,
 				B882A07E24EE1E0E00FC480E /* UserUtils.swift in Sources */,
+				B817395B2509EC6100263BD4 /* OnBoardNameingViewController+Bind.swift in Sources */,
 				B8C35FF824E38425002D2E75 /* Constants.swift in Sources */,
 				56CF14CE24D53533008BDCEF /* ViewController.swift in Sources */,
 				5699AF5924FF7530004EB80D /* ReviewDetailModel.swift in Sources */,
@@ -721,6 +731,7 @@
 				B85DF84724ED08ED00963927 /* MainViewController.swift in Sources */,
 				56CF14CA24D53533008BDCEF /* AppDelegate.swift in Sources */,
 				B8C3600424E392A1002D2E75 /* BaseViewModel.swift in Sources */,
+				B817395D2509ECF600263BD4 /* OnBoardNameingViewController+Delegate.swift in Sources */,
 				B827CA322507CD2B008013DF /* AlertUtils.swift in Sources */,
 				B8C35FFF24E3864B002D2E75 /* SceneCoordinator.swift in Sources */,
 				B8EB092F24F7EDBF00C926CC /* GeoCodeAPI.swift in Sources */,
@@ -771,6 +782,7 @@
 				B8C3600824E393E0002D2E75 /* OnBoardTypeViewModel.swift in Sources */,
 				B876768C2508C78500E799E5 /* PlaceAPI.swift in Sources */,
 				B82F618524E3B68B006A7F91 /* ColorUtils.swift in Sources */,
+				B817395F2509FF2600263BD4 /* OnBoardTypeViewController+Bind.swift in Sources */,
 				B823CCD124EC06DA009C734F /* WriteViewController.swift in Sources */,
 				B8CD07AF24D8F2B8007579FA /* TextUtils.swift in Sources */,
 				56871D5E24F29E5A00E1F863 /* ColorCollectionCell.swift in Sources */,

@@ -7,13 +7,15 @@
 //
 
 import Foundation
+import CoreLocation
 import FirebaseFirestore
 
 public struct FBWriteModel: Codable {
     
     let title: String
     let colorType: String
-    let location: GeoPoint
+    let latitude: Double
+    let longitude: Double
     let phrase: String
     let reason: String
     let time: String
@@ -30,7 +32,8 @@ public struct FBWriteModel: Codable {
     enum CodingKeys: String, CodingKey {
         case title
         case colorType
-        case location
+        case latitude
+        case longitude
         case phrase
         case reason
         case time

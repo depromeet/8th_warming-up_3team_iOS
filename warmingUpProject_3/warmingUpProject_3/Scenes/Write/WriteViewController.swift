@@ -50,6 +50,8 @@ class WriteViewController: UIViewController,ViewModelBindableType {
     
     let bookCoverView: BookCoverView = {
         let book = BookCoverView(colorChip: "NAVY", text: "")
+        book.lbContent.font = UIFont(name: TextUtils.FontType.NanumMyeongjoRegular.rawValue, size: 13)
+        book.lbContent.setTextWithLetterSpacing(text: "감상이나,\n감명 깊었던 문구를 적어주세요.", letterSpacing: -0.06, lineHeight: 20)
         return book
     }()
     
@@ -122,11 +124,14 @@ class WriteViewController: UIViewController,ViewModelBindableType {
     let searchBtnView: UIButton = {
         let searchBtnView = UIButton(type: .custom)
         searchBtnView.setTitle("찾아보기", for: .normal)
+        // forceRightToLeft 했기 때문에 반대로 정렬해야 올바름
+        searchBtnView.contentHorizontalAlignment = .leading
         searchBtnView.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .light)
         searchBtnView.setImage(UIImage(named: "btnRightarrow24"), for: .normal)
         searchBtnView.semanticContentAttribute = .forceRightToLeft
         searchBtnView.setTitleColor(ColorUtils.color170, for: .normal)
         searchBtnView.addTarget(self, action:  #selector(tapBookView), for: .touchUpInside)
+        searchBtnView.titleLabel?.lineBreakMode = .byTruncatingTail
         return searchBtnView
     }()
     
@@ -168,10 +173,13 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         let b = UIButton()
         b.setTitle("선택하기", for: .normal)
         b.setImage(UIImage(named: "btnRightarrow24"), for: .normal)
+        // forceRightToLeft 했기 때문에 반대로 정렬해야 올바름
+        b.contentHorizontalAlignment = .leading
         b.semanticContentAttribute = .forceRightToLeft
         b.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .light)
         b.titleLabel?.textAlignment = .right
         b.setTitleColor(ColorUtils.color170, for: .normal)
+        b.titleLabel?.lineBreakMode = .byTruncatingTail
         b.addTarget(self, action:  #selector(tapLocationView), for: .touchUpInside)
         return b
     }()
@@ -182,6 +190,8 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         bookcoverView.textContainer.maximumNumberOfLines = 2
         bookcoverView.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         bookcoverView.attributedText = TextUtils.attributedPlaceholder(text: "북커버에 남길 감상이나 문구를 적어주세요 (32자)", letterSpacing: -0.07)
+        bookcoverView.isScrollEnabled = false
+        bookcoverView.returnKeyType = .done
         return bookcoverView
     }()
     
@@ -316,7 +326,9 @@ class WriteViewController: UIViewController,ViewModelBindableType {
             })
             .disposed(by: rx.disposeBag)
         
+        //MARK: 컬러칩 바인딩
         viewModel.success.bind(to: colorListCollectionView.rx.items(cellIdentifier: String(describing: RoundCollectionCell.self), cellType: RoundCollectionCell.self)) { (row, element, cell) in
+            cell.isSelected = (row == self.viewModel.selColorIndex.row) ? true : false
             cell.lbRoundText.snp.removeConstraints()
             cell.lbRoundText.snp.makeConstraints { (make) in
                 make.top.equalToSuperview().offset(4)
@@ -326,13 +338,14 @@ class WriteViewController: UIViewController,ViewModelBindableType {
                 make.trailing.equalToSuperview().offset(-4)
                 make.bottom.equalToSuperview().offset(-4)
             }
-            if row == 0 {
+            if cell.isSelected {
                 cell.layer.borderWidth = 1
                 cell.layer.borderColor = ColorUtils.color187.cgColor
             } else {
                 cell.layer.borderWidth = 0
                 cell.layer.borderColor = nil
             }
+            
             cell.layer.cornerRadius = 19
             cell.lbRoundText.backgroundColor = ColorUtils.getColorChip(element).bookColor
             cell.lbRoundText.layer.cornerRadius = 15
@@ -342,38 +355,49 @@ class WriteViewController: UIViewController,ViewModelBindableType {
             
         }.disposed(by: rx.disposeBag)
         
+        //MARK: 컬러칩 선택 시
         Observable
             .zip(colorListCollectionView.rx.itemSelected, colorListCollectionView.rx.modelSelected(String.self))
             .do(onNext: { [unowned self] indexPath in
-                self.colorListCollectionView.indexPathsForVisibleItems.forEach { indexPath in
-                    
-                    // 레이어 보더 모두 해제
-                    let cell = self.colorListCollectionView.cellForItem(at: indexPath) as? RoundCollectionCell
-                    cell?.layer.borderWidth = 0
-                    cell?.layer.borderColor = nil
-                }
+                
+                // 이전 선택된 레이어 보더 해제 - 초기값 [0, 0]
+                let cell = self.colorListCollectionView.cellForItem(at: self.viewModel.selColorIndex) as? RoundCollectionCell
+                cell?.layer.borderWidth = 0
+                cell?.layer.borderColor = nil
+                
+                // 선택된 인덱스 저장
+                self.viewModel.selColorIndex = indexPath.0
             })
             .bind { [unowned self] indexPath, selColor in
+                
                 let cell = self.colorListCollectionView.cellForItem(at: indexPath) as? RoundCollectionCell
                 cell?.layer.borderWidth = 1
                 cell?.layer.borderColor = ColorUtils.color187.cgColor
-                self.bookCoverView.bind(color: selColor, text: self.writeBookcoverView.text ?? "")
+                
+                if self.writeBookcoverView.text == "북커버에 남길 감상이나 문구를 적어주세요 (32자)" {
+                    self.bookCoverView.bind(color: selColor, text: "감상이나,\n감명 깊었던 문구를 적어주세요.")
+                } else {
+                    self.bookCoverView.bind(color: selColor, text: self.writeBookcoverView.text ?? "")
+                }
+                
                 self.viewModel.selColor = selColor
                 self.viewModel.model?.colorType = selColor
         }
         .disposed(by: rx.disposeBag)
         
+        //MARK: 시간대 선택 시
         Observable
             .zip(suggestCollectionView.rx.itemSelected, suggestCollectionView.rx.modelSelected(String.self))
             .do(onNext: { [unowned self] indexPath, text in
-                self.suggestCollectionView.indexPathsForVisibleItems.forEach { indexPath in
-                    
-                    // 레이어 보더 모두 해제
-                    let cell = self.suggestCollectionView.cellForItem(at: indexPath) as? RoundCollectionCell
-                    cell?.lbRoundText.setTextWithLetterSpacing(text: cell?.lbRoundText.text ?? "", letterSpacing: -0.06, lineHeight: 19.5, font: UIFont.systemFont(ofSize: 13, weight: .regular), color: ColorUtils.color231)
-                    cell?.layer.borderColor = ColorUtils.color231.cgColor
-                    cell?.layer.borderWidth = 1
-                }
+                
+                // 이전 선택된 레이어 보더 해제 - 초기값 [0, 0]
+                let cell = self.suggestCollectionView.cellForItem(at: self.viewModel.selTimeIndex) as? RoundCollectionCell
+                cell?.lbRoundText.setTextWithLetterSpacing(text: cell?.lbRoundText.text ?? "", letterSpacing: -0.06, lineHeight: 19.5, font: UIFont.systemFont(ofSize: 13, weight: .regular), color: ColorUtils.color231)
+                cell?.layer.borderColor = ColorUtils.color231.cgColor
+                cell?.layer.borderWidth = 1
+                
+                // 선택된 인덱스 저장
+                self.viewModel.selTimeIndex = indexPath
             })
             .bind { [unowned self] indexPath, text in
                 let cell = self.suggestCollectionView.cellForItem(at: indexPath) as? RoundCollectionCell
@@ -384,11 +408,13 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         }
         .disposed(by: rx.disposeBag)
         
+        
+        // 시간대 바인딩
         viewModel.suggest.bind(to: suggestCollectionView.rx.items(cellIdentifier: String(describing: RoundCollectionCell.self), cellType: RoundCollectionCell.self)) { (row, element, cell) in
-            
+            cell.isSelected = (row == self.viewModel.selTimeIndex.row) ? true : false
             cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 19.5, font: UIFont.systemFont(ofSize: 13, weight: .regular), color: ColorUtils.color170)
             
-            if row == 0 {
+            if cell.isSelected {
                 cell.layer.borderColor = UIColor(r: 84, g: 90, b: 124).cgColor
                 cell.layer.borderWidth = 1
                 cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 19.5, font: UIFont.systemFont(ofSize: 13, weight: .regular), color: UIColor(r: 84, g: 90, b: 124))
@@ -402,20 +428,45 @@ class WriteViewController: UIViewController,ViewModelBindableType {
         
         Observable
             .zip(tagCollectionView.rx.itemSelected, tagCollectionView.rx.modelSelected(String.self))
-            .do(onNext: { [unowned self] indexPath, text in
-                //TODO: deSeleted 처리해야함
-            })
             .bind { [unowned self] indexPath, text in
-                let cell = self.tagCollectionView.cellForItem(at: indexPath) as? RoundCollectionCell
-                cell?.layer.borderWidth = 1
-                cell?.layer.borderColor = UIColor(r: 84, g: 90, b: 124).cgColor
-                cell?.lbRoundText.setTextWithLetterSpacing(text: text, letterSpacing: -0.06, lineHeight: 19.5, font: UIFont.systemFont(ofSize: 13, weight: .regular), color: UIColor(r: 84, g: 90, b: 124))
+                let cell = self.tagCollectionView.cellForItem(at: indexPath) as! RoundCollectionCell
                 
-                let addText = text.trimmingCharacters(in: ["#"])
-                self.viewModel.model?.tags.append(addText)
+//                let isTag = self.viewModel.model?.tags.contains(text)
+//                print(isTag)
+//
+//                if let tag = isTag || !tag {
+                    
+//                    cell.layer.borderWidth = 1
+//                    cell.layer.borderColor = UIColor(r: 84, g: 90, b: 124).cgColor
+//                    cell.lbRoundText.setTextWithLetterSpacing(text: text, letterSpacing: -0.06, lineHeight: 19.5, font: UIFont.systemFont(ofSize: 13, weight: .regular), color: UIColor(r: 84, g: 90, b: 124))
+//
+//                    let addText = text.trimmingCharacters(in: ["#"])
+//                    self.viewModel.model?.tags.append(addText)
+//                } else if isTag! {
+//                    cell.lbRoundText.setTextWithLetterSpacing(text: text, letterSpacing: -0.06, lineHeight: 20)
+//                    cell.layer.borderColor = ColorUtils.color231.cgColor
+//                    cell.layer.borderWidth = 1
+//                } else if !(isTag!) {
+//                }
+                
+                // 선택 - 존재 하지 않다면
+//                if isTag {
+                    cell.layer.borderWidth = 1
+                    cell.layer.borderColor = UIColor(r: 84, g: 90, b: 124).cgColor
+                    cell.lbRoundText.setTextWithLetterSpacing(text: text, letterSpacing: -0.06, lineHeight: 19.5, font: UIFont.systemFont(ofSize: 13, weight: .regular), color: UIColor(r: 84, g: 90, b: 124))
+                    
+                    let addText = text.trimmingCharacters(in: ["#"])
+                    self.viewModel.model?.tags.append(addText)
+//                }
+                // 선택 해제
+//                else {
+//
+//                }
         }
         .disposed(by: rx.disposeBag)
         
+        
+        //MARK: 태그 바인딩
         viewModel.tag.bind(to: tagCollectionView.rx.items(cellIdentifier: String(describing: RoundCollectionCell.self), cellType: RoundCollectionCell.self)) { (row, element, cell) in
             cell.lbRoundText.setTextWithLetterSpacing(text: element, letterSpacing: -0.06, lineHeight: 20)
             cell.layer.borderColor = ColorUtils.color231.cgColor
@@ -530,6 +581,7 @@ extension WriteViewController {
         
         searchBtnView.snp.makeConstraints { (make) in
             make.top.equalTo(bookTitleView.snp.top).offset(10)
+            make.leading.equalToSuperview().offset(62 + 15)
             make.trailing.equalTo(bookTitleView.snp.trailing).offset(-20)
             make.bottom.equalTo(bookTitleView.snp.bottom).offset(-11)
         }
@@ -544,6 +596,7 @@ extension WriteViewController {
         selectBtnView.snp.makeConstraints {
             $0.trailing.equalTo(locationView.snp.trailing).offset(-20)
             $0.top.equalTo(locationView.snp.top).offset(10)
+            $0.leading.equalToSuperview().offset(20 + 96 + 15)
             $0.bottom.equalTo(locationView.snp.bottom).offset(-11)
             $0.height.equalTo(24)
         }
@@ -654,17 +707,29 @@ extension WriteViewController: UITextViewDelegate {
             } else {
                 setPlaceholder2()
             }
+        } else {
+            if textView.tag == 111 {
+                self.bookCoverView.bind(color: self.viewModel.selColor, text: textView.text)
+            }
         }
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         guard let str = textView.text else { return true }
         if textView.tag == 111 {
+            
             let newLength = str.count + text.count - range.length
             
-            self.viewModel.model?.phrase = str
-            self.bookCoverView.bind(color: self.viewModel.selColor, text: str)
-            return newLength <= 32
+            // done 처리 완료지만 개행 됨
+            if text == "\n" {
+                textView.resignFirstResponder()
+                return false
+            } else {
+                self.viewModel.model?.phrase = str
+                self.bookCoverView.bind(color: self.viewModel.selColor, text: str)
+                return newLength <= 32
+            }
+            
         } else {
             self.viewModel.model?.reason = str
             return true

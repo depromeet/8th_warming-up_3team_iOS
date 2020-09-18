@@ -120,11 +120,9 @@
                                     <color key="titleColor" red="0.24313725490196078" green="0.15294117647058825" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgLoginBg" translatesAutoresizingMaskIntoConstraints="NO" id="FN4-x5-eFr">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="imgLoginBg" translatesAutoresizingMaskIntoConstraints="NO" id="FN4-x5-eFr">
                                 <rect key="frame" x="0.0" y="78" width="375" height="479"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgJsonLogin" translatesAutoresizingMaskIntoConstraints="NO" id="qIW-2r-TsT">
-                                <rect key="frame" x="0.0" y="78" width="375" height="479"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icnKakao24" translatesAutoresizingMaskIntoConstraints="NO" id="Wlb-pI-45T">
                                 <rect key="frame" x="78.333333333333329" y="653" width="24" height="24"/>
@@ -152,39 +150,28 @@
                                     <constraint firstAttribute="height" constant="24" id="txG-6r-jC3"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="60C-Z0-hC8" customClass="AnimationView" customModule="Lottie">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="60C-Z0-hC8" customClass="AnimationView" customModule="Lottie">
                                 <rect key="frame" x="0.0" y="78" width="375" height="479"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.95294117647058818" green="0.95294117647058818" blue="0.95294117647058818" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="YCA-bl-fyW" firstAttribute="leading" secondItem="ily-lb-Ybp" secondAttribute="trailing" constant="2" id="2dW-bO-KGc"/>
-                            <constraint firstItem="60C-Z0-hC8" firstAttribute="centerX" secondItem="qIW-2r-TsT" secondAttribute="centerX" id="9uJ-LN-bfL"/>
-                            <constraint firstItem="qIW-2r-TsT" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="B0X-37-mZC"/>
-                            <constraint firstItem="FN4-x5-eFr" firstAttribute="centerX" secondItem="qIW-2r-TsT" secondAttribute="centerX" id="BaE-jz-Dbp"/>
                             <constraint firstItem="YCA-bl-fyW" firstAttribute="centerX" secondItem="fdB-Or-kk3" secondAttribute="centerX" id="Gr4-Ns-f3z"/>
-                            <constraint firstItem="60C-Z0-hC8" firstAttribute="height" secondItem="qIW-2r-TsT" secondAttribute="height" id="IEj-Dr-KDE"/>
                             <constraint firstItem="Wlb-pI-45T" firstAttribute="centerY" secondItem="P6B-34-i9L" secondAttribute="centerY" id="R7E-AI-YOL"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="fdB-Or-kk3" secondAttribute="bottom" constant="24" id="RNV-U6-INe"/>
                             <constraint firstItem="YCA-bl-fyW" firstAttribute="centerY" secondItem="fdB-Or-kk3" secondAttribute="centerY" id="UGW-Yh-7Il"/>
-                            <constraint firstItem="P6B-34-i9L" firstAttribute="top" secondItem="qIW-2r-TsT" secondAttribute="bottom" constant="83" id="YED-4P-FGe"/>
                             <constraint firstItem="P6B-34-i9L" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="YQO-oU-vdJ"/>
-                            <constraint firstItem="FN4-x5-eFr" firstAttribute="centerY" secondItem="qIW-2r-TsT" secondAttribute="centerY" id="aRd-6T-BAw"/>
-                            <constraint firstItem="60C-Z0-hC8" firstAttribute="centerY" secondItem="qIW-2r-TsT" secondAttribute="centerY" id="dHR-y6-35q"/>
-                            <constraint firstItem="FN4-x5-eFr" firstAttribute="height" secondItem="qIW-2r-TsT" secondAttribute="height" id="ed9-LV-z79"/>
                             <constraint firstItem="vlN-sM-eti" firstAttribute="leading" secondItem="Wlb-pI-45T" secondAttribute="trailing" constant="2" id="kRo-A6-a4N"/>
                             <constraint firstItem="fdB-Or-kk3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="khE-PS-DhA"/>
                             <constraint firstItem="fdB-Or-kk3" firstAttribute="top" secondItem="P6B-34-i9L" secondAttribute="bottom" constant="14" id="n55-bb-ljc"/>
-                            <constraint firstItem="60C-Z0-hC8" firstAttribute="width" secondItem="qIW-2r-TsT" secondAttribute="width" id="nnJ-Do-IFE"/>
                             <constraint firstItem="vlN-sM-eti" firstAttribute="centerY" secondItem="P6B-34-i9L" secondAttribute="centerY" id="oIA-QG-7f9"/>
-                            <constraint firstItem="qIW-2r-TsT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="34" id="pIU-d6-bn3"/>
                             <constraint firstItem="ily-lb-Ybp" firstAttribute="centerY" secondItem="fdB-Or-kk3" secondAttribute="centerY" id="pdB-bm-hjh"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fdB-Or-kk3" secondAttribute="trailing" constant="20" id="q9S-xG-T43"/>
                             <constraint firstItem="vlN-sM-eti" firstAttribute="centerX" secondItem="P6B-34-i9L" secondAttribute="centerX" id="rpO-Ob-aZi"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="P6B-34-i9L" secondAttribute="trailing" constant="20" id="sc3-Bd-3gu"/>
-                            <constraint firstItem="FN4-x5-eFr" firstAttribute="width" secondItem="qIW-2r-TsT" secondAttribute="width" id="sub-5e-xCi"/>
-                            <constraint firstItem="qIW-2r-TsT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wPV-tO-VfQ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -202,7 +189,6 @@
     <resources>
         <image name="icnApple24" width="24" height="24"/>
         <image name="icnKakao24" width="24" height="24"/>
-        <image name="imgJsonLogin" width="375" height="479"/>
         <image name="imgLoginBg" width="375" height="479"/>
         <image name="imgLogo" width="149" height="40"/>
         <image name="imgSplashBg" width="375" height="340"/>

@@ -10,23 +10,35 @@ import Foundation
 import RxSwift
 import RxSwift
 import Moya
-import FirebaseFirestore
+import FirebaseDatabase
+import FirebaseAuth
+import GeoFire
 
 class BaseViewModel: NSObject {
 
     let scenCoordinator: SceneCoordinatorType
     
-
     init(scenCoordinator: SceneCoordinatorType) {
         self.scenCoordinator = scenCoordinator
+        
     }
     
-    let db = Firestore.firestore()
+    let ref = Database.database().reference()
+    
+    lazy var geoFire: GeoFire = {
+        let geoFire = GeoFire(firebaseRef: ref)
+        return geoFire
+    }()
     
     let provider = MoyaProvider<BookAPI>(plugins: [NetworkLoggerPlugin()])
     
     let geoCodeProvider = MoyaProvider<GeoCodeAPI>()
     
     let placeProvider = MoyaProvider<PlaceAPI>()
+    
+    func getUid() -> String {
+        
+        return Auth.auth().currentUser?.uid ?? ""
+    }
         
 }

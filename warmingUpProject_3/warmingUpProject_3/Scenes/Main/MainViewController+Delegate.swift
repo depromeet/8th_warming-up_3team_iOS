@@ -83,5 +83,13 @@ extension MainViewController: NMFMapViewCameraDelegate {
             viewModel.getDocumentNearBy(latitude: mapView.cameraPosition.target.lat , longitude: mapView.cameraPosition.target.lng, distance: 1)
         }
         
+        let center =  CLLocation ( latitude : 37.7832889 , longitude : -122.4056973 )
+        
+         // 반경 600 미터의 [37.7832889, -122.4056973] 위치 쿼리
+//        var circleQuery = geoFire.q ueryAtLocation (center, withRadius : 0.6 ) // 지역별
+//        위치 쿼리
+//        geofi
+
+        
     }
 }
