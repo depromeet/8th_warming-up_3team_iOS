@@ -10,8 +10,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 import AuthenticationServices
-import FirebaseFirestore
-import FirebaseFirestoreSwift
 import FirebaseAuth
 import NSObject_Rx
 import Lottie

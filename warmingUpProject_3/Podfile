@@ -25,9 +25,10 @@ target 'warmingUpProject_3' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Auth'	
   pod 'Firebase/Core'
-  pod 'Firebase/Firestore'
-  pod 'FirebaseFirestoreSwift'
+  # pod 'Firebase/Firestore'
+  # pod 'FirebaseFirestoreSwift'
   pod 'Firebase/Database'
   pod 'GeoFire', '~> 4.0'
+  pod 'CodableFirebase'
 
 end

@@ -10,7 +10,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 import Action
-import FirebaseFirestore
 import NMapsMap
 
 class MainViewModel: BaseViewModel {
@@ -61,9 +60,9 @@ class MainViewModel: BaseViewModel {
     
     // 주변 아이템 가져오기
     func getDocumentNearBy(latitude: Double, longitude: Double, distance: Double) {
-        
-        let writeRef = Firestore.firestore().collection("writeBook")
-        
+//        
+//        let writeRef = Firestore.firestore().collection("writeBook")
+//        
         
 //        let docRef = Firestore.firestore().collection("writeBook")
 //            .whereField("location", isGreaterThan: lesserGeopoint)
@@ -111,13 +110,19 @@ class MainViewModel: BaseViewModel {
     func getTimeDocumentNearBy(time: String, latitude: Double, longitude: Double, distance: Double) {
         
         
-        let aa = geoFire.query(at: CLLocation(latitude: 36.9204863, longitude: 127.2154336), withRadius: 0.1)
+//        let aa = geoFire.query(at: CLLocation(latitude: 36.9204863, longitude: 127.2154336), withRadius: 1)
+        //TODO: 서울시티타워 기준
+        let aa = geoFire.query(at: CLLocation(latitude: 37.5543418, longitude: 126.972316), withRadius: 1)
             //.observe(.keyEntered) { (s, loc) in
         var value = [CLLocation]()
         aa.observe(.keyEntered, with: { (key: String!, location: CLLocation!) in
             print("Key= '\(key)', \nlocation= '\(location)'")
             value.append(location)
 //            self.writeData.onNext(nextValue)
+            print("=================")
+            print("======= 보여지는 ==========")
+            print(value)
+            print("=================")
             self.writeData.onNext(value)
         })
         

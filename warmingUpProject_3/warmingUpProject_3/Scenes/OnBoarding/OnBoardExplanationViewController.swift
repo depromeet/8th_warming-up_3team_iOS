@@ -10,8 +10,6 @@ import UIKit
 import SnapKit
 import Action
 import Lottie
-import FirebaseFirestore
-import FirebaseFirestoreSwift
 
 class OnBoardExplanationViewController: UIViewController, ViewModelBindableType {
     

@@ -319,7 +319,8 @@ extension MainViewController: ViewModelBindableType {
     
     private func setProfile() {
         
-        viewModel.ref.child("users").child(viewModel.getUid()).observe(.value) { [unowned self] (dataSnapshot) in
+        
+        viewModel.ref.child("users").child(viewModel.getUid()).observeSingleEvent(of: .value) { [unowned self] (dataSnapshot) in
             let dic = dataSnapshot.value as? Dictionary<String, Any>
             let type: Int = dic?["type"] as! Int
             let nickName = dic?["nickName"] as! String

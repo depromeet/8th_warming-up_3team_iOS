@@ -20,9 +20,9 @@ class BaseViewModel: NSObject {
     
     init(scenCoordinator: SceneCoordinatorType) {
         self.scenCoordinator = scenCoordinator
-        
     }
     
+    //MARK: realTimeDB - FIRDatabaseReference
     let ref = Database.database().reference()
     
     lazy var geoFire: GeoFire = {
@@ -37,7 +37,6 @@ class BaseViewModel: NSObject {
     let placeProvider = MoyaProvider<PlaceAPI>()
     
     func getUid() -> String {
-        
         return Auth.auth().currentUser?.uid ?? ""
     }
         

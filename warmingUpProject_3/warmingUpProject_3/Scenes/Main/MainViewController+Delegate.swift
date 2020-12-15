@@ -33,9 +33,19 @@ extension MainViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locations.forEach { (location) in
-            mapView.locationOverlay.location = NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
+            
+            //MARK: 위치 오버레이 현재 위치 설정
+            let currentLocation = NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude)
+            mapView.locationOverlay.location = currentLocation
             viewModel.beforeCameraPosition = NMFCameraPosition(NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude), zoom: mapView.zoomLevel)
         }
+    }
+    
+    // MARK: 위치 오버레이 헤딩 조절
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        // MARK: newHeading.magneticHeading == degrees(도) 단위 측정
+        let degree = CGFloat(newHeading.magneticHeading)
+        mapView.locationOverlay.heading = degree
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -71,8 +81,49 @@ extension MainViewController: NMFMapViewTouchDelegate {
 
 extension MainViewController: NMFMapViewCameraDelegate {
     
+    func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
+        print("===== \n", mapView.cameraPosition.target.toLatLng())
+    }
+    
+    //MARK: 카메라 움직임이 끝났을때
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
+        
+        
+        /*
+         reason -1 : 사용자의 제스처로 인해 카메라가 움직였음을 나타내는 값.
+         
+         */
+        if reason == -1 {
+            
+            // 지우고
+            circleOverlay?.mapView = nil
+            var radius: Double = 0
+            let zoomLevel = floor(mapView.zoomLevel)
+            
+            // 줌 레벨에 따른 반경
+            switch zoomLevel {
+            case 12: // 1_000
+                radius = 2_500
+            case 13: // 500
+                radius = 1_250
+            case 14: // 200
+                radius = 500
+            case 15: // 100
+                radius = 250
+            default:
+                radius = 3_000
+            }
+            
+            circleOverlay =  NMFCircleOverlay(mapView.cameraPosition.target.toLatLng(), radius: radius)
+            circleOverlay?.fillColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.07)
+            circleOverlay?.outlineColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.07)
+            circleOverlay?.outlineWidth = 1
+            circleOverlay?.mapView = mapView
+        }
+        
         guard let coordinate = locationManager?.location?.coordinate else { return }
+        
+//        print(mapView.cameraPosition)
         
         let currentLocationFromDistance = mapView.cameraPosition.target.distance(to: NMGLatLng(lat: viewModel.beforeCameraPosition?.target.lat ?? NMGLatLng.init(from: coordinate).lat, lng: viewModel.beforeCameraPosition?.target.lng ?? NMGLatLng.init(from: coordinate).lng))
 

@@ -8,31 +8,29 @@
 
 import Firebase
 import FirebaseAuth
-import FirebaseFirestore
-import FirebaseFirestoreSwift
 
 class FirebaseManager {
     
     static func setUser(data: FBUserModel, completion: @escaping () -> Void) {
-        let db = Firestore.firestore()
-        do {
-            try db.collection("users").document(data.uID).setData(from: data)
-
-            completion()
-        } catch let error {
-            print("Error writing city to Firestore: \(error)")
-        }
+//        let db = Firestore.firestore()
+//        do {
+//            try db.collection("users").document(data.uID).setData(from: data)
+//
+//            completion()
+//        } catch let error {
+//            print("Error writing city to Firestore: \(error)")
+//        }
     }
     
     static func setWrite(data: FBWriteModel, completion: @escaping () -> Void) {
-        let db = Firestore.firestore()
-        do {
-            try db.collection("writeBook").addDocument(from: data)
-
-            completion()
-        } catch let error {
-            print("Error writing city to Firestore: \(error)")
-        }
+//        let db = Firestore.firestore()
+//        do {
+//            try db.collection("writeBook").addDocument(from: data)
+//
+//            completion()
+//        } catch let error {
+//            print("Error writing city to Firestore: \(error)")
+//        }
     }
     
     static func getUID() -> String {

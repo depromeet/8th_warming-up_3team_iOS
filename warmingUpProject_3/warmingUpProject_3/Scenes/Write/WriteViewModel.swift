@@ -11,8 +11,10 @@ import RxSwift
 import RxCocoa
 import Action
 import CoreLocation
+import Firebase
 import FirebaseDatabase
 import GeoFire
+import CodableFirebase
 
 class WriteViewModel: BaseViewModel {
     
@@ -44,6 +46,10 @@ class WriteViewModel: BaseViewModel {
         model = PostModel(title: "", colorType: "NAVY", lat: 0, log: 0, phrase: "", reason: "", time: "촉촉한 새벽", author: "", description: "", thumbnail: "", pubDate: "", publisher: "", tags: [], userID: 1, roadAddress: "", jibunAddress: "", addressElements: [])
     }
     
+    override func getUid() -> String {
+        return Auth.auth().currentUser?.uid ?? ""
+    }
+    
     func actionLocationView() {
         let writeViewModel = self
         let searchVC = Scene.search(writeViewModel)
@@ -59,16 +65,33 @@ class WriteViewModel: BaseViewModel {
     func actionSave(completion: @escaping () -> Void) {
         guard let model = self.model else { return }
         
-        
-        //TODO: 저장하는 부분
         let setWrite = FBWriteModel(title: model.title, colorType: model.colorType, latitude: model.lat, longitude: model.log, phrase: model.phrase, reason: model.reason, time: model.time, author: model.author, description: model.description, thumbnail: model.thumbnail, pubDate: model.pubDate, publisher: model.publisher, tags: model.tags, userID: FirebaseManager.getUID(), roadAddress: model.roadAddress, jibunAddress: model.jibunAddress)
         
+        //TODO: model -> dict
+        let docData = try! FirebaseEncoder().encode(setWrite)
+//        print(docData)
+        
         let autoIdKey = ref.childByAutoId().key ?? ""
-        // 1.위치를 geoFire를 이용하여 디비에 저장한다
+        print("===== autoIdKey : ", autoIdKey)
+        //TODO: geoFire.getLocationForKey("키")를 위해 uid 기준으로 저장한다.
+//        let autoIdKey = getUid()
+        
+        // 1.위치를 geoFire를 이용하여 디비에 저장한다 - 업데이트 되버림
+        // FIXME: autoIdKey 말고 뎁스를 하나 더 줄 수 없나?
         geoFire.setLocation(CLLocation(latitude: self.model?.lat ?? 0, longitude: self.model?.log ?? 0), forKey: autoIdKey) { [unowned self] _ in
             // 2. autoIdKey 기준으로 books에 데이터를 쌓는다.
             print(autoIdKey)
-            self.ref.child("books").setValue([autoIdKey : setWrite])
-        }        
+            // setValue
+            self.ref.child("books").child(getUid()).child(autoIdKey).setValue(docData)
+        }
+    
+        
+        //TODO: - 해당 유저의 모든 북 리스트를 가져올 수 있음.
+        self.ref.child("books").child(getUid()).observe(.value) { (snap) in
+            print(snap)
+        }
+        
+        
+        print("===============")
     }
 }

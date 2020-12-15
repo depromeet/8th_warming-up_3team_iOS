@@ -26,6 +26,7 @@ class MainViewController: UIViewController {
         locationManager?.requestWhenInUseAuthorization()
         locationManager?.requestLocation()
         locationManager?.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        locationManager?.startUpdatingHeading()
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager?.location?.coordinate.latitude ?? 37.5666102, lng: locationManager?.location?.coordinate.longitude ?? 126.9783881))
         cameraUpdate.pivot = CGPoint(x: 0.5, y: 0.3)
         mapView.moveCamera(cameraUpdate)
@@ -56,12 +57,13 @@ class MainViewController: UIViewController {
     
     var locationManager: CLLocationManager?
     
+    // 사용자 제스처로 인한 카메라 이동 완료시 해당 영역 표기
+    var circleOverlay: NMFCircleOverlay?
+    
     let naverMapView = NMFNaverMapView()
     
     var mapView: NMFMapView {
         let locationOverlay = naverMapView.mapView.locationOverlay
-        locationOverlay.circleOutlineWidth = 50
-        locationOverlay.circleColor = UIColor.blue
         locationOverlay.hidden = false
         locationOverlay.icon = NMFOverlayImage(name: "imgLocationDirection", in: Bundle.naverMapFramework())
         locationOverlay.subIcon = nil
@@ -69,7 +71,18 @@ class MainViewController: UIViewController {
         naverMapView.mapView.touchDelegate = self
         naverMapView.mapView.addCameraDelegate(delegate: self)
         naverMapView.showScaleBar = true
-
+        // default: 지도 줌레벨 14.0 숫자가 커질수로 확대
+        naverMapView.mapView.zoomLevel = 13
+        naverMapView.mapView.minZoomLevel = 10 // 5km
+        naverMapView.mapView.maxZoomLevel = 15 // 100m
+        /* zoomLevel
+         10 - 5_000
+         11 - 2_000
+         12 - 1_000
+         13 - 500
+         14 - 200
+         15 - 100
+         */
         return naverMapView.mapView
     }
     
