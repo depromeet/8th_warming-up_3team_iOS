@@ -10,6 +10,12 @@ iOS project
 - [ ] 추가적인 디자인은 누구 해줄거임? (정안?, 보영?)
 - [ ] API를 위한 비즈니스 로직 정리 (비즈니스 로직 작성하던거 어딧?)
 
+이전 서버 레포
+https://github.com/depromeet/toward-book-server 
+
+
+---------
+
 ## 북쪽으로 - 마음을 움직이는 책을 따라서
 
 [toc]
