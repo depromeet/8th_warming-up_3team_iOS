@@ -113,7 +113,11 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
                 if let user = authResult?.user {
                     print("Nice! You're now signed in as \(user.uid), email: \(user.email)")
                     
-                    
+                    print(type(of: user.uid), user.uid)
+                    print(type(of: user.email), user.email)
+                    print(type(of: user.displayName), user.displayName )
+                    print(type(of: user.photoURL), user.photoURL)
+                    print(type(of: user.phoneNumber), user.phoneNumber)
                     //TODO: 저장하는 부분
                     let setUser = FBUserModel(uID: user.uid,
                                               nickName: "",

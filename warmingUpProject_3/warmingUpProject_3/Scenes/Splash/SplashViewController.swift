@@ -41,21 +41,21 @@ final class SplashViewController: UIViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [unowned self] in
             // 파베를 통해 이미 로그인 되어 있는 경우
-            if let user = Auth.auth().currentUser {
-                print("You're sign in as \(user.uid)")
-                
-                let coordinator = SceneCoordinator(window:
-                    UIApplication.shared.windows.first!)
-                let mainViewModel = MainViewModel(scenCoordinator: coordinator)
-                let mainScene = Scene.main(mainViewModel)
-                coordinator.transition(to: mainScene, using: .root, animated: true)
-            } else {
+//            if let user = Auth.auth().currentUser {
+//                print("You're sign in as \(user.uid)")
+//
+//                let coordinator = SceneCoordinator(window:
+//                    UIApplication.shared.windows.first!)
+//                let mainViewModel = MainViewModel(scenCoordinator: coordinator)
+//                let mainScene = Scene.main(mainViewModel)
+//                coordinator.transition(to: mainScene, using: .root, animated: true)
+//            } else {
                 let coordinator = SceneCoordinator(window:
                     UIApplication.shared.windows.first!)
                 let loginViewModel = LoginViewModel(scenCoordinator: coordinator)
                 let loginScene = Scene.login(loginViewModel)
                 coordinator.transition(to: loginScene, using: .root, animated: true)
-            }
+//            }
         }
     }
     
