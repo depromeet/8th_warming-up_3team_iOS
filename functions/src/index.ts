@@ -2,7 +2,35 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin"; // firebaseStore
 admin.initializeApp();
 
-export const firstAPI = functions.https.onRequest((_, res) => {
+export const randomNumber = 
+functions.https.onRequest((request, response) => {
+  const number = Math.round(Math.random() * 100);
+  response.send(number.toString());
+});
+
+/*
+// firestore trigger for tracking activity
+export const logActivities = 
+functions.firestore.document('/{collection}/{id}').onCreate((snap, context) => {
+  console.log(snap.data())
+
+  const collection = context.params.collection;
+  const id = context.params.id
+
+  const activities = admin.firestore().collection('activities');
+  if (collection === 'requests' ) {
+    return activities.add({ text: 'a new tutorial request was added' });
+  }
+  if (collection === 'users' ) {
+    return activities.add({ text: 'a new user signed up' });
+  }
+
+  return null;
+})
+*/
+/*
+export const firstAPI = 
+functions.https.onRequest((_, res) => {
   functions.logger.info("Hello logs!", {structuredData: true});
   res.send("응답으로 텍스트를 줍니당");
 });
@@ -47,3 +75,4 @@ export const getBostonWeather = functions.https.onRequest((request, response) =>
         response.status(500).send(error);
       });
 });
+*/

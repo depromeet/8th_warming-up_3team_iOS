@@ -22,9 +22,10 @@ class MyPageViewController: UIViewController, ViewModelBindableType, NMFMapViewT
     }
     
     override func viewDidLoad() {
-        viewModel.requestUserInfo(userID: 1)
-        
+//        viewModel.requestUserInfo(userID: 1)
+        viewModel.requestTest()
     }
+    
     //MARK: - Bind
     func bindViewModel() {
         btnBack.rx

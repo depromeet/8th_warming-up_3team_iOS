@@ -27,4 +27,25 @@ class MyPageViewModel: BaseViewModel {
                 print("err:    \(err)")
         }.disposed(by: rx.disposeBag)
     }
+    
+    func requestTest() {
+        provider.rx
+            .request(.test)
+            .filterSuccessfulStatusCodes()
+            .subscribe(onSuccess: { [unowned self] res in
+                print(res.data)
+                /*
+                 ▿ 1 bytes
+                 - count : 1
+                 ▿ pointer : 0x000000016d7a08c0
+                 - pointerValue : 6131681472
+                 ▿ bytes : 1 element
+                 - 0 : 51
+                 
+                 */
+            }) { (err) in
+                print(err)
+            }
+            .disposed(by: rx.disposeBag)
+    }
 }

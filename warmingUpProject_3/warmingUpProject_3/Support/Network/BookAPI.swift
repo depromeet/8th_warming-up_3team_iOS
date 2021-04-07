@@ -28,14 +28,15 @@ public enum BookAPI {
     case writeBook(model: PostModel)
     
     case userBooksInfo(userID: Int)
+    case test
     
 }
 
 //MARK: - TargetType, Moya에서 제공하는 프로토콜
 extension BookAPI: TargetType {
     public var baseURL: URL {
-        guard let host = URL(string: "http://3.34.96.70:5000") else { fatalError() }
-        
+//        guard let host = URL(string: "http://3.34.96.70:5000") else { fatalError() }
+        guard let host = URL(string: "https://us-central1-bukjjogeuro.cloudfunctions.net/") else { fatalError() }
         return host
     }
     
@@ -57,12 +58,14 @@ extension BookAPI: TargetType {
             return "/books"
         case .userBooksInfo(let userID):
             return "/users/books/\(userID)"
+        case .test:
+            return "randomNumber"
         }
     }
     
     public var method: Moya.Method {
         switch self {
-        case .signIn, .signUp, .writeBook:
+        case .signIn, .signUp, .writeBook, .test:
             return .post
         case .detailBook, .searchBooks, .booksList, .userBooksInfo:
             return .get
@@ -103,7 +106,7 @@ extension BookAPI: TargetType {
             return .requestParameters(parameters: ["latitude" : lat, "longitude" : log], encoding: URLEncoding.queryString)
             
         // MARK: book
-        case .deleteBooks, .detailBook, .searchBooks, .userBooksInfo:
+        case .deleteBooks, .detailBook, .searchBooks, .userBooksInfo, .test:
             return .requestPlain
             
         //TODO: 입력 모델 만들기

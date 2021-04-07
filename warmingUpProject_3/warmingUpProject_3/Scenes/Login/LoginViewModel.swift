@@ -22,29 +22,29 @@ class LoginViewModel: BaseViewModel {
         UserUtils.setSnsType(name: "kakao")
         
         
-        if (AuthApi.isKakaoTalkLoginAvailable()) {
-            AuthApi.shared.loginWithKakaoTalk {(oauthToken, error) in
-                if let error = error {
-                    print(error)
-                }
-                else {
-                    UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
-                        if let error = error {
-                            print(error)
-                        }
-                        else {
-                            print("accessTokenInfo() success.")
-                            UserUtils.setSnsID(Id: accessTokenInfo?.id ?? Int64(0))
-
-                            let onboardNammingViewModel = OnBoardNameingViewModel(scenCoordinator: self.scenCoordinator)
-                            let onboardNammingScene = Scene.onboardNamming(onboardNammingViewModel)
-                            
-                            self.scenCoordinator.transition(to: onboardNammingScene, using: .root, animated: true)
-                        }
-                    }
-                }
-            }
-        }
+//        if (AuthApi.isKakaoTalkLoginAvailable()) {
+//            AuthApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+//                if let error = error {
+//                    print(error)
+//                }
+//                else {
+//                    UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
+//                        if let error = error {
+//                            print(error)
+//                        }
+//                        else {
+//                            print("accessTokenInfo() success.")
+//                            UserUtils.setSnsID(Id: accessTokenInfo?.id ?? Int64(0))
+//
+//                            let onboardNammingViewModel = OnBoardNameingViewModel(scenCoordinator: self.scenCoordinator)
+//                            let onboardNammingScene = Scene.onboardNamming(onboardNammingViewModel)
+//
+//                            self.scenCoordinator.transition(to: onboardNammingScene, using: .root, animated: true)
+//                        }
+//                    }
+//                }
+//            }
+//        }
         
     }
     
