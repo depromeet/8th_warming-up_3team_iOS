@@ -1,13 +1,22 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin"; // firebaseStore
-admin.initializeApp();
+import * as express from "express"; // REST API 프레임워크
+import {addEntry} from "./entryController";
+
+const app = express();
+app.post("/entries", addEntry);
+app.get("/", (req, res) => res.status(200).send("Hey there!"));
+exports.app = functions.https.onRequest(app);
+
+const db = admin.firestore();
+export {admin, db};
 
 export const randomNumber =
 functions.https.onRequest((request, response) => {
   console.log("request.body => ", request.body);
   // 왜 안찍힐까?
   // FIXME: body parser가 필요함!!
-  console.log("request.body => ", request.body.title);
+  console.log("xxxxx => " + request.body.title);
   const number = Math.round(Math.random() * 100);
   console.log(number);
   response.send(number.toString());
@@ -34,5 +43,3 @@ functions.firestore.document("/{collection}/{id}").onCreate((snap, context) => {
   }
   return null;
 });
-
-

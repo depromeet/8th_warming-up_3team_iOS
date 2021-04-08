@@ -1,4 +1,4 @@
-module.exports = {
+module.exports ={
   root: true,
   env: {
     es6: true,
@@ -24,6 +24,6 @@ module.exports = {
     "import",
   ],
   rules: {
-    quotes: [0, "error", "double"],
+    quotes: ["error", "double"],
   },
 };
