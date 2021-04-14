@@ -1,4 +1,4 @@
-module.exports ={
+module.exports = {
   root: true,
   env: {
     es6: true,
@@ -10,6 +10,7 @@ module.exports ={
     "plugin:import/warnings",
     "plugin:import/typescript",
     "google",
+    "plugin:@typescript-eslint/recommended",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
