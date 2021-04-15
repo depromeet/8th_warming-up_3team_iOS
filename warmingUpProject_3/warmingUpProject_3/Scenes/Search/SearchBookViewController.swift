@@ -35,10 +35,10 @@ class SearchBookViewController: UIViewController, ViewModelBindableType {
             .bind(to: adderCollectionView.rx.items(cellIdentifier: String(describing: BooksCollectionCell.self), cellType: BooksCollectionCell.self)) { (row, element, cell) in
                 
                 //TODO: 캐시로 처리해
-                cell.ivImageView.kf.setImage(with: URL(string: element.image))
-                cell.lbTitle.setTextWithLetterSpacing(text: element.title, letterSpacing: -0.08, lineHeight: 19, font: UIFont.systemFont(ofSize: 16, weight: .medium), color: ColorUtils.color34)
+                cell.ivImageView.kf.setImage(with: URL(string: element.thumbnail ?? ""))
+                cell.lbTitle.setTextWithLetterSpacing(text: element.title ?? "", letterSpacing: -0.08, lineHeight: 19, font: UIFont.systemFont(ofSize: 16, weight: .medium), color: ColorUtils.color34)
                 cell.lbSubText.setFocusTextWithLetterSpacing(
-                    text: "\(element.author) 지음  |  \(element.publisher)",
+                    text: "\(element.authors?.first ?? "") 지음  |  \(element.publisher ?? "")",
                     focusText: "|",
                     focusFont: UIFont(name: "AppleSDGothicNeo-Medium", size: 12) ?? UIFont.systemFont(ofSize: 12, weight: .medium) ,
                     focusColor: ColorUtils.color221,
@@ -46,7 +46,7 @@ class SearchBookViewController: UIViewController, ViewModelBindableType {
                     lineHeight: 13,
                     color: ColorUtils.color68
                 )
-                cell.lbDescription.setTextWithLetterSpacing(text: element.description, letterSpacing: -0.06, lineHeight: 14, font: UIFont.systemFont(ofSize: 12, weight: .regular), color: ColorUtils.color136)
+                cell.lbDescription.setTextWithLetterSpacing(text: element.contents ?? "", letterSpacing: -0.06, lineHeight: 14, font: UIFont.systemFont(ofSize: 12, weight: .regular), color: ColorUtils.color136)
                 cell.layoutIfNeeded()
 
                 cell.lbTitle.lineBreakMode = .byTruncatingTail
@@ -64,20 +64,16 @@ class SearchBookViewController: UIViewController, ViewModelBindableType {
                 strDateFormatter.dateFormat = "yyyy-MM-dd"
                 dateFormatter.dateFormat = "yyyyMMdd"
                 dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
-                let date: Date = dateFormatter.date(from: selData.pubDate)!
-                print(date)
-                
-                let pubDate = strDateFormatter.string(from: date)
-                print(pubDate)
+                let pubDate = selData.datetime?.split(separator: "T").first
             
-                self.viewModel.model?.title = selData.title
-                self.viewModel.model?.thumbnail = selData.image
-                self.viewModel.model?.author = selData.author
-                self.viewModel.model?.pubDate = pubDate
-                self.viewModel.model?.publisher = selData.publisher
-                self.viewModel.model?.description = selData.description
+                self.viewModel.model?.title = selData.title ?? ""
+                self.viewModel.model?.thumbnail = selData.thumbnail ?? ""
+                self.viewModel.model?.author = selData.authors?.first ?? ""
+                self.viewModel.model?.pubDate = String(pubDate ?? "")
+                self.viewModel.model?.publisher = selData.publisher ?? ""
+                self.viewModel.model?.description = selData.contents ?? ""
                                 
-                self.viewModel.bookTitle.onNext(selData.title)
+                self.viewModel.bookTitle.onNext(selData.title ?? "")
                 self.navigationController?.popViewController(animated: true)
         }
         .disposed(by: rx.disposeBag)
@@ -141,12 +137,12 @@ extension SearchBookViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
             textView.resignFirstResponder()
-            viewModel.provider.rx.request(.searchBooks(title: textView.text))
+            viewModel.searchProvider.rx
+                .request(.book(title: textView.text))
                 .filterSuccessfulStatusCodes()
                 .map(BooksModel.self)
                 .subscribe(onSuccess: { [unowned self] res in
-                    self.viewModel.booksData.onNext(res.data)
-                    
+                    self.viewModel.booksData.onNext(res.documents ?? [])
                 }) { (err) in
                     print(err)
             }

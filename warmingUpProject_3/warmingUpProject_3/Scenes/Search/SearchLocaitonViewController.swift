@@ -140,7 +140,7 @@ extension SearchLocaitonViewController: UITextViewDelegate {
                 }
                     // 검색해서 결과가 없는 경우
                 else {
-                    self.viewModel.placeProvider
+                    self.viewModel.searchProvider
                         .rx.request(.place(addr: textView.text))
                         .subscribe(onSuccess: { (response) in
                             

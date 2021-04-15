@@ -32,9 +32,9 @@ class BaseViewModel: NSObject {
     
     let provider = MoyaProvider<BookAPI>(plugins: [NetworkLoggerPlugin()])
     
-    let geoCodeProvider = MoyaProvider<GeoCodeAPI>()
+    let geoCodeProvider = MoyaProvider<GeoCodeAPI>(plugins: [NetworkLoggerPlugin()])
     
-    let placeProvider = MoyaProvider<PlaceAPI>()
+    let searchProvider = MoyaProvider<DaumSearchAPI>(plugins: [NetworkLoggerPlugin()])
     
     func getUid() -> String {
         return Auth.auth().currentUser?.uid ?? ""

@@ -44,7 +44,7 @@
 		B85F608724E42F4A004B2EEE /* OnBoardExplanationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F608624E42F4A004B2EEE /* OnBoardExplanationViewModel.swift */; };
 		B85F608C24E43368004B2EEE /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F608B24E43368004B2EEE /* MainViewModel.swift */; };
 		B876768A2507EA4B00E799E5 /* FBWriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B87676892507EA4B00E799E5 /* FBWriteModel.swift */; };
-		B876768C2508C78500E799E5 /* PlaceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B876768B2508C78500E799E5 /* PlaceAPI.swift */; };
+		B876768C2508C78500E799E5 /* DaumSearchAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B876768B2508C78500E799E5 /* DaumSearchAPI.swift */; };
 		B876768E2508C9FF00E799E5 /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B876768D2508C9FF00E799E5 /* PlaceModel.swift */; };
 		B882A07E24EE1E0E00FC480E /* UserUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882A07D24EE1E0E00FC480E /* UserUtils.swift */; };
 		B882A08124EE484D00FC480E /* AppleID.swift in Sources */ = {isa = PBXBuildFile; fileRef = B882A08024EE484D00FC480E /* AppleID.swift */; };
@@ -141,7 +141,7 @@
 		B85F608B24E43368004B2EEE /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		B85F608D24E43DA2004B2EEE /* warmingUpProject_3.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = warmingUpProject_3.entitlements; sourceTree = "<group>"; };
 		B87676892507EA4B00E799E5 /* FBWriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBWriteModel.swift; sourceTree = "<group>"; };
-		B876768B2508C78500E799E5 /* PlaceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAPI.swift; sourceTree = "<group>"; };
+		B876768B2508C78500E799E5 /* DaumSearchAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaumSearchAPI.swift; sourceTree = "<group>"; };
 		B876768D2508C9FF00E799E5 /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
 		B882A07D24EE1E0E00FC480E /* UserUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUtils.swift; sourceTree = "<group>"; };
 		B882A08024EE484D00FC480E /* AppleID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleID.swift; sourceTree = "<group>"; };
@@ -548,7 +548,7 @@
 				B8D1E2A524F760A900C669B7 /* BookAPI.swift */,
 				B8D1E2A924F76ADB00C669B7 /* UrlAPI.swift */,
 				B8EB092E24F7EDBF00C926CC /* GeoCodeAPI.swift */,
-				B876768B2508C78500E799E5 /* PlaceAPI.swift */,
+				B876768B2508C78500E799E5 /* DaumSearchAPI.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -780,7 +780,7 @@
 				B82BEBDB24F0DB6300E3B375 /* selectedBookCollectionCell.swift in Sources */,
 				B882A08324EE6FB900FC480E /* EdgeInsetsLabel.swift in Sources */,
 				B8C3600824E393E0002D2E75 /* OnBoardTypeViewModel.swift in Sources */,
-				B876768C2508C78500E799E5 /* PlaceAPI.swift in Sources */,
+				B876768C2508C78500E799E5 /* DaumSearchAPI.swift in Sources */,
 				B82F618524E3B68B006A7F91 /* ColorUtils.swift in Sources */,
 				B817395F2509FF2600263BD4 /* OnBoardTypeViewController+Bind.swift in Sources */,
 				B823CCD124EC06DA009C734F /* WriteViewController.swift in Sources */,
