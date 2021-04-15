@@ -21,8 +21,9 @@ public enum BookAPI {
     
     case detailBook(id: Int) // get
     
+    // 필요없음
     case searchBooks(title: String) // get
-    
+
     case booksList(lat: Double, log: Double)
     
     case writeBook(model: PostModel)
@@ -36,7 +37,8 @@ public enum BookAPI {
 extension BookAPI: TargetType {
     public var baseURL: URL {
 //        guard let host = URL(string: "http://3.34.96.70:5000") else { fatalError() }
-        guard let host = URL(string: "https://us-central1-bukjjogeuro.cloudfunctions.net/") else { fatalError() }
+//        guard let host = URL(string: "https://us-central1-bukjjogeuro.cloudfunctions.net/") else { fatalError() }
+        guard let host = URL(string: "https://us-central1-bukjjogeuro.cloudfunctions.net/app") else { fatalError() }
         return host
     }
     
@@ -55,7 +57,7 @@ extension BookAPI: TargetType {
         case .booksList:
             return "/books"
         case .writeBook:
-            return "/books"
+            return "/writeBook"
         case .userBooksInfo(let userID):
             return "/users/books/\(userID)"
         case .test:

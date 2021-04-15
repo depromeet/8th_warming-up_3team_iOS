@@ -132,7 +132,9 @@ extension SearchLocaitonViewController: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
             textView.resignFirstResponder()
-            viewModel.geoCodeProvider.rx.request(.geocode(addr: textView.text)).subscribe(onSuccess: { (res) in
+            viewModel.geoCodeProvider.rx
+                .request(.geocode(addr: textView.text))
+                .subscribe(onSuccess: { (res) in
                 
                 // 지번으로 검색하면
                 if let geocodeModel = try? JSONDecoder().decode(GeocodeModel.self, from: res.data) {

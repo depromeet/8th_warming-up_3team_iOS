@@ -12,6 +12,66 @@ type Request = {
   params: {entryId: string},
 };
 
+type BookType = {
+  title: string,
+  colorType: string, 
+  lat: number,  
+  log: number, 
+  phrase: string, 
+  reason: string, 
+  time: string, 
+  author: string,  
+  description: string,  
+  thumbnail: string, 
+  pubDate: string,  
+  publisher: string, 
+  userID: number,  
+  roadAddress: string, 
+  jibunAddress: string, 
+};
+
+type BookRequest = {
+  body: BookType,
+  params: {entryId: string},
+};
+
+const writeBook = async (req: BookRequest, res: Response) => {
+  // eslint-disable-next-line
+  const {title, colorType, lat, log, phrase, reason, time, author, description, thumbnail, pubDate, publisher, userID, roadAddress, jibunAddress} = req.body;
+  
+  try {
+    const entry = db.collection("writeBook").doc();
+    const entryObject = {
+      id: entry.id,
+      title,
+      colorType,
+      lat,  
+      log, 
+      phrase, 
+      reason, 
+      time, 
+      author,  
+      description,  
+      thumbnail, 
+      pubDate,  
+      publisher, 
+      userID,  
+      roadAddress, 
+      jibunAddress, 
+    };
+
+    entry.set(entryObject);
+
+    res.status(200).send({
+      status: "success",
+      message: "entry added successfully",
+      data: entryObject,
+    });
+  } catch (error) {
+    res.status(500).json(error.message);
+  }
+};
+
 const addEntry = async (req: Request, res: Response) => {
   const {title, text} = req.body;
   try {
@@ -99,4 +159,4 @@ const deleteEntry = async (req: Request, res: Response) => {
   }
 };
 
-export {addEntry, getAllEntries, updateEntry, deleteEntry};
+export {writeBook, addEntry, getAllEntries, updateEntry, deleteEntry};

@@ -65,6 +65,16 @@ class WriteViewModel: BaseViewModel {
     func actionSave(completion: @escaping () -> Void) {
         guard let model = self.model else { return }
         
+        self.provider.rx
+            .request(.writeBook(model: model))
+            .filterSuccessfulStatusCodes()
+            .subscribe { (res) in
+                print(res)
+            } onError: { (err) in
+                print(err)
+            }
+            .disposed(by: self.rx.disposeBag)
+
         /*
         let setWrite = FBWriteModel(title: model.title, colorType: model.colorType, latitude: model.lat, longitude: model.log, phrase: model.phrase, reason: model.reason, time: model.time, author: model.author, description: model.description, thumbnail: model.thumbnail, pubDate: model.pubDate, publisher: model.publisher, tags: model.tags, userID: FirebaseManager.getUID(), roadAddress: model.roadAddress, jibunAddress: model.jibunAddress)
         
