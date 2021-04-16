@@ -13,21 +13,14 @@ public enum BookAPI {
     
     // MARK: auth
     case signIn(snsType: String, snsID: String, snsToken: String)
-    
     case signUp(nickName: String, type: Int, snsType: String, snsLoginID: String)
-    
     // MARK: book
     case deleteBooks(id: Int) // delete
-    
     case detailBook(id: Int) // get
-    
     // 필요없음
     case searchBooks(title: String) // get
-
     case booksList(lat: Double, log: Double)
-    
     case writeBook(model: PostModel)
-    
     case userBooksInfo(userID: Int)
     case test
     
@@ -55,7 +48,7 @@ extension BookAPI: TargetType {
         case .searchBooks(let title):
             return "/books/search/\(title)"
         case .booksList:
-            return "/books"
+            return "/getBookList"
         case .writeBook:
             return "/writeBook"
         case .userBooksInfo(let userID):
@@ -67,9 +60,9 @@ extension BookAPI: TargetType {
     
     public var method: Moya.Method {
         switch self {
-        case .signIn, .signUp, .writeBook, .test:
+        case .signIn, .signUp, .writeBook, .test, .booksList:
             return .post
-        case .detailBook, .searchBooks, .booksList, .userBooksInfo:
+        case .detailBook, .searchBooks, .userBooksInfo:
             return .get
         case .deleteBooks:
             return .delete
@@ -105,13 +98,12 @@ extension BookAPI: TargetType {
             
             
         case .booksList(let lat, let log):
-            return .requestParameters(parameters: ["latitude" : lat, "longitude" : log], encoding: URLEncoding.queryString)
+            return .requestParameters(parameters: ["latitude" : lat, "longitude" : log], encoding: JSONEncoding.default)
             
         // MARK: book
         case .deleteBooks, .detailBook, .searchBooks, .userBooksInfo, .test:
             return .requestPlain
             
-        //TODO: 입력 모델 만들기
         case .writeBook(let model):
             return .requestParameters(
                 parameters: [
@@ -129,7 +121,6 @@ extension BookAPI: TargetType {
                     "publisher": model.publisher,
                     "tags": model.tags,
                     "userId": model.userID
-
                 ],
                 encoding: JSONEncoding.default)
             

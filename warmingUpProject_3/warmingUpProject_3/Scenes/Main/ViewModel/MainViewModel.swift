@@ -109,23 +109,40 @@ class MainViewModel: BaseViewModel {
     
     func getTimeDocumentNearBy(time: String, latitude: Double, longitude: Double, distance: Double) {
         
+        provider.rx
+            .request(.booksList(lat: latitude, log: longitude))
+            .filterSuccessfulStatusCodes()
+            .map(BookListModel.self)
+            .subscribe(onSuccess: { [unowned self] (res) in
+//                print(lat)
+//                print(log)
+                if res.data?.isEmpty ?? true {
+                    print(res.data?.isEmpty)
+                    self.emptyData.onNext(true)
+                } else {
+//                    self.writeData.onNext(res.data ?? [])
+                }
+            }) { (err) in
+                print(err)
+        }
+        .disposed(by: rx.disposeBag)
         
 //        let aa = geoFire.query(at: CLLocation(latitude: 36.9204863, longitude: 127.2154336), withRadius: 1)
         //TODO: 서울시티타워 기준
-        let aa = geoFire.query(at: CLLocation(latitude: 37.5543418, longitude: 126.972316), withRadius: 1)
-            //.observe(.keyEntered) { (s, loc) in
-        var value = [CLLocation]()
-        aa.observe(.keyEntered, with: { (key: String!, location: CLLocation!) in
-            print("Key= '\(key)', \nlocation= '\(location)'")
-            value.append(location)
-//            self.writeData.onNext(nextValue)
-            print("=================")
-            print("======= 보여지는 ==========")
-            print(value)
-            print("=================")
-            self.writeData.onNext(value)
-        })
-        
+//        let aa = geoFire.query(at: CLLocation(latitude: 37.5543418, longitude: 126.972316), withRadius: 1)
+//            //.observe(.keyEntered) { (s, loc) in
+//        var value = [CLLocation]()
+//        aa.observe(.keyEntered, with: { (key: String!, location: CLLocation!) in
+//            print("Key= '\(key)', \nlocation= '\(location)'")
+//            value.append(location)
+////            self.writeData.onNext(nextValue)
+//            print("=================")
+//            print("======= 보여지는 ==========")
+//            print(value)
+//            print("=================")
+//            self.writeData.onNext(value)
+//        })
+//
         // ~1 mile of lat and lon in degrees
 //        let lat = 0.0144927536231884
 //        let lon = 0.0181818181818182
