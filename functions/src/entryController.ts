@@ -17,7 +17,7 @@ type BookType = {
   title: string,
   colorType: string,
   lat: number,
-  log: number,
+  lng: number,
   phrase: string,
   reason: string,
   time: string,
@@ -27,6 +27,7 @@ type BookType = {
   pubDate: string,
   publisher: string,
   userID: number,
+  tags: string[],
   roadAddress: string,
   jibunAddress: string,
 };
@@ -38,7 +39,7 @@ type BookRequest = {
 
 const writeBook = async (req: BookRequest, res: Response) => {
   // eslint-disable-next-line
-  const {title, colorType, lat, log, phrase, reason, time, author, description, thumbnail, pubDate, publisher, userID, roadAddress, jibunAddress} = req.body;
+  const {title, colorType, lat, lng, phrase, reason, time, author, description, thumbnail, pubDate, publisher, tags, userID, roadAddress, jibunAddress} = req.body;
   try {
     const entry = db.collection("writeBook").doc();
     const entryObject = {
@@ -46,7 +47,7 @@ const writeBook = async (req: BookRequest, res: Response) => {
       title,
       colorType,
       lat,
-      log,
+      lng,
       phrase,
       reason,
       time,
@@ -55,6 +56,7 @@ const writeBook = async (req: BookRequest, res: Response) => {
       thumbnail,
       pubDate,
       publisher,
+      tags,
       userID,
       roadAddress,
       jibunAddress,
@@ -96,6 +98,7 @@ const addEntry = async (req: Request, res: Response) => {
 };
 
 type LocationType = {
+  timeTag: string,
   latitude: number,
   longitude: number,
   distanceInKm: number,
@@ -107,24 +110,68 @@ type LocationRequest = {
 }
 
 const getWriteBook = async (req: LocationRequest, res: Response) => {
-  const {latitude, longitude, distanceInKm} = req.body;
+  const {timeTag, latitude, longitude, distanceInKm} = req.body;
   const center = [latitude, longitude];
-  const _distanceInKm = distanceInKm
+  const _distanceInKm = distanceInKm;
 
   try {
-    const allEntries: any[] = [];
+    const allHoreTag: any[] = [];
+    const dawnTag: any[] = [];
+    const morningTag: any[] = [];
+    const dayTag: any[] = [];
+    const nightTag: any[] = [];
+    const afternoonTag: any[] = [];
     const querySnapshot = await db.collection("writeBook").get();
     for (const doc of querySnapshot.docs) {
       const lat = doc.get("lat");
-      const lng = doc.get("log");
+      const lng = doc.get("lng");
       const distanceInKm = distanceBetween([lat, lng], center);
 
       if (distanceInKm <= _distanceInKm) {
-        console.log(_distanceInKm, "조건에 만족하는 ", doc.get("title"));
-        allEntries.push(doc.data());
+        allHoreTag.push(doc.data());
+
+        switch (timeTag) {
+          case "촉촉한 새벽":
+            dawnTag.push(doc.data());
+            break;
+          case "새로운 아침":
+            morningTag.push(doc.data());
+            break;
+          case "나른한 낮":
+            dayTag.push(doc.data());
+            break;
+          case "빛나는 오후":
+            afternoonTag.push(doc.data());
+            break;
+          case "별 헤는 밤":
+            nightTag.push(doc.data());
+            break;
+        }
       }
     }
-    return res.status(200).json(allEntries);
+
+    switch (timeTag) {
+      case "촉촉한 새벽":
+        dawnTag.push(doc.data());
+        console.log("촉촉한 새벽");
+        break;
+      case "새로운 아침":
+        morningTag.push(doc.data());
+        console.log("새로운 아침");
+        break;
+      case "나른한 낮":
+        console.log("나른한 낮");
+        break;
+      case "빛나는 오후":
+        console.log("빛나는 오후");
+        break;
+      case "별 헤는 밤":
+        console.log("별 헤는 밤");
+        return res.status(200).json(afternoonTag);        
+      default:
+        return res.status(200).json(allHoreTag);
+    }
+    
   } catch (error) {
     return res.status(500).json(error.message);
   }
