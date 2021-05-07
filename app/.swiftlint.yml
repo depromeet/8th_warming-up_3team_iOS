@@ -1,0 +1,65 @@
+excluded:
+- Pods
+- Carthage
+- macaronTests
+- macaron/Lib
+
+# 기본값이 비활성화인 룰을 활성화함.
+opt_in_rules:
+- force_unwrapping # 강제 언래핑 체크
+- vertical_parameter_alignment_on_call
+- multiline_parameters # 파라미터는 한줄에 다 표한하거나 한줄에 하나
+- multiline_literal_brackets # 여러 줄 리터럴은 새 줄에 둘러싸는 대괄호가 있어야합니다 닫을때 ]이게 하나의 라인으로 끝나야함.
+- multiline_function_chains  # 체이닝은 한줄에 하나거나 한줄로 표현 RxSwift 적용 대비
+- multiline_arguments_brackets # 대괄호 처리
+- multiline_arguments        # 인수는 같은 줄에 있거나 한 줄에 하나씩 있어야합니다. 이것까지 하면 너무 빡빡함.
+- joined_default_parameter
+# - function_default_parameter_at_end #func foo(baz: String, bar: Int = 0) {} 파라미터 끝에 초기값을 주는게 좋다는데 이점은 뭘까?
+- vertical_whitespace_opening_braces # 중괄호 시작 뒤에 공백 포함하면 안됨.
+- vertical_whitespace_closing_braces # 중괄호 닫기 전에 공백 포함하면 안됨.
+# - missing_docs # 문서화 체크할 때 쓸수 있음 (open, public)에 대해서만
+
+# 기본 룰 중에 강제로 비활성화함.
+disabled_rules:
+- trailing_whitespace
+- large_tuple #튜플 갯수 제한 해제.
+- identifier_name # 변수 네이밍 관련 제한 해제.
+- type_name # 타입 네이밍 관련 제한 해제.
+- type_body_length # 클래스 줄 길이 제한 해제.
+- line_length # 한줄 길이 제한 해제.
+- force_cast # 강제 캐스팅 제한 해제.
+- force_try # 강제 try 해제.
+- function_body_length # 메소드 바디 길이 제한.
+- cyclomatic_complexity #복잡성 위반. (if,else, if let 등등)
+- function_parameter_count #파라미터 갯수 제한 해제. 5개이상이면 원래는 워닝
+- file_length #파일 내 라인 제한 해제.
+- vertical_whitespace #수직 공백 간격 미스 해제
+- syntactic_sugar #Array<Element> -> [Element]이 규칙인데 해제.
+- unneeded_break_in_switch #Break 비 명시 규칙 해제
+- shorthand_operator #축약 오퍼레이터 규칙 제한 해제. ( A = A + 1 -> A += 1)
+- redundant_optional_initialization # 옵셔널 변수에 초기값 nil 제한 규칙 해제.
+- opening_brace # 메소드 바디 선언 간격 규칙 해제. [정상: func xx(){} -> func xx() {}] ,  { }, 팀장님 스타일 \n { }
+- switch_case_alignment # switch문 case는 같은 레벨 탭이 규칙인데 해제
+- control_statement # 제어,루프문의 조건에 ()를 하면 안됨 규칙 제한 해제.
+- statement_position # 제어문 간격 규칙 해제.
+- for_where # For문 내 제어문 존재시 where 사용 규칙 해제.
+- unused_enumerated # enumerated인데 idx가 사용되지 않음 규칙 해제.
+- discouraged_direct_init #직접 초기화하여 조건에 사용하면 안되는 규칙해제. e.g switch UIDevice().type
+- protocol_property_accessors_order # 프로토콜 선언 규칙 해제.[정상: { set get } -> { get set }]
+- multiple_closures_with_trailing_closure # 두개 이상 trailing 클로져 사용 불가 규칙 해제.
+- duplicate_imports # 중복 import 규칙 해제.
+- trailing_newline # .swift 마지막 줄 유무 체크 규칙 해제.
+- unused_optional_binding # 사용 되지않는 옵셔널 바인딩 값 체크 규칙 해제.
+- redundant_discardable_let #
+- empty_enum_arguments # 비어 있는 이놈 아규먼트 체크 규칙 해제.
+- void_return # "-> ()" 보다 "-> Void" 선호하는 규칙 해제.
+- inclusive_language # 포괄적인언어 "BlackList, whiteList" 넣으면 워닝되서 규칙 해제함.
+
+# todo를 해결(삭제)하지 않으면 계속 워닝 규칙 해제.
+# - colon # 타입 콜론 위치 규칙 해제. [정상-> let xx: typeName]
+# - mark # mark format 규칙 해제. '// MARK: ...' or '// MARK: - ...' (mark)
+# - redundant_void_return # 중복 보이드 반환 규칙 체크 해제.
+# - unused_closure_parameter # 사용되지 않는 클로져 파라미터 _ 표기 규칙 해제.
+# - vertical_parameter_alignment # 수직 파라미터 정렬 규칙 해제.
+# - comma # 콤마(,) 간격 규칙 해제.
+# - return_arrow_whitespace #return 화살 간격 규칙 해제. [정상: (Int)->Void -> (Int) -> Void
