@@ -15,7 +15,7 @@ warmingUpProject_3/Pods/
 .DS_Store
 .AppleDouble
 .LSOverride
-warmingUpProject_3/.DS_Store
+Bookjjogeuro/.DS_Store
 
 # Icon must end with two \r
 Icon
@@ -134,10 +134,10 @@ iOSInjectionProject/
 /*.gcno
 
 ### Xcode Patch ###
-warmingUpProject_3/*.xcodeproj/*
-warmingUpProject_3/!*.xcodeproj/project.pbxproj
-warmingUpProject_3/!*.xcodeproj/xcshareddata/
-warmingUpProject_3/!*.xcworkspace/contents.xcworkspacedata
-warmingUpProject_3/**/xcshareddata/WorkspaceSettings.xcsettings
+Bookjjogeuro/*.xcodeproj/*
+Bookjjogeuro/!*.xcodeproj/project.pbxproj
+Bookjjogeuro/!*.xcodeproj/xcshareddata/
+Bookjjogeuro/!*.xcworkspace/contents.xcworkspacedata
+Bookjjogeuro/**/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.toptal.com/developers/gitignore/api/swift,xcode,cocoapods,macos
